@@ -10,7 +10,7 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\"",
-    "build": "electron-packager . --icon=src/assets/icon.ico"
+    "build": "electron-packager . --icon=src/assets/icon.ico && node build"
   },
   "keywords": [],
   "author": {
@@ -21,6 +21,7 @@
   "dependencies": {
     "electron-reload": "^2.0.0-alpha.1",
     "electron-squirrel-startup": "^1.0.0",
+    "electron-winstaller": "^5.1.0",
     "google-search-results-nodejs": "^2.1.0",
     "qr-image": "^3.2.0",
     "whatsapp-web.js": "^1.19.2"

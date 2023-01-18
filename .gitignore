@@ -89,3 +89,7 @@ typings/
 out/
 
 .wwebjs_auth
+
+Prospect-installers
+
+Prospect-win32-x64
