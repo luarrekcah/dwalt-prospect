@@ -1,10 +1,14 @@
 const SerpApi = require("google-search-results-nodejs");
-const { text, type, location, apiKey } = require("../../data.json");
-const search = new SerpApi.GoogleSearch(apiKey);
 const fs = require("fs");
-const db = require("../../db.json");
+const client = require("../index");
 
-module.exports.run = async (client, message) => {
+module.exports.run = async () => {
+  const { text, type, location, apiKey } = require("../../data.json");
+
+  const search = new SerpApi.GoogleSearch(apiKey);
+
+  const db = require("../../db.json");
+
   if (!text || !type || !location) return;
 
   const chats = await client.getAllChats();
@@ -35,7 +39,7 @@ module.exports.run = async (client, message) => {
       intervaloEnvio: 5,
     };
 
-    client.sendMessage(message.from, `*Pesquisando...*`);
+    alert("Pesquisando...")
 
     for (let index = 0; index < config.pages; index++) {
       search.json(

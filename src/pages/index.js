@@ -4,6 +4,8 @@ const infoSave = document.getElementById("infoSave");
 const configSave = document.getElementById("configSave");
 
 const testProspect = document.getElementById("sendTest");
+const prospect = document.getElementById("sendProspect");
+
 const formFile = document.getElementById("formFile");
 
 const list = document.getElementById("list");
@@ -56,6 +58,12 @@ configSave.addEventListener("click", () => {
 testProspect.addEventListener("click", () => {
   const dmCommand = require("../core/commands/dm");
   dmCommand.run();
+});
+
+
+prospect.addEventListener("click", () => {
+  const pemCommand = require("../core/commands/pem");
+  pemCommand.run();
 });
 
 const toBase64 = (file) =>

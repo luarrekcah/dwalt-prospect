@@ -1,9 +1,9 @@
 const client = require("../index");
-
-const data = require("../../data.json");
 const { sendImage } = require("../../utils");
 
 module.exports.run = () => {
+  const data = require("../../data.json");
+
   const numero = document.getElementById("testNumber").value;
   if (numero === "") return alert("Insira um número válido.");
   const testNumber = `${numero
