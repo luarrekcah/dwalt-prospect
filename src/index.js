@@ -35,22 +35,8 @@ const menuList = [
           }
         }
       },
-      {
-        label: 'DevTools',
-        accelerator: 'CmdOrCtrl+Shift+I',
-        click: (item, focusedWindow) => {
-          focusedWindow.openDevTools();
-        }
-      },
     ]
   },
-  {
-    label: 'Ajuda',
-    accelerator: 'CmdOrCtrl+H',
-    click: (item, focusedWindow) => {
-      //sair
-    }
-  }
 ]
 
 const createWindow = () => {
