@@ -3,7 +3,7 @@ const client = new Client({
   restartOnAuthFail: true,
   authStrategy: new LocalAuth(),
 });
-const fs = require("fs");
+
 const genqr = require("qr-image");
 
 const data = require("../data.json");
@@ -17,36 +17,22 @@ const nameElement = document.getElementById("namebot");
 const infoSave = document.getElementById("infoSave");
 const configSave = document.getElementById("configSave");
 
+const messageHandler = require(`../core/handler/message`);
+const readyHandler = require(`../core/handler/ready`);
+const qrHandler = require(`../core/handler/qr`);
+
+const {saveData} = require("../utils") 
+
 client.on("qr", (qr) => {
-  divInitial.innerHTML = `<p>Para que o bot tenha acesso ao seu whatsapp, você precisa ler o <b>código QR</b>.</p><p>Já leu o QR? Aguarde alguns segundos para que o bot atualize o status.</p>`;
-  const qrImage = genqr.image(qr);
-  const chunks = [];
-  qrImage.on("data", (chunk) => chunks.push(chunk));
-  qrImage.on("end", () => {
-    const buffer = Buffer.concat(chunks);
-    const base64data = buffer.toString("base64");
-    qrElement.src = `data:image/png;base64,${base64data}`;
-  });
+  return qrHandler.run(qr);
 });
 
 client.on("ready", () => {
-  console.log("Client is ready!");
-  divInitial.style.display = "none";
-  qrElement.style.display = "none";
-  namebot.innerHTML = `Prospect bot <span class="badge text-bg-success">Online</span>`;
-  mainElement.style.display = "block";
-
-  document.getElementById("text").value = data.text || '';
-  document.getElementById("businesstype").value = data.type || '';
-  document.getElementById("where").value = data.location || '';
-  document.getElementById("apiKey").value = data.apiKey || '';
+  return readyHandler.run();
 });
 
 client.on("message", (message) => {
-  if (message.body === "!ping") {
-    client.sendMessage(message.from, "Dados coletados.");
-    console.log(message);
-  }
+  return messageHandler.run(client, message);
 });
 
 client.on("disconnected", () => {
@@ -57,19 +43,12 @@ client.on("disconnected", () => {
   }, 3000);
 });
 
-const saveData = (data) => {
-  const toStringData = JSON.stringify(data);
-  fs.writeFileSync(`${__dirname}/../data.json`, toStringData);
-  
-  alert("Suas preferências foram salvas.");
-};
-
 infoSave.addEventListener("click", () => {
   saveData({
     text: document.getElementById("text").value,
     type: document.getElementById("businesstype").value,
     location: document.getElementById("where").value,
-    apiKey: document.getElementById("apiKey").value
+    apiKey: document.getElementById("apikey").value
   });
 });
 
@@ -78,7 +57,7 @@ configSave.addEventListener("click", () => {
     text: document.getElementById("text").value,
     type: document.getElementById("businesstype").value,
     location: document.getElementById("where").value,
-    apiKey: document.getElementById("apiKey").value
+    apiKey: document.getElementById("apikey").value
   });
 });
 
