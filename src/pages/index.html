@@ -34,6 +34,10 @@
             type="button" role="tab" aria-controls="config-tab-pane" aria-selected="false">⚙️</button>
         </li>
         <li class="nav-item" role="presentation">
+          <button class="nav-link text-dark" id="files-tab" data-bs-toggle="tab" data-bs-target="#files-tab-pane"
+            type="button" role="tab" aria-controls="files-tab-pane" aria-selected="false">📁</button>
+        </li>
+        <li class="nav-item" role="presentation">
           <button class="nav-link text-dark" id="bot-tab" data-bs-toggle="tab" data-bs-target="#bot-tab-pane"
             type="button" role="tab" aria-controls="bot-tab-pane" aria-selected="false">🤖</button>
         </li>
@@ -49,7 +53,7 @@
               </div>
               <div class="mb-3">
                 <label for="businesstype" class="form-label">Para qual tipo de empresa?</label>
-                <input placeholder="colete sua api no site" class="form-control" id="businesstype"></input>
+                <input placeholder="lanchonetes" class="form-control" id="businesstype"></input>
               </div>
             </div>
             <div class="mb-3">
@@ -70,7 +74,18 @@
             </div>
           </div>
         </div>
-        <div class="tab-pane fade" id="bot-tab-pane" role="tabpanel" aria-labelledby="bot-tab" tabindex="2">
+        <div class="tab-pane fade" id="files-tab-pane" role="tabpanel" aria-labelledby="files-tab" tabindex="2">
+          <div class="row">
+            <ul class="list-group" id="list" style="margin-top: 20px;">
+              
+            </ul>
+            <div class="mb-3">
+              <label for="formFile" class="form-label">Adicione os arquivos de envio.</label>
+              <input class="form-control" multiple type="file" id="formFile">
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="bot-tab-pane" role="tabpanel" aria-labelledby="bot-tab" tabindex="3">
           <div class="row">
             <div class="col">
               <div class="mb-3">

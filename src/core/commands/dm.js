@@ -1,9 +1,11 @@
 const client = require("../index");
 
 module.exports.run = () => {
-  const testNumber = `${document
-      .getElementById("testNumber")
-      .value.replaceAll("+", "")
+  const numero = document
+  .getElementById("testNumber")
+  .value;
+  if(numero === '' || isNaN(numero)) return alert("Insira um número válido.")
+  const testNumber = `${numero.replaceAll("+", "")
       .replaceAll(" ", "")
       .replaceAll("-", "")
       .replaceAll("(", "")
@@ -12,4 +14,5 @@ module.exports.run = () => {
     testNumber,
     "Essa é uma mensagem de teste do painel do Prospect BOT"
   );
+  alert("Enviado.")
 };
