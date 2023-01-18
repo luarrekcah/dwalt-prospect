@@ -1,4 +1,3 @@
-
 const genqr = require("qr-image");
 const qrElement = document.getElementById("qr");
 

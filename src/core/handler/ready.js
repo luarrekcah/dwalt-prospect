@@ -5,7 +5,6 @@ const mainElement = document.getElementById("main");
 const nameElement = document.getElementById("namebot");
 
 module.exports.run = () => {
-  console.log("Client is ready!");
   divInitial.style.display = "none";
   qrElement.style.display = "none";
   nameElement.innerHTML = `Prospect bot <span class="badge text-bg-success">Online</span>`;
