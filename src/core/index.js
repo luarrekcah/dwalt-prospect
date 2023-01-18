@@ -26,3 +26,5 @@ client.on("disconnected", () => {
 });
 
 client.initialize();
+
+module.exports = client;
