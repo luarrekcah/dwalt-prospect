@@ -3,16 +3,6 @@ const client = new Client({
   restartOnAuthFail: true,
   authStrategy: new LocalAuth(),
 });
-
-const genqr = require("qr-image");
-
-const data = require("../data.json");
-
-const qrElement = document.getElementById("qr");
-const divInitial = document.getElementById("divInitial");
-const mainElement = document.getElementById("main");
-const nameElement = document.getElementById("namebot");
-
 //buttons
 const infoSave = document.getElementById("infoSave");
 const configSave = document.getElementById("configSave");
@@ -20,6 +10,7 @@ const configSave = document.getElementById("configSave");
 const messageHandler = require(`../core/handler/message`);
 const readyHandler = require(`../core/handler/ready`);
 const qrHandler = require(`../core/handler/qr`);
+const disconnectedHandler = require(`../core/handler/disconnected`);
 
 const {saveData} = require("../utils") 
 
@@ -36,11 +27,7 @@ client.on("message", (message) => {
 });
 
 client.on("disconnected", () => {
-  mainElement.style.display = "none";
-  namebot.innerHTML = `Prospect bot <span class="badge text-bg-danger">Desconectado</span>`;
-  setTimeout(() => {
-    location.reload();
-  }, 3000);
+  return disconnectedHandler.run();
 });
 
 infoSave.addEventListener("click", () => {

@@ -1,8 +1,14 @@
+const data = require("../../data.json");
+const qrElement = document.getElementById("qr");
+const divInitial = document.getElementById("divInitial");
+const mainElement = document.getElementById("main");
+const nameElement = document.getElementById("namebot");
+
 module.exports.run = () => {
   console.log("Client is ready!");
   divInitial.style.display = "none";
   qrElement.style.display = "none";
-  namebot.innerHTML = `Prospect bot <span class="badge text-bg-success">Online</span>`;
+  nameElement.innerHTML = `Prospect bot <span class="badge text-bg-success">Online</span>`;
   mainElement.style.display = "block";
 
   document.getElementById("text").value = data.text || "";
