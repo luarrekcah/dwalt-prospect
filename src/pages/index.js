@@ -36,10 +36,10 @@ client.on("ready", () => {
   namebot.innerHTML = `Prospect bot <span class="badge text-bg-success">Online</span>`;
   mainElement.style.display = "block";
 
-  document.getElementById("text").value = data.text;
-  document.getElementById("businesstype").value = data.type;
-  document.getElementById("where").value = data.location;
-  document.getElementById("apiKey").value = data.apiKey;
+  document.getElementById("text").value = data.text || '';
+  document.getElementById("businesstype").value = data.type || '';
+  document.getElementById("where").value = data.location || '';
+  document.getElementById("apiKey").value = data.apiKey || '';
 });
 
 client.on("message", (message) => {
@@ -60,14 +60,26 @@ client.on("disconnected", () => {
 const saveData = (data) => {
   const toStringData = JSON.stringify(data);
   fs.writeFileSync(`${__dirname}/../data.json`, toStringData);
+  
+  alert("Suas preferências foram salvas.");
 };
 
 infoSave.addEventListener("click", () => {
-  alert("Botao");
+  saveData({
+    text: document.getElementById("text").value,
+    type: document.getElementById("businesstype").value,
+    location: document.getElementById("where").value,
+    apiKey: document.getElementById("apiKey").value
+  });
 });
 
 configSave.addEventListener("click", () => {
-  alert("Botao");
+  saveData({
+    text: document.getElementById("text").value,
+    type: document.getElementById("businesstype").value,
+    location: document.getElementById("where").value,
+    apiKey: document.getElementById("apiKey").value
+  });
 });
 
 client.initialize();
