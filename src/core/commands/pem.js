@@ -11,7 +11,9 @@ module.exports.run = async () => {
 
   if (!text || !type || !location) return;
 
-  const chats = await client.getAllChats();
+  const chats = await client.getChats();
+  console.log(chats);
+
   const chatNumbers = db.numbers || [];
 
   chats.forEach((c) => {
@@ -39,7 +41,7 @@ module.exports.run = async () => {
       intervaloEnvio: 5,
     };
 
-    alert("Pesquisando...")
+    alert("Pesquisando...");
 
     for (let index = 0; index < config.pages; index++) {
       search.json(
