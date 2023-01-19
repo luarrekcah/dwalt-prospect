@@ -35,13 +35,13 @@ const menuList = [
           }
         },
       },
-      {
+     /* {
         label: 'DevTools',
         accelerator: 'CmdOrCtrl+Shift+I',
         click: (item, focusedWindow) => {
           focusedWindow.openDevTools();
         }
-      },
+      },*/
     ],
   },
 ];
