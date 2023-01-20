@@ -1,4 +1,5 @@
 const fs = require("fs");
+const { ipcRenderer } = require("electron");
 
 const infoSave = document.getElementById("infoSave");
 const configSave = document.getElementById("configSave");
@@ -26,14 +27,14 @@ const readFiles = () => {
     </button>
   </li>`;
   });
-}
-readFiles()
+};
+readFiles();
 
 const deleteFile = async (file) => {
   fs.unlink(`${__dirname}/../medias/${file}`, (err) => {
     if (err) throw err;
-    console.log('file deleted successfully');
-    readFiles()
+    console.log("file deleted successfully");
+    readFiles();
   });
 };
 
@@ -59,7 +60,6 @@ testProspect.addEventListener("click", () => {
   const dmCommand = require("../core/commands/dm");
   dmCommand.run();
 });
-
 
 prospect.addEventListener("click", () => {
   const pemCommand = require("../core/commands/pem");
@@ -87,9 +87,9 @@ formFile.addEventListener("change", (event) => {
       { encoding: "base64" },
       function (err) {
         console.log("File created");
+        ipcRenderer.send("notification", "Arquivo adicionado.");
         readFiles();
       }
     );
   });
 });
-

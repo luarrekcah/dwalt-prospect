@@ -1,4 +1,6 @@
-const data = require("../../data.json");
+const data = JSON.parse(
+  fs.readFileSync(__dirname + "/../../data.json", "utf8")
+);
 const qrElement = document.getElementById("qr");
 const divInitial = document.getElementById("divInitial");
 const mainElement = document.getElementById("main");

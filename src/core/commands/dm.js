@@ -2,7 +2,9 @@ const client = require("../index");
 const { sendImage } = require("../../utils");
 
 module.exports.run = () => {
-  const data = require("../../data.json");
+  const data = JSON.parse(
+    fs.readFileSync(__dirname + "/../../data.json", "utf8")
+  );
 
   const numero = document.getElementById("testNumber").value;
   if (numero === "") return alert("Insira um número válido.");

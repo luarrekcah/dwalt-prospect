@@ -1,15 +1,26 @@
 const SerpApi = require("google-search-results-nodejs");
 const fs = require("fs");
 const client = require("../index");
+const { ipcRenderer } = require("electron");
 
 module.exports.run = async () => {
-  const { text, type, location, apiKey } = require("../../data.json");
+  const { text, type, location, apiKey } = JSON.parse(
+    fs.readFileSync(__dirname + "/../../data.json", "utf8")
+  );
 
   const search = new SerpApi.GoogleSearch(apiKey);
 
   const db = require("../../db.json");
 
-  if (!text || !type || !location) return;
+  if (
+    !text ||
+    !type ||
+    !location ||
+    text === "" ||
+    type === "" ||
+    location === ""
+  )
+    return ipcRenderer.send("notification", "Erro, dados em falta.");
 
   const chats = await client.getChats();
   console.log(chats);
@@ -22,7 +33,7 @@ module.exports.run = async () => {
 
   console.log(chatNumbers);
 
-  const q = `${type} ${location}`;
+  const q = `${type.toLowerCase()} ${location.toLowerCase()}`;
 
   const numbers = [],
     removed = [],
@@ -76,8 +87,7 @@ module.exports.run = async () => {
 
     setTimeout(() => {
       if (numbers.length === 0)
-        return alert("Ocorreu um problema com a pesquisa.");
-
+        return alert("Nenhum número válido encontrado para sua pesquisa. Tente alterar.");
       alert(
         `Coletei *${numbers.length}* números válidos de empresas. ${
           removed.length
@@ -88,6 +98,7 @@ module.exports.run = async () => {
         }s*\n\n\n*⚠️Realizando envio para os números⚠️*`
       );
 
+      console.log(numbers);
       numbers.forEach((num) => {
         setTimeout(async () => {
           try {
@@ -96,7 +107,7 @@ module.exports.run = async () => {
               await sendImage(client, num, "", f);
             });
           } catch (error) {
-            console.log(error);
+            alert("Ocorreu um erro: "+ err)
           }
         }, config.intervaloEnvio * 1000);
       });

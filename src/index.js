@@ -1,11 +1,16 @@
-const { app, BrowserWindow, Menu } = require("electron");
+const { app, BrowserWindow, Menu, ipcMain, Notification } = require("electron");
 const path = require("path");
 const electronReload = require("electron-reload");
+const {production} = require("../config.json");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
   app.quit();
 }
+
+ipcMain.on('notification', (event, arg) => {
+  new Notification({ title: "Notificação", body: arg }).show()
+});
 
 const menuList = [
   {
@@ -35,16 +40,22 @@ const menuList = [
           }
         },
       },
-     /* {
-        label: 'DevTools',
-        accelerator: 'CmdOrCtrl+Shift+I',
-        click: (item, focusedWindow) => {
-          focusedWindow.openDevTools();
-        }
-      },*/
     ],
   },
 ];
+
+if(!production) {
+  menuList.push(
+    {
+      label: 'DevTools',
+      accelerator: 'CmdOrCtrl+Shift+I',
+      click: (item, focusedWindow) => {
+        focusedWindow.openDevTools();
+      }
+    },
+  )
+}
+
 
 const createWindow = () => {
   // Create the browser window.
