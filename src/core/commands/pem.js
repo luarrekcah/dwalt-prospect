@@ -4,13 +4,13 @@ const client = require("../index");
 const { ipcRenderer } = require("electron");
 
 module.exports.run = async () => {
-  const { text, type, location, apiKey } = JSON.parse(
+  const { text, type, location, apiKey, config } = JSON.parse(
     fs.readFileSync(__dirname + "/../../data.json", "utf8")
   );
 
   const search = new SerpApi.GoogleSearch(apiKey);
 
-  const db = require("../../db.json");
+  const db = fs.readFileSync(__dirname + "/../../db.json", "utf8")
 
   if (
     !text ||
@@ -22,16 +22,17 @@ module.exports.run = async () => {
   )
     return ipcRenderer.send("notification", "Erro, dados em falta.");
 
-  const chats = await client.getChats();
-  console.log(chats);
+  let chatNumbers = [];
 
-  const chatNumbers = db.numbers || [];
+  if (config.blockOldNumbers) {
+    chatNumbers = db.numbers;
 
-  chats.forEach((c) => {
-    chatNumbers.push(c.id._serialized);
-  });
+    const chats = await client.getChats();
 
-  console.log(chatNumbers);
+    chats.forEach((c) => {
+      chatNumbers.push(c.id._serialized);
+    });
+  }
 
   const q = `${type.toLowerCase()} ${location.toLowerCase()}`;
 
@@ -77,7 +78,9 @@ module.exports.run = async () => {
               if (chatNumbers.includes(`${formated}@c.us`)) {
                 removed.push(`${formated}@c.us`);
               } else {
-                numbers.push(`${formated}@c.us`);
+                numbers.push(
+                  `${formated.slice(0, 4) + formated.slice(5)}@c.us`
+                );
               }
             }
           });
@@ -87,7 +90,9 @@ module.exports.run = async () => {
 
     setTimeout(() => {
       if (numbers.length === 0)
-        return alert("Nenhum número válido encontrado para sua pesquisa. Tente alterar.");
+        return alert(
+          "Nenhum número válido encontrado para sua pesquisa. Tente alterar."
+        );
       alert(
         `Coletei *${numbers.length}* números válidos de empresas. ${
           removed.length
@@ -99,7 +104,7 @@ module.exports.run = async () => {
       );
 
       console.log(numbers);
-      numbers.forEach((num) => {
+      numbers.forEach((num, index) => {
         setTimeout(async () => {
           try {
             client.sendMessage(num, text.toString());
@@ -107,7 +112,7 @@ module.exports.run = async () => {
               await sendImage(client, num, "", f);
             });
           } catch (error) {
-            alert("Ocorreu um erro: "+ err)
+            alert("Ocorreu um erro: " + err);
           }
         }, config.intervaloEnvio * 1000);
       });
