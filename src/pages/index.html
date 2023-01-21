@@ -70,7 +70,11 @@
                 <label for="apikey" class="form-label">Chave da API</label>
                 <input placeholder="Coletar a chave no site" class="form-control" id="apikey"></input>
               </div>
-              <button type="button" id="configSave" class="btn btn-info" style="width: 100%;">Salvar</button>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="blockOldNumbers" checked>
+                <label class="form-check-label" for="blockOldNumbers">Bloquear repetição de números</label>
+              </div>
+              <button type="button" id="configSave" class="btn btn-info" style="width: 100%; margin-top: 20px">Salvar</button>
             </div>
           </div>
         </div>

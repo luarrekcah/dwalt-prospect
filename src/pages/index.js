@@ -44,6 +44,7 @@ infoSave.addEventListener("click", () => {
     type: document.getElementById("businesstype").value,
     location: document.getElementById("where").value,
     apiKey: document.getElementById("apikey").value,
+    config: {blockOldNumbers: document.getElementById("blockOldNumbers").checked},
   });
 });
 
@@ -53,6 +54,7 @@ configSave.addEventListener("click", () => {
     type: document.getElementById("businesstype").value,
     location: document.getElementById("where").value,
     apiKey: document.getElementById("apikey").value,
+    config: {blockOldNumbers: document.getElementById("blockOldNumbers").checked},
   });
 });
 

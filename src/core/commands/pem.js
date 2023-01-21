@@ -10,7 +10,7 @@ module.exports.run = async () => {
 
   const search = new SerpApi.GoogleSearch(apiKey);
 
-  const db = fs.readFileSync(__dirname + "/../../db.json", "utf8")
+  const db = JSON.parse(fs.readFileSync(__dirname + "/../../db.json", "utf-8"));
 
   if (
     !text ||
@@ -105,12 +105,13 @@ module.exports.run = async () => {
 
       console.log(numbers);
       numbers.forEach((num, index) => {
-        setTimeout(async () => {
+        let intervalId = setInterval(async () => {
           try {
             client.sendMessage(num, text.toString());
-            files.forEach(async (f) => {
-              await sendImage(client, num, "", f);
-            });
+            for (let index = 0; index < files.length; index++) {
+              await sendImage(client, num, "", files[index]);
+            }
+            clearInterval(intervalId);
           } catch (error) {
             alert("Ocorreu um erro: " + err);
           }
