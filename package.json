@@ -23,6 +23,8 @@
     "electron-squirrel-startup": "^1.0.0",
     "electron-winstaller": "^5.1.0",
     "google-search-results-nodejs": "^2.1.0",
+    "puppeteer-core": "^19.6.0",
+    "puppeteer-in-electron": "^3.0.5",
     "qr-image": "^3.2.0",
     "whatsapp-web.js": "^1.19.2"
   },

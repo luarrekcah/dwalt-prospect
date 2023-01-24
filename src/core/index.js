@@ -2,6 +2,10 @@ const { Client, LocalAuth } = require("whatsapp-web.js");
 const client = new Client({
   restartOnAuthFail: true,
   authStrategy: new LocalAuth(),
+   puppeteer: {
+    executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
+		args: ['--no-sandbox'],
+	}
 });
 
 const messageHandler = require(`./handler/message`);
