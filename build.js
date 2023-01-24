@@ -1,19 +1,19 @@
-var electronInstaller = require('electron-winstaller');
+const electronInstaller = require('electron-winstaller');
 // In this case, we can use relative paths
-var settings = {
+const settings = {
 // Specify the folder where the built app is located
-appDirectory: './Prospect-win32-x64',
-// Specify the existing folder where
-outputDirectory: './Prospect-installers',
-// The name of the Author of the app (the name of your company)
-authors: 'D | Walt',
-// The name of the executable of your built
-exe: './Prospect.exe',
-description: 'BOT para prospecção no WhatsApp!'
+  appDirectory: './Prospect-win32-x64',
+  // Specify the existing folder where
+  outputDirectory: './Prospect-installers',
+  // The name of the Author of the app (the name of your company)
+  authors: 'D | Walt',
+  // The name of the executable of your built
+  exe: './Prospect.exe',
+  description: 'BOT para prospecção no WhatsApp!',
 };
 resultPromise = electronInstaller.createWindowsInstaller(settings);
 resultPromise.then(() => {
-console.log("The installers of your application were succesfully created !");
+  console.log('The installers of your application were succesfully created !');
 }, (e) => {
-console.log(`Well, sometimes you are not so lucky: ${e.message}`)
+  console.log(`Well, sometimes you are not so lucky: ${e.message}`);
 });

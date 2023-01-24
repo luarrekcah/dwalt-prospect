@@ -34,6 +34,8 @@
     "@electron-forge/maker-rpm": "^6.0.4",
     "@electron-forge/maker-squirrel": "^6.0.4",
     "@electron-forge/maker-zip": "^6.0.4",
-    "electron": "22.0.2"
+    "electron": "22.0.2",
+    "eslint": "^8.32.0",
+    "eslint-config-google": "^0.14.0"
   }
 }
