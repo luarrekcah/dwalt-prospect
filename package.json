@@ -10,7 +10,7 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\"",
-    "build": "electron-packager . --icon=src/assets/icon.ico && node build"
+    "build": "rmdir /s /q Prospect-installers && rmdir /s /q Prospect-win32-x64 && electron-packager . --icon=src/assets/icon.ico && node build"
   },
   "keywords": [],
   "author": {
