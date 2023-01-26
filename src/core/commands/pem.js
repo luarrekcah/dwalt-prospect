@@ -4,6 +4,10 @@ const client = require('../index');
 const {ipcRenderer} = require('electron');
 const {sendImage} = require('../../utils');
 
+const sleep = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
 module.exports.run = async () => {
   const {text, type, location, apiKey, config} = JSON.parse(
       fs.readFileSync(__dirname + '/../../data.json', 'utf8'),
@@ -15,11 +19,11 @@ module.exports.run = async () => {
 
   if (
     !text ||
-    !type ||
-    !location ||
-    text === '' ||
-    type === '' ||
-    location === ''
+      !type ||
+      !location ||
+      text === '' ||
+      type === '' ||
+      location === ''
   ) {
     return ipcRenderer.send('notification', 'Erro, dados em falta.');
   }
@@ -86,42 +90,41 @@ module.exports.run = async () => {
                 }
               }
             });
+            if (index === config.pages -1) {
+              if (numberCount === 0) {
+                return alert(
+                    `Nenhum número válido encontrado
+                     para sua pesquisa. Tente alterar.`,
+                );
+              }
+              alert(
+                  `Coletei *${numberCount}* números válidos de empresas. 
+                  ${ removedCount } foram removidos porque estão repetidos.
+                  \n\n Configuração do BOT: \n\nLimite de buscas: 
+                  *${ config.pages * 20 } empresas* || Intervalo de envio:
+                   *${ config.intervaloEnvio }s*\n\n\n*⚠️Realizando 
+                   envio para os números...`,
+              );
+            }
           },
       );
     }
-
-    setTimeout(() => {
-      if (numbers.length === 0) {
-        return alert(
-            'Nenhum número válido encontrado para sua pesquisa. Tente alterar.',
-        );
-      }
-      alert(
-          `Coletei *${numbers.length}* números válidos de empresas. ${
-            removed.length
-          } foram removidos porque estão repetidos.\n\n
-          Configuração do BOT: \n\nLimite de buscas: *${
-  config.pages * 20
-} empresas* || Intervalo de envio: *${
-  config.intervaloEnvio
-}s*\n\n\n*⚠️Realizando envio para os números⚠️*`,
-      );
-
+    setTimeout(async () => {
       console.log(numbers);
-      numbers.forEach((num, index) => {
-        const intervalId = setInterval(async () => {
-          try {
-            client.sendMessage(num, text.toString());
-            for (let index = 0; index < files.length; index++) {
-              await sendImage(client, num, '', files[index]);
-            }
-            clearInterval(intervalId);
-          } catch (err) {
-            alert('Ocorreu um erro: ' + err);
+
+      numbers.forEach(async (num, index) => {
+        await sleep(5000);
+        try {
+          await client.sendMessage(num, text.toString());
+          for (let index = 0; index < files.length; index++) {
+            await sendImage(client, num, '', files[index]);
           }
-        }, config.intervaloEnvio * 1000);
+        } catch (err) {
+          alert('Ocorreu um erro: ' + err);
+        }
       });
-    }, 10 * 1000);
+    }, 5000);
+
     const save = {
       numbers: chatNumbers,
     };
