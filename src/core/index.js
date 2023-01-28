@@ -17,8 +17,8 @@ client.on('qr', (qr) => {
   return qrHandler.run(qr);
 });
 
-client.on('ready', () => {
-  return readyHandler.run();
+client.on('ready', async () => {
+  return readyHandler.run(client);
 });
 
 client.on('message', (message) => {

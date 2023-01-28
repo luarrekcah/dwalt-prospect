@@ -93,3 +93,7 @@ out/
 Prospect-installers
 
 Prospect-win32-x64
+
+src/data.json
+
+src/db.json

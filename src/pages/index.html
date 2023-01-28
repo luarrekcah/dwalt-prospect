@@ -1,114 +1,464 @@
 <!DOCTYPE html>
-<html>
+<html lang="pr-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <title>Prospect</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Prospect bot</title>
-  <link rel="stylesheet" href="./index.css" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
-</head>
+    <link href="../assets/css/app.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<body class="container">
-  <div class="center" style="color: white">
-    <h1 id="namebot">Prospect bot <span class="badge text-bg-danger">Offline</span></h1>
-
-    <img src="" alt="" srcset="" width="200px" id="qr" />
-
-    <div id="divInitial">
-      <div class="spinner-border text-light" role="status">
-        <span class="visually-hidden">Loading...</span>
+  <body>
+    <!--BODY 1-->
+    <div id="loginBody">
+      <div class="wrapper">
+        <div class="main">
+          <main class="d-flex w-100">
+            <div class="container d-flex flex-column">
+              <div class="row vh-100">
+                <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+                  <div class="d-table-cell align-middle">
+                    <div class="text-center mt-4">
+                      <h1 class="h2" id="namebot">
+                        Prospect bot
+                        <span class="badge text-bg-danger">Offline</span>
+                      </h1>
+                    </div>
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="text-center">
+                          <img src="" alt="" srcset="" width="200px" id="qr" />
+                          <div id="divInitial">
+                            <div
+                              class="spinner-border text-primary"
+                              role="status"
+                            >
+                              <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p>Aguarde... estamos checando seu acesso.</p>
+                          </div>
+                          <img src="" alt="" srcset="" width="200px" id="qr" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
       </div>
-      <p>Aguarde... estamos checando seu acesso.</p>
     </div>
+    <!--BODY 2-->
+    <div id="loggedBody" style="display: none">
+      <div class="wrapper">
+        <nav id="sidebar" class="sidebar js-sidebar">
+          <div class="sidebar-content js-simplebar">
+            <a class="sidebar-brand" href="index.html">
+              <span class="align-middle">Prospect</span>
+            </a>
 
-    <div id="main" style="display: none; margin-top: 50px;">
+            <ul class="sidebar-nav">
+              <li class="sidebar-header">Páginas</li>
 
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active text-dark" id="envio-tab" data-bs-toggle="tab" data-bs-target="#envio-tab-pane"
-            type="button" role="tab" aria-controls="envio-tab-pane" aria-selected="true">🏠</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link text-dark" id="config-tab" data-bs-toggle="tab" data-bs-target="#config-tab-pane"
-            type="button" role="tab" aria-controls="config-tab-pane" aria-selected="false">⚙️</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link text-dark" id="files-tab" data-bs-toggle="tab" data-bs-target="#files-tab-pane"
-            type="button" role="tab" aria-controls="files-tab-pane" aria-selected="false">📁</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link text-dark" id="bot-tab" data-bs-toggle="tab" data-bs-target="#bot-tab-pane"
-            type="button" role="tab" aria-controls="bot-tab-pane" aria-selected="false">🤖</button>
-        </li>
-      </ul>
-      <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="envio-tab-pane" role="tabpanel" aria-labelledby="home-tab"
-          tabindex="0">
-          <div class="row">
-            <div class="col">
-              <div class="mb-3">
-                <label for="text" class="form-label">Texto para enviar</label>
-                <textarea class="form-control" id="text" rows="3"></textarea>
-              </div>
-              <div class="mb-3">
-                <label for="businesstype" class="form-label">Para qual tipo de empresa?</label>
-                <input placeholder="lanchonetes" class="form-control" id="businesstype"></input>
-              </div>
-            </div>
-            <div class="mb-3">
-              <label for="where" class="form-label">Onde?</label>
-              <input placeholder="em são paulo" class="form-control" id="where"></input>
-            </div>
-          </div>
-          <button type="button" id="infoSave" class="btn btn-info" style="width: 100%;">Salvar</button>
-        </div>
-        <div class="tab-pane fade" id="config-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="1">
-          <div class="row">
-            <div class="col">
-              <div class="mb-3">
-                <label for="apikey" class="form-label">Chave da API</label>
-                <input placeholder="Coletar a chave no site" class="form-control" id="apikey"></input>
-              </div>
-              <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="blockOldNumbers" checked>
-                <label class="form-check-label" for="blockOldNumbers">Bloquear repetição de números</label>
-              </div>
-              <button type="button" id="configSave" class="btn btn-info" style="width: 100%; margin-top: 20px">Salvar</button>
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane fade" id="files-tab-pane" role="tabpanel" aria-labelledby="files-tab" tabindex="2">
-          <div class="row">
-            <ul class="list-group" id="list" style="margin-top: 20px;">
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link"
+                  href="#"
+                  onclick="swithScreen('indexPage')"
+                >
+                  <i class="align-middle" data-feather="sliders"></i>
+                  <span class="align-middle">Principal</span>
+                </a>
+              </li>
 
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link"
+                  href="#"
+                  onclick="swithScreen('SearchPage')"
+                >
+                  <i class="align-middle" data-feather="user"></i>
+                  <span class="align-middle">Pesquisa</span>
+                </a>
+              </li>
+
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link"
+                  href="#"
+                  onclick="swithScreen('FilesPage')"
+                >
+                  <i class="align-middle" data-feather="log-in"></i>
+                  <span class="align-middle">Arquivos</span>
+                </a>
+              </li>
+
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link"
+                  href="#"
+                  onclick="swithScreen('ConfigPage')"
+                >
+                  <i class="align-middle" data-feather="settings"></i>
+                  <span class="align-middle">Configuração</span>
+                </a>
+              </li>
             </ul>
-            <div class="mb-3">
-              <label for="formFile" class="form-label">Adicione os arquivos de envio.</label>
-              <input class="form-control" multiple type="file" id="formFile">
-            </div>
           </div>
-        </div>
-        <div class="tab-pane fade" id="bot-tab-pane" role="tabpanel" aria-labelledby="bot-tab" tabindex="3">
-          <div class="row">
-            <div class="col">
-              <div class="mb-3">
-                <label for="testNumber" class="form-label">Número de teste</label>
-                <input placeholder="Informe um número" class="form-control" id="testNumber"></input>
+        </nav>
+
+        <div class="main">
+          <nav class="navbar navbar-expand navbar-light navbar-bg">
+            <a class="sidebar-toggle js-sidebar-toggle">
+              <i class="hamburger align-self-center"></i>
+            </a>
+          </nav>
+
+          <div id="indexPage">
+            <main class="content">
+              <div class="container-fluid p-0">
+                <h1 class="h3 mb-3">Dashboard de<strong> Análises</strong></h1>
+
+                <div class="row">
+                  <div class="col-xl-6 col-xxl-5 d-flex">
+                    <div class="w-100">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="card">
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col mt-0">
+                                  <h5 class="card-title">Números no banco</h5>
+                                </div>
+
+                                <div class="col-auto">
+                                  <div class="stat text-primary">
+                                    <i
+                                      class="align-middle"
+                                      data-feather="users"
+                                    ></i>
+                                  </div>
+                                </div>
+                              </div>
+                              <h1 class="mt-1 mb-3" id="numbersSaved">0</h1>
+                            </div>
+                          </div>
+                          <div class="card">
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col mt-0">
+                                  <h5 class="card-title">Meus chats</h5>
+                                </div>
+
+                                <div class="col-auto">
+                                  <div class="stat text-primary">
+                                    <i
+                                      class="align-middle"
+                                      data-feather="users"
+                                    ></i>
+                                  </div>
+                                </div>
+                              </div>
+                              <h1 class="mt-1 mb-3" id="myChats">0</h1>
+                            </div>
+                          </div>
+                          <div class="card">
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col mt-0">
+                                  <h5 class="card-title">
+                                    Envios nessa sessão
+                                  </h5>
+                                </div>
+
+                                <div class="col-auto">
+                                  <div class="stat text-primary">
+                                    <i
+                                      class="align-middle"
+                                      data-feather="users"
+                                    ></i>
+                                  </div>
+                                </div>
+                              </div>
+                              <h1 class="mt-1 mb-3" id="sendCount">0</h1>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="card">
+                            <div class="card-body">
+                              <div class="col mt-0">
+                                <h5 class="card-title">
+                                  Deseja fazer um teste?
+                                </h5>
+                                <p>
+                                  Envie uma mensagem de teste
+                                  para apenas um número com
+                                  os dados informados.
+                                </p>
+                              </div>
+                              <input
+                                type="text"
+                                id="testNumber"
+                                placeholder="Número de teste"
+                                class="form-control"
+                              />
+                              <hr />
+                              <button
+                                class="btn btn-primary btn-lg"
+                                style="width: 100%"
+                                id="sendTest"
+                              >
+                                Prospectar teste
+                              </button>
+                            </div>
+                          </div>
+                          <div class="card">
+                            <div class="card-body">
+                              <div class="col mt-0">
+                                <h5 class="card-title">Status</h5>
+                                <p>
+                                  Aqui vão aparecer status de envio e execução
+                                  mais rápidos que a luz.
+                                </p>
+                              </div>
+                              <input type="range" class="form-range" min="1" max="3" step="1" id="progressBar" disabled>
+                              <p id="statusShow"></p>
+                            </div>
+                          </div>
+                          <div class="card">
+                            <div class="card-body">
+                              <div class="col mt-0">
+                                <h5 class="card-title">Execução</h5>
+                                <p>
+                                  Verifique se você já definiu todos
+                                  os dados nas outras abas antes
+                                  de enviar mensagem.
+                                </p>
+                              </div>
+                              <button
+                                class="btn btn-primary btn-lg"
+                                style="width: 100%"
+                                id="sendProspect"
+                              >
+                                Prospectar
+                              </button>
+                            </div>
+                          </div>
+                          <div class="card">
+                            <div class="card-body">
+                              <div class="col mt-0">
+                                <h5 class="card-title">Respropecção</h5>
+                                <p>
+                                  Caso queira reenviar a mensagem para
+                                  os números que já foram enviados
+                                </p>
+                                <small>
+                                  Verifique a quantidade de números
+                                  no widget "Banco"
+                                </small>
+                              </div>
+                              <button
+                                class="btn btn-primary btn-lg"
+                                style="width: 100%"
+                                id="sendReprospect"
+                              >
+                                Enviar para o banco
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <button type="button" id="sendTest" class="btn btn-info" style="width: 100%;">Prospectar teste</button>
-              <hr />
-              <button type="button" id="sendProspect" class="btn btn-info" style="width: 100%;">Prospectar</button>
-            </div>
+            </main>
+          </div>
+          <div id="SearchPage" style="display: none">
+            <main class="content">
+              <div class="container-fluid p-0">
+                <h1 class="h3 mb-3">
+                  Configuração de<strong> Pesquisa</strong>
+                </h1>
+                <div class="row">
+                  <div class="col-12 col-lg-6">
+                    <div class="card">
+                      <div class="card-header">
+                        <h5 class="card-title mb-0">Texto para enviar</h5>
+                      </div>
+                      <div class="card-body">
+                        <textarea
+                          class="form-control"
+                          id="text"
+                          rows="2"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <div class="card-header">
+                        <h5 class="card-title mb-0">Onde?</h5>
+                      </div>
+                      <div class="card-body">
+                        <input type="text" id="where" class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <div class="card">
+                      <div class="card-header">
+                        <h5 class="card-title mb-0">
+                          Para que tipo de empresa?
+                        </h5>
+                      </div>
+                      <div class="card-body">
+                        <input
+                          type="text"
+                          id="businesstype"
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                    <div class="card">
+                      <div class="card-body">
+                        <button
+                          class="btn btn-primary btn-lg"
+                          style="width: 100%"
+                          id="infoSave"
+                        >
+                          Salvar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </main>
+          </div>
+          <div id="FilesPage" style="display: none">
+            <main class="content">
+              <div class="container-fluid p-0">
+                <h1 class="h3 mb-3">
+                  Configuração de<strong> Arquivos</strong>
+                </h1>
+
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <ul
+                          class="list-group"
+                          id="list"
+                          style="margin-top: 20px"
+                        ></ul>
+                        <div class="mb-3">
+                          <label for="formFile" class="form-label"
+                            >Adicione os arquivos de envio.</label
+                          >
+                          <input
+                            class="form-control"
+                            multiple
+                            type="file"
+                            id="formFile"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </main>
+          </div>
+          <div id="ConfigPage" style="display: none">
+            <main class="content">
+              <div class="container-fluid p-0">
+                <h1 class="h3 mb-3">
+                  Configuração do<strong> Sistema</strong>
+                </h1>
+                <div class="row">
+                  <div class="col-12 col-lg-6">
+                    <div class="card">
+                      <div class="card-header">
+                        <h5 class="card-title mb-0">Chave da API</h5>
+                      </div>
+                      <div class="card-body">
+                        <input type="text" id="apikey" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="card">
+                      <div class="card-header">
+                        <h5 class="card-title mb-0">Intervalo de envio</h5>
+                      </div>
+                      <div class="card-body">
+                        <div class="mb-3">
+                          <label for="sendTime" class="form-label"
+                            >Intervalo de envio
+                            <b id="showTime"></b> segundos</label
+                          >
+                          <input
+                            type="range"
+                            onchange="switchTime()"
+                            class="form-range"
+                            min="3"
+                            max="15"
+                            id="sendTime"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <div class="card">
+                      <div class="card-header">
+                        <h5 class="card-title mb-0">Checkboxes</h5>
+                      </div>
+                      <div class="card-body">
+                        <div>
+                          <label class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value=""
+                              id="blockOldNumbers"
+                            />
+                            <span class="form-check-label">
+                              Bloquear números repetidos
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card">
+                      <div class="card-body">
+                        <button
+                          class="btn btn-primary btn-lg"
+                          style="width: 100%"
+                          id="configSave"
+                        >
+                          Salvar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </main>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-    crossorigin="anonymous"></script>
-  <script src="./index.js"></script>
-</body>
-
+  </body>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/index.js"></script>
 </html>

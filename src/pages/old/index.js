@@ -1,5 +1,10 @@
+/* eslint-disable no-unused-vars */
 const fs = require('fs');
 const {ipcRenderer} = require('electron');
+
+const {config} = JSON.parse(
+    fs.readFileSync(__dirname + '/../data.json', 'utf8'),
+);
 
 const infoSave = document.getElementById('infoSave');
 const configSave = document.getElementById('configSave');
@@ -10,6 +15,9 @@ const prospect = document.getElementById('sendProspect');
 const formFile = document.getElementById('formFile');
 
 const list = document.getElementById('list');
+
+document.getElementById('sendTime').value = config.intervalTime;
+document.getElementById('showTime').innerText = config.intervalTime;
 
 const {saveData} = require('../utils');
 require('../core');
@@ -40,18 +48,7 @@ const deleteFile = async (file) => {
   });
 };
 
-infoSave.addEventListener('click', () => {
-  saveData({
-    text: document.getElementById('text').value,
-    type: document.getElementById('businesstype').value,
-    location: document.getElementById('where').value,
-    apiKey: document.getElementById('apikey').value,
-    config:
-     {blockOldNumbers: document.getElementById('blockOldNumbers').checked},
-  });
-});
-
-configSave.addEventListener('click', () => {
+const save = () => {
   saveData({
     text: document.getElementById('text').value,
     type: document.getElementById('businesstype').value,
@@ -60,8 +57,17 @@ configSave.addEventListener('click', () => {
     config:
     {
       blockOldNumbers: document.getElementById('blockOldNumbers').checked,
+      intervalTime: Number(document.getElementById('sendTime').value),
     },
   });
+};
+
+infoSave.addEventListener('click', () => {
+  save();
+});
+
+configSave.addEventListener('click', () => {
+  save();
 });
 
 testProspect.addEventListener('click', () => {
@@ -101,3 +107,9 @@ formFile.addEventListener('change', (event) => {
     );
   });
 });
+
+// eslint-disable-next-line require-jsdoc
+function switchTime() {
+  document.getElementById('showTime').innerText =
+  document.getElementById('sendTime').value;
+}
