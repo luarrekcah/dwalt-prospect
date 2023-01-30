@@ -7,6 +7,11 @@ const client = new Client({
     args: ['--no-sandbox'],
   },
 });
+const {getAccount} = require('serpapi');
+
+const {apiKey} = JSON.parse(
+    fs.readFileSync(__dirname + '/../data.json', 'utf8'),
+);
 
 const messageHandler = require(`./handler/message`);
 const readyHandler = require(`./handler/ready`);
@@ -30,5 +35,38 @@ client.on('disconnected', () => {
 });
 
 client.initialize();
+
+// CHART DATA API
+setInterval(async () => {
+  if (apiKey === '') return;
+  const info = await getAccount({api_key: apiKey});
+  document.getElementById('usedApi').innerText = info.searches_per_month -
+   info.plan_searches_left;
+  document.getElementById('limitApi').innerText = info.searches_per_month;
+
+  new Chart(document.getElementById('chartjs-dashboard-pie'), {
+    type: 'pie',
+    data: {
+      labels: ['Utilizado', 'Disponível'],
+      datasets: [{
+        data: [info.searches_per_month -
+          info.plan_searches_left, info.plan_searches_left],
+        backgroundColor: [
+          window.theme.danger,
+          window.theme.success,
+        ],
+        borderWidth: 5,
+      }],
+    },
+    options: {
+      responsive: !window.MSInputMethodContext,
+      maintainAspectRatio: false,
+      legend: {
+        display: false,
+      },
+      cutoutPercentage: 75,
+    },
+  });
+}, 60*1000);
 
 module.exports = client;

@@ -26,6 +26,7 @@
     "puppeteer-core": "^19.6.0",
     "puppeteer-in-electron": "^3.0.5",
     "qr-image": "^3.2.0",
+    "serpapi": "^1.0.0",
     "whatsapp-web.js": "^1.19.2"
   },
   "devDependencies": {

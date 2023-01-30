@@ -7,11 +7,11 @@ const sleep = (s) => {
 };
 
 const setStatus = (arg) => {
-  document.getElementById('statusShow').innerText = arg;
+  // document.getElementById('statusShow').innerText = arg;
 };
 
 const setProgress = (step) => {
-  document.getElementById('progressBar').value = step;
+  // document.getElementById('progressBar').value = step;
 };
 
 
@@ -49,14 +49,14 @@ module.exports.run = async () => {
         setStatus('Enviando');
         setProgress(2);
         try {
-          await client.sendMessage(db.numbers[index], text.toString());
+          await client.sendMessage(db.numbers[index].number, text.toString());
         } catch (err) {
           alert('Ocorreu um erro ao enviar mensagem: ' + err);
         }
 
         files.forEach(async (f) => {
           try {
-            await sendImage(client, db.numbers[index], '', f);
+            await sendImage(client, db.numbers[index].number, '', f);
           } catch (err) {
             alert('Ocorreu um erro ao enviar arquivos: ' + err);
           }

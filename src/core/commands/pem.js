@@ -42,7 +42,7 @@ module.exports.run = async () => {
   const removed = [];
   const nonWhatsapp = [];
   const files = [];
-  const customersNumbers = db.numbers;
+  const toDbNumbers = db.numbers || [];
 
   const chats = await client.getChats();
 
@@ -118,17 +118,11 @@ module.exports.run = async () => {
                     ) {
                       return;
                     }
-                    customersNumbers.push(
-                        `${formated.slice(0, 4) + formated.slice(5)}@c.us`,
-                    );
                     numbers.push(
                         `${formated.slice(0, 4) + formated.slice(5)}@c.us`,
                     );
                   } else {
                     numbers.push(
-                        `${formated.slice(0, 4) + formated.slice(5)}@c.us`,
-                    );
-                    customersNumbers.push(
                         `${formated.slice(0, 4) + formated.slice(5)}@c.us`,
                     );
                   }
@@ -140,8 +134,6 @@ module.exports.run = async () => {
           },
       );
     }
-
-    console.log(customersNumbers);
 
     setTimeout(async () => {
       if (numbers.length === 0) {
@@ -178,6 +170,14 @@ module.exports.run = async () => {
           await sleep(config.intervalTime);
           setStatus('Enviando');
           setProgress(2);
+          let today = new Date();
+          const dd = String(today.getDate()).padStart(2, '0');
+          const mm = String(today.getMonth() + 1).padStart(2, '0');
+          const yyyy = today.getFullYear();
+
+          today = dd + '-' + mm + '-' + yyyy;
+          console.log(today);
+
           try {
             await client.sendMessage(numbers[index], text.toString());
           } catch (err) {
@@ -191,6 +191,8 @@ module.exports.run = async () => {
               alert('Ocorreu um erro ao enviar arquivos: ' + err);
             }
           });
+
+          toDbNumbers.push({number: numbers[index], date: today});
 
           setProgress(3);
 
@@ -208,14 +210,12 @@ module.exports.run = async () => {
       }
     }, 5000);
 
-    console.log(customersNumbers);
-    setStatus(`Gravando ${customersNumbers.length} numeros na memória.`);
+    console.log(toDbNumbers);
+    setStatus(`Gravando ${toDbNumbers.length} numeros na memória.`);
 
     const save = {
-      numbers: customersNumbers,
+      numbers: toDbNumbers,
     };
-    // const toStringData = JSON.stringify(save);
-    // fs.writeFileSync(`${__dirname}/../../db.json`, toStringData);
     fs.writeFile(`${__dirname}/../../db.json`, JSON.stringify(save), (err) => {
       if (err) {
         console.error(err);
