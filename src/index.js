@@ -160,6 +160,23 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, '/pages/index.html'));
 };
 
+const validateDate = (dateString) => {
+  const dateArray = dateString.split('-');
+  const day = parseInt(dateArray[0], 10);
+  const month = parseInt(dateArray[1], 10) - 1;
+  const year = parseInt(dateArray[2], 10);
+
+  const inputDate = new Date(year, month, day);
+
+  if (isNaN(inputDate.getTime())) {
+    return false;
+  }
+
+  const currentDate = new Date();
+
+  return inputDate >= currentDate;
+};
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -171,16 +188,14 @@ app.on('ready', () => {
       (snapshot) => {
         if (snapshot.exists() && snapshot.val()) {
           const data = snapshot.val();
-          if (data.lockedAcess === false) {
+          if (validateDate(data.validUntil) && data.lockedAcess === false) {
             try {
               verificationWindow.close();
             } catch (error) {
               // nothing
             }
-
             createWindow();
           } else {
-            // acesso bloqueado
             console.log('Acesso bloqueado');
             try {
               mainWindow.close();
