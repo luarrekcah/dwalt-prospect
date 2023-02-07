@@ -4,7 +4,7 @@ const path = require('path');
 const {production} = require('../config.json');
 const fs = require('fs');
 const {initializeApp} = require('@firebase/app');
-const {getDatabase, ref, onValue, get, child} = require('@firebase/database');
+const {getDatabase, ref, onValue} = require('@firebase/database');
 require('dotenv').config();
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -101,7 +101,7 @@ function generateLicenseKey() {
 
   for (let i = 0; i < 4; i++) {
     const part = [];
-    for (let j = 0; j < 5; j++) {
+    for (let j = 0; j < 4; j++) {
       part.push(Math.random().toString(36).substring(2, 3).toUpperCase());
     }
     key.push(part.join(''));
@@ -141,9 +141,11 @@ function createVerificationWindow() {
   });
 }
 
+let mainWindow;
+
 const createWindow = () => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
@@ -162,33 +164,53 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-  /* const db = getDatabase();
-  const keys = ref(db, 'prospect/keys');
-   onValue(
-        keys,
-        (snapshot) => {
-          if (snapshot.exists() && snapshot.val()) {
-            console.log(snapshot.val());
+  const db = getDatabase();
+  const keys = ref(db, 'prospect/keys/'+licenseKey);
+  onValue(
+      keys,
+      (snapshot) => {
+        if (snapshot.exists() && snapshot.val()) {
+          const data = snapshot.val();
+          if (data.lockedAcess === false) {
+            try {
+              verificationWindow.close();
+            } catch (error) {
+              // nothing
+            }
+
             createWindow();
           } else {
+            // acesso bloqueado
+            console.log('Acesso bloqueado');
+            try {
+              mainWindow.close();
+            } catch (error) {
+              console.log(error);
+            }
             createVerificationWindow();
           }
-        },
-        {
-          onlyOnce: true,
-        },
-    );*/
-  const dbRef = ref(getDatabase());
+        } else {
+          createVerificationWindow();
+        }
+      },
+  );
+  /* const dbRef = ref(getDatabase());
   get(child(dbRef, `prospect/keys/${licenseKey}`)).then((snapshot) => {
     if (snapshot.exists()) {
-      console.log(snapshot.val());
+      const data = snapshot.val();
+      if (data.lockedAcess === false) {
+        //
+      } else {
+        //acesso bloqueado
+        console.log("Acesso bloqueado");
+      }
     } else {
       createVerificationWindow();
     }
   }).catch((error) => {
     console.error(error);
     createVerificationWindow();
-  });
+  });*/
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
