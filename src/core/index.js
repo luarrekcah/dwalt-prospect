@@ -34,8 +34,11 @@ client.on('disconnected', () => {
   return disconnectedHandler.run();
 });
 
-client.initialize();
-
+try {
+  client.initialize();
+} catch (error) {
+  console.log(error);
+}
 
 const getData = () => {
   const db = JSON.parse(
@@ -102,9 +105,27 @@ const getLabels = () => {
     dd + '/' + mm];
 };
 
+if (apiKey === '') {
+  document.getElementById('useApiBody').style.display = `none`;
+
+  document.getElementById('useApiWarn').
+      innerHTML = `<b>Adicione uma chave primeiro!</b>`;
+}
 // CHART DATA API
 setInterval(async () => {
-  if (apiKey === '') return;
+  if (apiKey === '') {
+    document.getElementById('useApiBody').
+        style.display = `none`;
+
+    document.getElementById('useApiWarn').
+        innerHTML = `<b>Adicione uma chave primeiro!</b>`;
+    return;
+  }
+  document.getElementById('useApiBody').
+      style.display = `block`;
+
+  document.getElementById('useApiWarn').
+      style.display = `none`;
   const info = await getAccount({api_key: apiKey});
   document.getElementById('usedApi').innerText = info.searches_per_month -
    info.plan_searches_left;

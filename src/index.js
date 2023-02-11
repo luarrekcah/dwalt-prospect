@@ -209,23 +209,6 @@ app.on('ready', () => {
         }
       },
   );
-  /* const dbRef = ref(getDatabase());
-  get(child(dbRef, `prospect/keys/${licenseKey}`)).then((snapshot) => {
-    if (snapshot.exists()) {
-      const data = snapshot.val();
-      if (data.lockedAcess === false) {
-        //
-      } else {
-        //acesso bloqueado
-        console.log("Acesso bloqueado");
-      }
-    } else {
-      createVerificationWindow();
-    }
-  }).catch((error) => {
-    console.error(error);
-    createVerificationWindow();
-  });*/
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common

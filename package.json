@@ -19,27 +19,27 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@firebase/app": "^0.9.2",
-    "@firebase/database": "^0.14.2",
+    "@firebase/app": "^0.9.3",
+    "@firebase/database": "^0.14.3",
     "dotenv": "^16.0.3",
     "electron-reload": "^2.0.0-alpha.1",
     "electron-squirrel-startup": "^1.0.0",
     "electron-winstaller": "^5.1.0",
     "google-search-results-nodejs": "^2.1.0",
-    "puppeteer-core": "^19.6.0",
+    "puppeteer-core": "^19.6.3",
     "puppeteer-in-electron": "^3.0.5",
     "qr-image": "^3.2.0",
     "serpapi": "^1.0.0",
-    "whatsapp-web.js": "^1.19.2"
+    "whatsapp-web.js": "^1.19.3"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.4",
-    "@electron-forge/maker-deb": "^6.0.4",
-    "@electron-forge/maker-rpm": "^6.0.4",
-    "@electron-forge/maker-squirrel": "^6.0.4",
-    "@electron-forge/maker-zip": "^6.0.4",
-    "electron": "22.0.2",
-    "eslint": "^8.32.0",
+    "@electron-forge/cli": "^6.0.5",
+    "@electron-forge/maker-deb": "^6.0.5",
+    "@electron-forge/maker-rpm": "^6.0.5",
+    "@electron-forge/maker-squirrel": "^6.0.5",
+    "@electron-forge/maker-zip": "^6.0.5",
+    "electron": "23.0.0",
+    "eslint": "^8.34.0",
     "eslint-config-google": "^0.14.0"
   }
 }
