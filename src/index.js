@@ -3,30 +3,13 @@ const path = require('path');
 // const electronReload = require('electron-reload');
 const {production} = require('../config.json');
 const fs = require('fs');
-const {initializeApp} = require('@firebase/app');
-const {getDatabase, ref, onValue} = require('@firebase/database');
+const {default: axios} = require('axios');
+
 require('dotenv').config();
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
-}
-
-const firebaseConfig = {
-  apiKey: process.env.apiKey,
-  authDomain: process.env.authDomain,
-  projectId: process.env.projectId,
-  storageBucket: process.env.storageBucket,
-  messagingSenderId: process.env.messagingSenderId,
-  appId: process.env.appId,
-  measurementId: process.env.measurementId,
-};
-
-try {
-  initializeApp(firebaseConfig);
-  console.log('Connected to Firebase Database');
-} catch (error) {
-  console.error(error);
 }
 
 ipcMain.on('notification', (event, arg) => {
@@ -181,18 +164,17 @@ const validateDate = (dateString) => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-  const db = getDatabase();
-  const keys = ref(db, 'prospect/keys/'+licenseKey);
-  onValue(
-      keys,
-      (snapshot) => {
-        if (snapshot.exists() && snapshot.val()) {
-          const data = snapshot.val();
+  axios
+      .get('https://api-dlwalt.glitch.me/verify', {params: {key: licenseKey}})
+      .then((r) => {
+        console.log(r.data);
+        const data = r.data;
+        if (data) {
           if (validateDate(data.validUntil) && data.lockedAcess === false) {
             try {
               verificationWindow.close();
             } catch (error) {
-              // nothing
+            // nothing
             }
             createWindow();
           } else {
@@ -207,8 +189,12 @@ app.on('ready', () => {
         } else {
           createVerificationWindow();
         }
-      },
-  );
+      })
+      .catch((error) => {
+      // Handle error
+        createVerificationWindow();
+        console.error(error);
+      });
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common

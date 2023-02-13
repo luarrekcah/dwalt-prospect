@@ -47,17 +47,9 @@
       </div>
     <script>
       const { ipcRenderer } = require('electron');
-
       ipcRenderer.on('key', (event, key) => {
         document.getElementById('key').innerHTML = `Chave: ${key}`;
       });
-
-      // Verifica se o programa está funcionando corretamente
-      // ...
-
-      // Envia uma mensagem para o processo principal informando
-      // que a verificação foi concluída
-      //ipcRenderer.send('verification-done');
     </script>
   </body>
 </html>
