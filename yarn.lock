@@ -7,19 +7,6 @@
   resolved "https://registry.npmjs.org/7zip-bin/-/7zip-bin-5.1.1.tgz"
   integrity sha512-sAP4LldeWNz0lNzmTird3uWfFDWWTeg6V/MsmyyLR9X1idwKBWIgt/ZvinqQldJm3LecKEs1emkbquO6PCiLVQ==
 
-"@deno/shim-deno-test@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.npmjs.org/@deno/shim-deno-test/-/shim-deno-test-0.4.0.tgz"
-  integrity sha512-oYWcD7CpERZy/TXMTM9Tgh1HD/POHlbY9WpzmAk+5H8DohcxG415Qws8yLGlim3EaKBT2v3lJv01x4G0BosnaQ==
-
-"@deno/shim-deno@~0.11.0":
-  version "0.11.0"
-  resolved "https://registry.npmjs.org/@deno/shim-deno/-/shim-deno-0.11.0.tgz"
-  integrity sha512-z5FRYleehfz1Z0Wp9jilB98cJRGV2HYiLN0FZu1/xwLrQk+hk5VaNKp1nEoyGrUM4MLruTlnhEbqHJwxfnbPLw==
-  dependencies:
-    "@deno/shim-deno-test" "^0.4.0"
-    which "^2.0.2"
-
 "@develar/schema-utils@~2.6.5":
   version "2.6.5"
   resolved "https://registry.npmjs.org/@develar/schema-utils/-/schema-utils-2.6.5.tgz"
@@ -1023,11 +1010,6 @@ chownr@^2.0.0:
   resolved "https://registry.npmjs.org/chownr/-/chownr-2.0.0.tgz"
   integrity sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==
 
-chromium-bidi@0.4.3:
-  version "0.4.3"
-  resolved "https://registry.npmjs.org/chromium-bidi/-/chromium-bidi-0.4.3.tgz"
-  integrity sha512-A40H1rdpJqkTdnGhnYDzMhtDdIbkXNFj2wgIfivMXL7LyHFDmBtv1hdyycDhnxtYunbPLDZtTs/n+ZT5j7Vnew==
-
 chromium-pickle-js@^0.2.0:
   version "0.2.0"
   resolved "https://registry.npmjs.org/chromium-pickle-js/-/chromium-pickle-js-0.2.0.tgz"
@@ -1395,13 +1377,6 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-domexception@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/domexception/-/domexception-4.0.0.tgz"
-  integrity sha512-A2is4PLG+eeSfoTMA95/s4pvAoSo2mKtiM5jlHkAVewmiO8ISFTFKZjH7UAM1Atli/OT/7JHOrJRJiMKUZKYBw==
-  dependencies:
-    webidl-conversions "^7.0.0"
-
 dotenv-expand@^5.1.0:
   version "5.1.0"
   resolved "https://registry.npmjs.org/dotenv-expand/-/dotenv-expand-5.1.0.tgz"
@@ -1556,10 +1531,10 @@ electron-winstaller@^5.0.0, electron-winstaller@^5.1.0:
     lodash.template "^4.2.2"
     temp "^0.9.0"
 
-electron@23.0.0:
-  version "23.0.0"
-  resolved "https://registry.npmjs.org/electron/-/electron-23.0.0.tgz"
-  integrity sha512-S6hVtTAjauMiiWP9sBVR5RpcUC464cNZ06I2EMUjeZBq+KooS6tLmNsfw0zLpAXDp1qosjlBP3v71NTZ3gd9iA==
+electron@23.1.0:
+  version "23.1.0"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-23.1.0.tgz#92c6a1480754bb83155d9d783bef6fec414cf2c8"
+  integrity sha512-LRgACMpVrmjfYWPgCSyJ+TFQ/FPeniOowpO57z0xUcTchfC7EH+5rUncgYN+uMvqePiYDce+ywZeCIFaO8x/Nw==
   dependencies:
     "@electron/get" "^2.0.0"
     "@types/node" "^16.11.26"
@@ -3319,12 +3294,11 @@ punycode@^2.1.0:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.0.tgz"
   integrity sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==
 
-puppeteer-core@^19.6.3:
-  version "19.7.0"
-  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-19.7.0.tgz"
-  integrity sha512-BU05W24N+fWudCCeWxv/+R9fnMGmS6HCNPJbieoy0S4yAloVOoVDpOnHV8ZpFTGMPTHQ2EuPyZPWA+idPKO0pw==
+puppeteer-core@^19.7.1:
+  version "19.7.1"
+  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-19.7.1.tgz#6f5326ba0a97a7ba63f8f986c3971e31ef42d871"
+  integrity sha512-4b5Go25IA+0xrUIw0Qtqi4nxc0qwdu/C7VT1+tFPl1W27207YT+7bxfANC3PjXMlS6bcbzinCf5YfGqMl8tfyQ==
   dependencies:
-    chromium-bidi "0.4.3"
     cross-fetch "3.1.5"
     debug "4.3.4"
     devtools-protocol "0.0.1094867"
@@ -3645,13 +3619,11 @@ serialize-error@^7.0.1:
   dependencies:
     type-fest "^0.13.1"
 
-serpapi@^1.0.0:
-  version "1.1.0"
-  resolved "https://registry.npmjs.org/serpapi/-/serpapi-1.1.0.tgz"
-  integrity sha512-874fif/vKbs9MQ2suG3brMcv8fVtxgQfKcQPycDiNEcTaZdLHXtviE7z8xAopyQYJQDKIcXT2NOwLs03EfbNmg==
+serpapi@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/serpapi/-/serpapi-1.1.1.tgz#bc4be0f246b1c5abe8a138cf191a3aff6732f5c4"
+  integrity sha512-t5Bqu/6VMJ9naX8K+qCgUStpZOaNQFvIM4AudhMJLS6sqQT/EHaYrhGidDZHVx8QvcEdY6y1wNlxizOCtvJtUQ==
   dependencies:
-    "@deno/shim-deno" "~0.11.0"
-    domexception "^4.0.0"
     undici "^5.12.0"
 
 set-blocking@^2.0.0:
@@ -4127,14 +4099,9 @@ webidl-conversions@^3.0.0:
   resolved "https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-3.0.1.tgz"
   integrity sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==
 
-webidl-conversions@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-7.0.0.tgz"
-  integrity sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==
-
-whatsapp-web.js@^1.19.3:
+whatsapp-web.js@^1.19.4:
   version "1.19.4"
-  resolved "https://registry.npmjs.org/whatsapp-web.js/-/whatsapp-web.js-1.19.4.tgz"
+  resolved "https://registry.yarnpkg.com/whatsapp-web.js/-/whatsapp-web.js-1.19.4.tgz#14d37c7107def34a65c0ffeea534873ca803f932"
   integrity sha512-qwfdauW3rKsI2gzRexFU5y+SumXjuZTidyZXFIXaWfPzMe4ejxAkVoj/u27wyNZDqK3Z8tI/Ac3ZJFG60VgA6w==
   dependencies:
     "@pedroslopez/moduleraid" "^5.0.2"

@@ -6,9 +6,16 @@ const data = JSON.parse(
     fs.readFileSync(__dirname + '/../data.json', 'utf8'),
 );
 
-const db = JSON.parse(
-    fs.readFileSync(__dirname + '/../db.json', 'utf8'),
-);
+
+const {saveData, saveDb} = require('../utils');
+
+let db;
+try {
+  db = JSON.parse(fs.readFileSync(__dirname + '/../datanum.json', 'utf-8'));
+} catch (error) {
+  saveDb({numbers: []});
+  db = JSON.parse(fs.readFileSync(__dirname + '/../datanum.json', 'utf-8'));
+}
 
 // Preloads
 document.getElementById('text').value = data.text;
@@ -45,7 +52,6 @@ document.getElementById('showTime').innerText = data.config.intervalTime;
 document.getElementById('blockOldNumbers').checked =
 data.config.blockOldNumbers;
 
-const {saveData} = require('../utils');
 
 const readFiles = () => {
   formFile.value = '';

@@ -20,7 +20,7 @@ module.exports.run = async () => {
   const {text, config} = JSON.parse(
       fs.readFileSync(__dirname + '/../../data.json', 'utf8'),
   );
-  const db = JSON.parse(fs.readFileSync(__dirname + '/../../db.json', 'utf-8'));
+  const db = JSON.parse(fs.readFileSync(__dirname + '/../../datanum.json', 'utf-8'));
   setStatus('Checando números');
   if (db.numbers.length === 0) {
     setStatus('Nenhum número encontrado!');

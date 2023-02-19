@@ -28,11 +28,11 @@
     "electron-squirrel-startup": "^1.0.0",
     "electron-winstaller": "^5.1.0",
     "google-search-results-nodejs": "^2.1.0",
-    "puppeteer-core": "^19.6.3",
+    "puppeteer-core": "^19.7.1",
     "puppeteer-in-electron": "^3.0.5",
     "qr-image": "^3.2.0",
-    "serpapi": "^1.0.0",
-    "whatsapp-web.js": "^1.19.3"
+    "serpapi": "^1.1.1",
+    "whatsapp-web.js": "^1.19.4"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.5",
@@ -40,7 +40,7 @@
     "@electron-forge/maker-rpm": "^6.0.5",
     "@electron-forge/maker-squirrel": "^6.0.5",
     "@electron-forge/maker-zip": "^6.0.5",
-    "electron": "23.0.0",
+    "electron": "23.1.0",
     "electron-builder": "^23.6.0",
     "eslint": "^8.34.0",
     "eslint-config-google": "^0.14.0"

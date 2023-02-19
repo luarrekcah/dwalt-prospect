@@ -25,7 +25,15 @@ module.exports.run = async () => {
   const search = new SerpApi.GoogleSearch(apiKey);
 
   setStatus('[Lendo dados anteriores]');
-  const db = JSON.parse(fs.readFileSync(__dirname + '/../../db.json', 'utf-8'));
+  let db;
+  try {
+    db = JSON.parse(fs.readFileSync(
+        __dirname + '/../../datanum.json', 'utf-8'));
+  } catch (error) {
+    saveDb({numbers: []});
+    db = JSON.parse(fs.readFileSync(
+        __dirname + '/../../datanum.json', 'utf-8'));
+  }
 
   if (
     !text ||
@@ -73,7 +81,7 @@ module.exports.run = async () => {
       files.push(`${__dirname}/../../medias/${file}`);
     });
 
-    setStatus(`Encontrei ${files.length} para envio.`);
+    setStatus(`Encontrei ${files.length} arquivos para envio.`);
 
     ipcRenderer.send('notification', 'Pesquisando...');
 
@@ -126,9 +134,10 @@ module.exports.run = async () => {
       );
     }
 
-    /* TESTING */
+    /* TESTING
     numbers = [];
     numbers = ['556892186647@c.us'];
+    */
 
     setTimeout(async () => {
       if (numbers.length === 0) {
@@ -176,7 +185,10 @@ module.exports.run = async () => {
             }
           });
 
-          toDbNumbers.push({number: numbers[index], date: today});
+          if (!chatNumbers.includes(numbers[index])) {
+            toDbNumbers.push({number: numbers[index], date: today});
+          }
+
 
           setProgress(3);
 
@@ -192,16 +204,14 @@ module.exports.run = async () => {
       } else {
         alert('Ok, cancelado.');
       }
+
+      console.log(toDbNumbers);
+      setStatus(`Gravando ${toDbNumbers.length} numeros na memória.`);
+
+      saveDb({
+        numbers: toDbNumbers,
+      });
+      setStatus(`Gravação concluída.`);
     }, 5000);
-
-    console.log(toDbNumbers);
-    setStatus(`Gravando ${toDbNumbers.length} numeros na memória.`);
-
-    const save = {
-      numbers: toDbNumbers,
-    };
-
-    saveDb(save);
-    setStatus(`Gravação concluída.`);
   });
 };

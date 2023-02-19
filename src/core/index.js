@@ -17,7 +17,7 @@ const messageHandler = require(`./handler/message`);
 const readyHandler = require(`./handler/ready`);
 const qrHandler = require(`./handler/qr`);
 const disconnectedHandler = require(`./handler/disconnected`);
-const {setGraph} = require('../utils');
+const {setGraph, saveDb} = require('../utils');
 
 client.on('qr', (qr) => {
   return qrHandler.run(qr);
@@ -42,9 +42,14 @@ try {
 }
 
 setGraph();
-fs.watch(__dirname + '/../db.json', (eventType, filename) => {
+try {
+  fs.watch(__dirname + '/../datanum.json', () => {
+    setGraph();
+  });
+} catch (error) {
+  saveDb({numbers: []});
   setGraph();
-});
+}
 
 if (apiKey === '') {
   document.getElementById('useApiBody').style.display = `none`;

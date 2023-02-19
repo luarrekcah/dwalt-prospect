@@ -3,9 +3,13 @@ const {MessageMedia} = require('whatsapp-web.js');
 
 
 const getData = () => {
-  const db = JSON.parse(
-      fs.readFileSync(__dirname + '/../db.json', 'utf8'),
-  );
+  let db;
+  try {
+    db = JSON.parse(fs.readFileSync(__dirname + '/../datanum.json', 'utf-8'));
+  } catch (error) {
+    saveDb({numbers: []});
+    db = JSON.parse(fs.readFileSync(__dirname + '/../datanum.json', 'utf-8'));
+  }
 
   const week = {
     pri: 0,
@@ -76,7 +80,7 @@ module.exports = {
   saveDb: (data) => {
     const toStringData = JSON.stringify(data);
     try {
-      fs.writeFileSync(`${__dirname}/../db.json`, toStringData);
+      fs.writeFileSync(`${__dirname}/../datanum.json`, toStringData);
     } catch (error) {
       console.log('error when writing json: ', error);
     }
@@ -93,7 +97,7 @@ module.exports = {
   },
   setGraph: () => {
     const db = JSON.parse(
-        fs.readFileSync(__dirname + '/../db.json', 'utf8'),
+        fs.readFileSync(__dirname + '/../datanum.json', 'utf8'),
     );
     document.getElementById('numbersSaved').innerText = db.numbers.length;
     new Chart(document.getElementById('chartjs-dashboard-line'), {
