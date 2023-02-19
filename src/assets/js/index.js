@@ -11,8 +11,6 @@ const db = JSON.parse(
 );
 
 // Preloads
-document.getElementById('numbersSaved').innerText = db.numbers.length;
-
 document.getElementById('text').value = data.text;
 document.getElementById('businesstype').value = data.type;
 document.getElementById('where').value = data.location;
@@ -53,7 +51,6 @@ const readFiles = () => {
   formFile.value = '';
   list.innerHTML = '';
   fs.readdirSync(`${__dirname}/../medias/`).forEach((file) => {
-    console.log(file);
     list.innerHTML += `
   <li class="list-group-item d-flex justify-content-between align-items-center">
     ${file}
@@ -70,7 +67,6 @@ const deleteFile = async (file) => {
   // na vdd isso aqui é usado simkk
   fs.unlink(`${__dirname}/../medias/${file}`, (err) => {
     if (err) throw err;
-    console.log('file deleted successfully');
     readFiles();
   });
 };
@@ -109,7 +105,6 @@ prospect.addEventListener('click', () => {
 
 reprospect.addEventListener('click', () => {
   const repCommand = require('../core/commands/reprospect');
-  console.log('Respropect run');
   repCommand.run();
 });
 
@@ -123,17 +118,14 @@ const toBase64 = (file) =>
 
 formFile.addEventListener('change', (event) => {
   const selectedFiles = [...formFile.files];
-  console.log(selectedFiles);
   selectedFiles.forEach(async (f) => {
     const bs64 = await toBase64(f);
-    console.log(bs64);
     const base64Image = bs64.split(';base64,').pop();
     fs.writeFile(
         `${__dirname}/../medias/${f.name}`,
         base64Image,
         {encoding: 'base64'},
         function(err) {
-          console.log('File created');
           ipcRenderer.send('notification', 'Arquivo adicionado.');
           readFiles();
         },

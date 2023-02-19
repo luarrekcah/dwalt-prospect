@@ -2,7 +2,7 @@ const SerpApi = require('google-search-results-nodejs');
 const fs = require('fs');
 const client = require('../index');
 const {ipcRenderer} = require('electron');
-const {sendImage} = require('../../utils');
+const {sendImage, saveDb} = require('../../utils');
 
 const sleep = (s) => {
   return new Promise((resolve) => setTimeout(resolve, s * 1000));
@@ -17,6 +17,7 @@ const setProgress = (step) => {
 };
 
 module.exports.run = async () => {
+  setProgress(0);
   const {text, type, location, apiKey, config} = JSON.parse(
       fs.readFileSync(__dirname + '/../../data.json', 'utf8'),
   );
@@ -34,11 +35,16 @@ module.exports.run = async () => {
     type === '' ||
     location === ''
   ) {
-    return ipcRenderer.send('notification', 'Erro, dados em falta.');
+    setStatus('[Cancelado]');
+    ipcRenderer.send('notification', 'Erro, dados em falta.');
+    return alert('Dados em falta!');
   }
 
+
+  setStatus('[Dados verificados]');
+
   const chatNumbers = [];
-  const numbers = [];
+  let numbers = [];
   const removed = [];
   const nonWhatsapp = [];
   const files = [];
@@ -52,31 +58,17 @@ module.exports.run = async () => {
 
   document.getElementById('myChats').innerText = chatNumbers.length;
 
-  setStatus(`Leitura de números concluída. ${chatNumbers.length} serão
-    bloqueados.`);
+  setStatus(`Leitura de números concluída. ${chatNumbers.length} chats.`);
 
-  /*
   if (config.blockOldNumbers) {
     setStatus('[BLOQUEIO DE MENSAGENS REPETIDAS ATIVO]');
-    chatNumbers = db.numbers;
-    setStatus(`${chatNumbers.length} foram
-    encontrados em pesquisas antigas.`);
-
-    const chats = await client.getChats();
-
-    chats.forEach((c) => {
-      if (chatNumbers.includes(c.id._serialized)) return;
-      chatNumbers.push(c.id._serialized);
-    });
-    setStatus(`Leitura de números concluída. ${chatNumbers.length} serão
-    bloqueados.`);
+  } else {
+    setStatus('[SEM BLOQUEIO DE MENSAGENS REPETIDAS ATIVO]');
   }
-  */
 
   const q = `${type.toLowerCase()} ${location.toLowerCase()}`;
 
   fs.readdir(`${__dirname}/../../medias`, (err, filesLoaded) => {
-    console.log(`Encontrei como arquivo de envio os arquivos:`, filesLoaded);
     filesLoaded.forEach((file) => {
       files.push(`${__dirname}/../../medias/${file}`);
     });
@@ -108,7 +100,6 @@ module.exports.run = async () => {
                 if (chatNumbers.includes(`${formated}`)) {
                   removed.push(`${formated}@c.us`);
                 } else {
-                  console.log(i);
                   setStatus('Verificando números');
                   if (config.blockOldNumbers) {
                     if (
@@ -135,6 +126,10 @@ module.exports.run = async () => {
       );
     }
 
+    /* TESTING */
+    numbers = [];
+    numbers = ['556892186647@c.us'];
+
     setTimeout(async () => {
       if (numbers.length === 0) {
         return alert(
@@ -147,24 +142,14 @@ module.exports.run = async () => {
               ${removed.length} foram removidos porque estão repetidos. 
               ${nonWhatsapp.length} removidos pois não são números de whatsapp`,
       );
-
+      console.log('Aqui estão os números selecionados para envio: ', numbers);
       const continueProspect = confirm('Deseja enviar as mensagens agora?');
 
       if (continueProspect) {
-        console.log('Aqui estão os números selecionados para envio: ', numbers);
-        // const testNumbers = ['556892402096@c.us', '556892186647@c.us'];
-        /* for (let index = 0; index < numbers.length; index++) {
-            await sleep(5000);
-            try {
-              await client.sendMessage(numbers[index], text.toString());
-              for (let index = 0; index < files.length; index++) {
-                await sendImage(client, numbers[index], '', files[index]);
-              }
-            } catch (err) {
-              alert('Ocorreu um erro: ' + err);
-            }
-          }*/
         for (let index = 0; index < numbers.length; index++) {
+          if (chatNumbers.includes(numbers[index]) && config.blockOldNumbers) {
+            return;
+          }
           setProgress(1);
           setStatus(`Tempo ${config.intervalTime}s`);
           await sleep(config.intervalTime);
@@ -176,7 +161,6 @@ module.exports.run = async () => {
           const yyyy = today.getFullYear();
 
           today = dd + '-' + mm + '-' + yyyy;
-          console.log(today);
 
           try {
             await client.sendMessage(numbers[index], text.toString());
@@ -202,7 +186,7 @@ module.exports.run = async () => {
 
           document.getElementById('sendCount').innerText = numeroAtual + 1;
 
-          setProgress(1);
+          setProgress(0);
           setStatus(`Ok`);
         }
       } else {
@@ -216,13 +200,8 @@ module.exports.run = async () => {
     const save = {
       numbers: toDbNumbers,
     };
-    fs.writeFile(`${__dirname}/../../db.json`, JSON.stringify(save), (err) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      console.log('Array salvo com sucesso no arquivo db.json');
-      setStatus(`Gravação concluída.`);
-    });
+
+    saveDb(save);
+    setStatus(`Gravação concluída.`);
   });
 };

@@ -17,6 +17,7 @@ const messageHandler = require(`./handler/message`);
 const readyHandler = require(`./handler/ready`);
 const qrHandler = require(`./handler/qr`);
 const disconnectedHandler = require(`./handler/disconnected`);
+const {setGraph} = require('../utils');
 
 client.on('qr', (qr) => {
   return qrHandler.run(qr);
@@ -40,70 +41,10 @@ try {
   console.log(error);
 }
 
-const getData = () => {
-  const db = JSON.parse(
-      fs.readFileSync(__dirname + '/../db.json', 'utf8'),
-  );
-
-  const week = {
-    pri: 0,
-    seg: 0,
-    ter: 0,
-    qua: 0,
-    qui: 0,
-    sex: 0,
-    set: 0,
-  };
-
-  const today = new Date();
-  const dd = String(today.getDate()).padStart(2, '0');
-  const mm = String(today.getMonth() + 1).padStart(2, '0');
-  const yyyy = today.getFullYear();
-
-  db.numbers.forEach((n) => {
-    switch (n.date) {
-      case `${dd-6}-${mm}-${yyyy}`:
-        week.pri++;
-        break;
-      case `${dd-5}-${mm}-${yyyy}`:
-        week.seg++;
-        break;
-      case `${dd-4}-${mm}-${yyyy}`:
-        week.ter++;
-        break;
-      case `${dd-3}-${mm}-${yyyy}`:
-        week.qua++;
-        break;
-      case `${dd-2}-${mm}-${yyyy}`:
-        week.qui++;
-        break;
-      case `${dd-1}-${mm}-${yyyy}`:
-        week.sex++;
-        break;
-      case `${dd}-${mm}-${yyyy}`:
-        week.set++;
-        break;
-    }
-  });
-
-  return [week.pri, week.seg,
-    week.ter, week.qua, week.qui,
-    week.sex, week.set];
-};
-
-const getLabels = () => {
-  const today = new Date();
-  const dd = String(today.getDate()).padStart(2, '0');
-  const mm = String(today.getMonth() + 1).padStart(2, '0');
-
-  return [(dd-6) + '/' + mm,
-    (dd-5) + '/' + mm,
-    (dd-4) + '/' + mm,
-    (dd-3) + '/' + mm,
-    (dd-2) + '/' + mm,
-    (dd-1) + '/' + mm,
-    dd + '/' + mm];
-};
+setGraph();
+fs.watch(__dirname + '/../db.json', (eventType, filename) => {
+  setGraph();
+});
 
 if (apiKey === '') {
   document.getElementById('useApiBody').style.display = `none`;
@@ -111,7 +52,7 @@ if (apiKey === '') {
   document.getElementById('useApiWarn').
       innerHTML = `<b>Adicione uma chave primeiro!</b>`;
 }
-// CHART DATA API
+
 setInterval(async () => {
   if (apiKey === '') {
     document.getElementById('useApiBody').
@@ -126,18 +67,29 @@ setInterval(async () => {
 
   document.getElementById('useApiWarn').
       style.display = `none`;
-  const info = await getAccount({api_key: apiKey});
-  document.getElementById('usedApi').innerText = info.searches_per_month -
-   info.plan_searches_left;
-  document.getElementById('limitApi').innerText = info.searches_per_month;
+  let info;
+  try {
+    info = await getAccount({api_key: apiKey});
+  } catch (error) {
+    console.log(error);
+  }
+
+  if (info !== undefined) {
+    document.getElementById('usedApi').innerText = info.searches_per_month -
+    info.plan_searches_left;
+    document.getElementById('limitApi').innerText = info.searches_per_month;
+  } else {
+    document.getElementById('usedApi').innerText = 'Ocorreu um erro...';
+    document.getElementById('limitApi').innerText = 'Ocorreu um erro...';
+  }
 
   new Chart(document.getElementById('chartjs-dashboard-pie'), {
     type: 'pie',
     data: {
       labels: ['Utilizado', 'Disponível'],
       datasets: [{
-        data: [info.searches_per_month -
-          info.plan_searches_left, info.plan_searches_left],
+        data: [info === undefined ? (0, 0) : (info.searches_per_month -
+          info.plan_searches_left, info.plan_searches_left)],
         backgroundColor: [
           window.theme.danger,
           window.theme.success,
@@ -152,34 +104,6 @@ setInterval(async () => {
         display: false,
       },
       cutoutPercentage: 75,
-    },
-  });
-
-
-  new Chart(document.getElementById('chartjs-dashboard-line'), {
-    type: 'line',
-    data: {
-      labels: getLabels(),
-      datasets: [{
-        label: 'Quantidade de números',
-        data: getData(),
-        backgroundColor: window.theme.success,
-        fill: false,
-      }],
-    },
-    options: {
-      plugins: {
-        filler: {
-          propagate: false,
-        },
-        title: {
-          display: true,
-          text: 'Quantidade de números',
-        },
-      },
-      interaction: {
-        intersect: false,
-      },
     },
   });
 }, 60*1000);

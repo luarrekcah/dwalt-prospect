@@ -259,7 +259,11 @@
                           </div>
                           <div class="card">
                             <div class="card-body">
-                             
+                             <p>Status: <b><p id="statusShow"></p></b></p>
+                             <div class="mb-3">
+                              <label for="progressBar" class="form-label">Progresso</label>
+                              <input type="range" onchange="switchTime()" class="form-range" min="0" value="0" max="3" id="progressBar">
+                            </div>
                             </div>
                           </div>
                         </div>

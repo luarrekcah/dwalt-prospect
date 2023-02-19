@@ -5,8 +5,6 @@ const {production} = require('../config.json');
 const fs = require('fs');
 const {default: axios} = require('axios');
 
-require('dotenv').config();
-
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -56,7 +54,6 @@ const menuList = [
                   if (err) {
                     throw err;
                   }
-                  console.log(`Credenciais apagadas!`);
                   focusedWindow.reload();
                 },
             );
@@ -167,7 +164,6 @@ app.on('ready', () => {
   axios
       .get('https://api-dlwalt.glitch.me/verify', {params: {key: licenseKey}})
       .then((r) => {
-        console.log(r.data);
         const data = r.data;
         if (data) {
           if (validateDate(data.validUntil) && data.lockedAcess === false) {
@@ -178,7 +174,6 @@ app.on('ready', () => {
             }
             createWindow();
           } else {
-            console.log('Acesso bloqueado');
             try {
               mainWindow.close();
             } catch (error) {

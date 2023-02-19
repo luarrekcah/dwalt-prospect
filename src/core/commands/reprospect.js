@@ -7,11 +7,11 @@ const sleep = (s) => {
 };
 
 const setStatus = (arg) => {
-  // document.getElementById('statusShow').innerText = arg;
+  document.getElementById('statusShow').innerText = arg;
 };
 
 const setProgress = (step) => {
-  // document.getElementById('progressBar').value = step;
+  document.getElementById('progressBar').value = step;
 };
 
 
@@ -21,7 +21,6 @@ module.exports.run = async () => {
       fs.readFileSync(__dirname + '/../../data.json', 'utf8'),
   );
   const db = JSON.parse(fs.readFileSync(__dirname + '/../../db.json', 'utf-8'));
-  console.log(db);
   setStatus('Checando números');
   if (db.numbers.length === 0) {
     setStatus('Nenhum número encontrado!');
@@ -36,7 +35,6 @@ module.exports.run = async () => {
     console.log('Aqui estão os números selecionados para envio: ', db.numbers);
 
     fs.readdir(`${__dirname}/../../medias`, async (err, filesLoaded) => {
-      console.log(`Encontrei como arquivo de envio os arquivos:`, filesLoaded);
       filesLoaded.forEach((file) => {
         files.push(`${__dirname}/../../medias/${file}`);
       });
