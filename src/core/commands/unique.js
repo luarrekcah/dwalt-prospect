@@ -25,6 +25,8 @@ module.exports.run = async (number) => {
         await sendImage(client, number, '', f);
       });
 
+      document.getElementById('sendCount').innerText = numeroAtual + 1;
+
       alert('Enviado.');
     }
   });

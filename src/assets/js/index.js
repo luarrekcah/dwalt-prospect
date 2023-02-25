@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 /* eslint-disable no-unused-vars */
 const fs = require('fs');
@@ -41,6 +42,7 @@ const swithScreen = (arg) => {
 
 require('../core');
 
+
 const infoSave = document.getElementById('infoSave');
 const configSave = document.getElementById('configSave');
 
@@ -83,6 +85,7 @@ const deleteFile = async (file) => {
   });
 };
 
+
 const save = () => {
   saveData({
     text: document.getElementById('text').value,
@@ -119,6 +122,11 @@ reprospect.addEventListener('click', () => {
   const repCommand = require('../core/commands/reprospect');
   repCommand.run();
 });
+
+function sendMessageTo(n) {
+  const sendMessage = require('../core/commands/unique');
+  sendMessage.run(n);
+}
 
 const toBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -180,6 +188,14 @@ function addLineTable(grupo, local, nome, numero, data) {
   // Cria um novo elemento <tr>
   const newRow = document.createElement('tr');
 
+  // Extrai apenas os dígitos do número de telefone
+  const digitos = numero.replace(/\D/g, '');
+
+  // Formata os dígitos em um número de telefone com código de país, código de área e número
+  const telefoneFormatado = `+${digitos.slice(0, 2)} ${digitos.slice(2, 4)} ${digitos.slice(4, 8)}-${digitos.slice(8)}`;
+
+  console.log(telefoneFormatado);
+
   // Cria as células da nova linha e adiciona os valores correspondentes
   const grupoCell = document.createElement('td');
   grupoCell.textContent = grupo;
@@ -188,7 +204,7 @@ function addLineTable(grupo, local, nome, numero, data) {
   const nomeCell = document.createElement('td');
   nomeCell.textContent = nome;
   const numeroCell = document.createElement('td');
-  numeroCell.textContent = numero;
+  numeroCell.textContent = telefoneFormatado;
   const dataCell = document.createElement('td');
   dataCell.textContent = data;
   const sendButtonCell = document.createElement('td');

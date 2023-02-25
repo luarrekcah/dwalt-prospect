@@ -43,6 +43,8 @@ module.exports.run = async () => {
           await sendImage(client, testNumber, '', f);
         });
 
+        document.getElementById('sendCount').innerText = numeroAtual + 1;
+
         alert('Enviado.');
       }
     });
