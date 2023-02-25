@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const client = require('../index');
 const {sendImage} = require('../../utils');
 
@@ -26,8 +27,7 @@ module.exports.run = async () => {
   const files = [];
 
   if (data.config.blockOldNumbers && chatNumbers.includes(testNumber)) {
-    alert(`Bloqueio de números está ativo, 
-    desative para enviar mensagem para esse número`);
+    alert(`Bloqueio de números está ativo, desative para enviar mensagem para esse número`);
   } else {
     fs.readdir(`${__dirname}/../../medias`, (err, filesLoaded) => {
       if (err) {

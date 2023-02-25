@@ -38,7 +38,7 @@ client.on('disconnected', () => {
 try {
   client.initialize();
 } catch (error) {
-  console.log(error);
+  addLineConsole(error, 'error', true);
 }
 
 setGraph();
@@ -66,17 +66,18 @@ setInterval(async () => {
     document.getElementById('useApiWarn').
         innerHTML = `<b>Adicione uma chave primeiro!</b>`;
     return;
-  }
-  document.getElementById('useApiBody').
-      style.display = `block`;
+  } else {
+    document.getElementById('useApiBody').
+        style.display = `block`;
 
-  document.getElementById('useApiWarn').
-      style.display = `none`;
+    document.getElementById('useApiWarn').
+        style.display = `none`;
+  }
   let info;
   try {
     info = await getAccount({api_key: apiKey});
   } catch (error) {
-    console.log(error);
+    addLineConsole(error, 'error', true);
   }
 
   if (info !== undefined) {

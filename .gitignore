@@ -96,6 +96,8 @@ Prospect-win32-x64
 
 src/data.json
 
+src/datanum.json
+
 license.key
 
 dist

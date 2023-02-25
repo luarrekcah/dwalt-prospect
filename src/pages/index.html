@@ -19,6 +19,84 @@
       body {
         height: 100vh;
       }
+
+      #console {
+        position: relative;
+        background-color: #222;
+        color: #eee;
+        font-family: "Lucida Console", Monaco, monospace;
+        font-size: 14px;
+        height: 400px;
+        overflow-y: scroll;
+        padding: 10px;
+      }
+
+      #console h2 {
+        font-size: 18px;
+        color: #fff;
+        margin: 0 0 10px 0;
+      }
+
+      #console ul {
+        list-style: none;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      #console li {
+        margin: 0;
+        padding: 0;
+      }
+
+      #console .error {
+        color: #f44336;
+      }
+
+      #console .warning {
+        color: #ff9800;
+      }
+
+      #console .success {
+        color: #4caf50;
+      }
+
+      #console .info {
+        color: #2196f3;
+      }
+
+      #console .debug {
+        color: #9c27b0;
+      }
+
+      .btn-clear-console {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 5px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        color: #fff;
+      }
+
+      .btn-clear-console:hover {  
+        color: rgb(0, 0, 0);
+        background-color: #ddd;
+      }
+
+      .btn-clear-console:focus {
+        outline: none;
+      }
+
+      .btn-clear-console i {
+        display: block;
+        width: 16px;
+        height: 16px;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
     </style>
   </head>
 
@@ -116,6 +194,29 @@
                 >
                   <i class="align-middle" data-feather="settings"></i>
                   <span class="align-middle">Configuração</span>
+                </a>
+              </li>
+              <li class="sidebar-header">Funções adicionais</li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link"
+                  href="#"
+                  onclick="swithScreen('BankNumbers')"
+                >
+                  <i class="align-middle" data-feather="database"></i>
+                  <span class="align-middle">Banco</span>
+                </a>
+              </li>
+              <li class="sidebar-header">Outros</li>
+
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link"
+                  href="#"
+                  onclick="swithScreen('Console')"
+                >
+                  <i class="align-middle" data-feather="monitor"></i>
+                  <span class="align-middle">Console</span>
                 </a>
               </li>
             </ul>
@@ -259,11 +360,23 @@
                           </div>
                           <div class="card">
                             <div class="card-body">
-                             <p>Status: <b><p id="statusShow"></p></b></p>
-                             <div class="mb-3">
-                              <label for="progressBar" class="form-label">Progresso</label>
-                              <input type="range" onchange="switchTime()" class="form-range" min="0" value="0" max="3" id="progressBar">
-                            </div>
+                              <p>
+                                Status: <b><p id="statusShow"></p></b>
+                              </p>
+                              <div class="mb-3">
+                                <label for="progressBar" class="form-label"
+                                  >Progresso</label
+                                >
+                                <input
+                                  type="range"
+                                  onchange="switchTime()"
+                                  class="form-range"
+                                  min="0"
+                                  value="0"
+                                  max="3"
+                                  id="progressBar"
+                                />
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -377,7 +490,9 @@
                   >
                     <div class="card flex-fill w-100">
                       <div class="card-header">
-                        <h5 class="card-title mb-0">Uso (atualiza a cada 60s)</h5>
+                        <h5 class="card-title mb-0">
+                          Uso (atualiza a cada 60s)
+                        </h5>
                       </div>
                       <div class="card-body d-flex" id="useApiWarn"></div>
                       <div class="card-body d-flex" id="useApiBody">
@@ -410,12 +525,15 @@
                             <tbody>
                               <tr>
                                 <td>Usado</td>
-                                <td class="text-end" id="usedApi">Carregando... 60s
+                                <td class="text-end" id="usedApi">
+                                  Carregando... 60s
                                 </td>
                               </tr>
                               <tr>
                                 <td>Total</td>
-                                <td class="text-end" id="limitApi">Carregando... 60s</td>
+                                <td class="text-end" id="limitApi">
+                                  Carregando... 60s
+                                </td>
                               </tr>
                             </tbody>
                           </table>
@@ -592,6 +710,33 @@
                         </button>
                       </div>
                     </div>
+                  </div>
+                </div>
+              </div>
+            </main>
+          </div>
+          <!--BANK-->
+          <div id="BankNumbers" style="display: none">
+            <main class="content">
+              <div class="container-fluid p-0">
+                <h1 class="h3 mb-3">Banco de<strong> Números</strong></h1>
+
+                <div class="row"></div>
+              </div>
+            </main>
+          </div>
+          <!--CONSOLE-->
+          <div id="Console" style="display: none">
+            <main class="content">
+              <div class="container-fluid p-0">
+                <h1 class="h3 mb-3">Avançado -<strong> Console</strong></h1>
+
+                <div class="row">
+                  <div id="console">
+                    <ul id="console-list"></ul>
+                    <button onclick="cleanConsole()" class="btn-clear-console">
+                      <i class="align-middle" data-feather="trash"></i>
+                    </button>
                   </div>
                 </div>
               </div>

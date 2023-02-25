@@ -27,12 +27,14 @@ module.exports.run = async () => {
   setStatus('[Lendo dados anteriores]');
   let db;
   try {
-    db = JSON.parse(fs.readFileSync(
-        __dirname + '/../../datanum.json', 'utf-8'));
+    db = JSON.parse(
+        fs.readFileSync(__dirname + '/../../datanum.json', 'utf-8'),
+    );
   } catch (error) {
     saveDb({numbers: []});
-    db = JSON.parse(fs.readFileSync(
-        __dirname + '/../../datanum.json', 'utf-8'));
+    db = JSON.parse(
+        fs.readFileSync(__dirname + '/../../datanum.json', 'utf-8'),
+    );
   }
 
   if (
@@ -48,11 +50,10 @@ module.exports.run = async () => {
     return alert('Dados em falta!');
   }
 
-
   setStatus('[Dados verificados]');
 
   const chatNumbers = [];
-  let numbers = [];
+  const numbers = [];
   const removed = [];
   const nonWhatsapp = [];
   const files = [];
@@ -147,11 +148,9 @@ module.exports.run = async () => {
         );
       }
       alert(
-          `Coletei ${numbers.length} números válidos de empresas. 
-              ${removed.length} foram removidos porque estão repetidos. 
-              ${nonWhatsapp.length} removidos pois não são números de whatsapp`,
+          `Coletei ${numbers.length} números válidos de empresas.`,
       );
-      console.log('Aqui estão os números selecionados para envio: ', numbers);
+      addLineConsole(numbers, 'success', true);
       const continueProspect = confirm('Deseja enviar as mensagens agora?');
 
       if (continueProspect) {
@@ -174,21 +173,20 @@ module.exports.run = async () => {
           try {
             await client.sendMessage(numbers[index], text.toString());
           } catch (err) {
-            alert('Ocorreu um erro ao enviar mensagem: ' + err);
+            addLineConsole(err, 'error', true);
           }
 
           files.forEach(async (f) => {
             try {
               await sendImage(client, numbers[index], '', f);
             } catch (err) {
-              alert('Ocorreu um erro ao enviar arquivos: ' + err);
+              addLineConsole(err, 'error', true);
             }
           });
 
           if (!chatNumbers.includes(numbers[index])) {
             toDbNumbers.push({number: numbers[index], date: today});
           }
-
 
           setProgress(3);
 
@@ -205,7 +203,7 @@ module.exports.run = async () => {
         alert('Ok, cancelado.');
       }
 
-      console.log(toDbNumbers);
+      addLineConsole(toDbNumbers, 'success', true);
       setStatus(`Gravando ${toDbNumbers.length} numeros na memória.`);
 
       saveDb({

@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 /* eslint-disable no-unused-vars */
 const fs = require('fs');
 const {ipcRenderer} = require('electron');
@@ -24,7 +25,12 @@ document.getElementById('where').value = data.location;
 document.getElementById('apikey').value = data.apiKey;
 
 const swithScreen = (arg) => {
-  const screensID = ['indexPage', 'SearchPage', 'FilesPage', 'ConfigPage'];
+  const screensID = ['indexPage',
+    'SearchPage',
+    'FilesPage',
+    'ConfigPage',
+    'Console',
+    'BankNumbers'];
   screensID.forEach((s) => {
     if (s !== arg) {
       document.getElementById(s).style.display = 'none';
@@ -144,3 +150,29 @@ function switchTime() {
   document.getElementById('showTime').innerText =
   document.getElementById('sendTime').value;
 }
+
+function addLineConsole(line, type, isObject) {
+  const list = document.getElementById('console-list');
+  const li = document.createElement('li');
+
+  if (isObject) {
+    console.dir(line);
+    li.innerHTML = '<pre>' + JSON.stringify(line, null, 2) + '</pre>';
+  } else {
+    li.textContent = line;
+  }
+
+  if (type) {
+    li.classList.add(type);
+  }
+
+  list.appendChild(li);
+}
+
+function cleanConsole() {
+  document.getElementById('console-list').innerHTML = '';
+}
+
+addLineConsole('...', 'success', false);
+cleanConsole();
+

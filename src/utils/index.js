@@ -82,7 +82,8 @@ module.exports = {
     try {
       fs.writeFileSync(`${__dirname}/../datanum.json`, toStringData);
     } catch (error) {
-      console.log('error when writing json: ', error);
+      addLineConsole('error when writing json: ', 'error', false);
+      addLineConsole(error, 'error', true);
     }
   },
   sendImage: async (client, phone, caption = '', path) => {

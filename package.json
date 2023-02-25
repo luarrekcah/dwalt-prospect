@@ -2,7 +2,7 @@
   "name": "Prospect",
   "productName": "Prospect",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Um programa windows para prospecção de clientes.",
   "main": "src/index.js",
   "build": {
     "appId": "com.dlwalt.prospect",

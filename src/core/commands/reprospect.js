@@ -20,7 +20,9 @@ module.exports.run = async () => {
   const {text, config} = JSON.parse(
       fs.readFileSync(__dirname + '/../../data.json', 'utf8'),
   );
-  const db = JSON.parse(fs.readFileSync(__dirname + '/../../datanum.json', 'utf-8'));
+  const db = JSON.parse(fs.readFileSync(
+      __dirname + '/../../datanum.json', 'utf-8',
+  ));
   setStatus('Checando números');
   if (db.numbers.length === 0) {
     setStatus('Nenhum número encontrado!');
@@ -32,7 +34,7 @@ module.exports.run = async () => {
   const continuereProspect = confirm('Deseja enviar as mensagens agora?');
 
   if (continuereProspect) {
-    console.log('Aqui estão os números selecionados para envio: ', db.numbers);
+    addLineConsole(db.numbers, 'success', true);
 
     fs.readdir(`${__dirname}/../../medias`, async (err, filesLoaded) => {
       filesLoaded.forEach((file) => {
