@@ -1,13 +1,12 @@
 const fs = require('fs');
 const {MessageMedia} = require('whatsapp-web.js');
 
-
 const getData = () => {
   let db;
   try {
     db = JSON.parse(fs.readFileSync(__dirname + '/../datanum.json', 'utf-8'));
   } catch (error) {
-    saveDb({numbers: []});
+    saveDb({business: []});
     db = JSON.parse(fs.readFileSync(__dirname + '/../datanum.json', 'utf-8'));
   }
 
@@ -26,24 +25,24 @@ const getData = () => {
   const mm = String(today.getMonth() + 1).padStart(2, '0');
   const yyyy = today.getFullYear();
 
-  db.numbers.forEach((n) => {
+  db.business.forEach((n) => {
     switch (n.date) {
-      case `${dd-6}-${mm}-${yyyy}`:
+      case `${dd - 6}-${mm}-${yyyy}`:
         week.pri++;
         break;
-      case `${dd-5}-${mm}-${yyyy}`:
+      case `${dd - 5}-${mm}-${yyyy}`:
         week.seg++;
         break;
-      case `${dd-4}-${mm}-${yyyy}`:
+      case `${dd - 4}-${mm}-${yyyy}`:
         week.ter++;
         break;
-      case `${dd-3}-${mm}-${yyyy}`:
+      case `${dd - 3}-${mm}-${yyyy}`:
         week.qua++;
         break;
-      case `${dd-2}-${mm}-${yyyy}`:
+      case `${dd - 2}-${mm}-${yyyy}`:
         week.qui++;
         break;
-      case `${dd-1}-${mm}-${yyyy}`:
+      case `${dd - 1}-${mm}-${yyyy}`:
         week.sex++;
         break;
       case `${dd}-${mm}-${yyyy}`:
@@ -52,9 +51,7 @@ const getData = () => {
     }
   });
 
-  return [week.pri, week.seg,
-    week.ter, week.qua, week.qui,
-    week.sex, week.set];
+  return [week.pri, week.seg, week.ter, week.qua, week.qui, week.sex, week.set];
 };
 
 const getLabels = () => {
@@ -62,13 +59,15 @@ const getLabels = () => {
   const dd = String(today.getDate()).padStart(2, '0');
   const mm = String(today.getMonth() + 1).padStart(2, '0');
 
-  return [(dd-6) + '/' + mm,
-    (dd-5) + '/' + mm,
-    (dd-4) + '/' + mm,
-    (dd-3) + '/' + mm,
-    (dd-2) + '/' + mm,
-    (dd-1) + '/' + mm,
-    dd + '/' + mm];
+  return [
+    dd - 6 + '/' + mm,
+    dd - 5 + '/' + mm,
+    dd - 4 + '/' + mm,
+    dd - 3 + '/' + mm,
+    dd - 2 + '/' + mm,
+    dd - 1 + '/' + mm,
+    dd + '/' + mm,
+  ];
 };
 
 module.exports = {
@@ -92,7 +91,7 @@ module.exports = {
       client
           .sendMessage(phone, media, {caption})
           .then((res) => resolve('Succesfully sent.'))
-          // eslint-disable-next-line prefer-promise-reject-errors
+      // eslint-disable-next-line prefer-promise-reject-errors
           .catch((error) => reject('Can not send message.', error));
     });
   },
@@ -100,17 +99,19 @@ module.exports = {
     const db = JSON.parse(
         fs.readFileSync(__dirname + '/../datanum.json', 'utf8'),
     );
-    document.getElementById('numbersSaved').innerText = db.numbers.length;
+    document.getElementById('numbersSaved').innerText = db.business.length;
     new Chart(document.getElementById('chartjs-dashboard-line'), {
       type: 'line',
       data: {
         labels: getLabels(),
-        datasets: [{
-          label: 'Quantidade de números',
-          data: getData(),
-          backgroundColor: window.theme.success,
-          fill: false,
-        }],
+        datasets: [
+          {
+            label: 'Quantidade de números',
+            data: getData(),
+            backgroundColor: window.theme.success,
+            fill: false,
+          },
+        ],
       },
       options: {
         plugins: {
@@ -138,5 +139,16 @@ module.exports = {
     });
 
     document.getElementById('myChats').innerText = chatNumbers.length;
+  },
+  updateTable: () => {
+    const db = JSON.parse(
+        fs.readFileSync(__dirname + '/../datanum.json', 'utf8'),
+    );
+
+    document.querySelector('#tablenumbers tbody').innerHTML = '';
+
+    db.business.forEach((i) => {
+      addLineTable(i.group, i.local, i.title, i.number, i.date);
+    });
   },
 };

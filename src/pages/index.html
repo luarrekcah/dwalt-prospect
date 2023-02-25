@@ -12,6 +12,9 @@
 
     <link href="../assets/css/app.css" rel="stylesheet" />
     <link
+      href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css"
+    />
+    <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
       rel="stylesheet"
     />
@@ -80,7 +83,7 @@
         color: #fff;
       }
 
-      .btn-clear-console:hover {  
+      .btn-clear-console:hover {
         color: rgb(0, 0, 0);
         background-color: #ddd;
       }
@@ -96,6 +99,66 @@
         stroke-width: 2;
         stroke-linecap: round;
         stroke-linejoin: round;
+      }
+
+      /**/
+      table.dataTable {
+        width: 100%;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+      }
+
+      .dataTables_length {
+        margin-bottom: 20px;
+      }
+
+      .dataTables_filter {
+        margin-bottom: 20px;
+      }
+
+      table.dataTable thead th {
+        padding: 8px;
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+      }
+
+      table.dataTable tbody td {
+        padding: 8px;
+        border: 1px solid #ccc;
+      }
+
+      table.dataTable tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      .dataTables_wrapper .dataTables_paginate .paginate_button {
+        padding: 0.5em 1em;
+        border-radius: 3px;
+        background-color: #e0e0e0;
+        color: #333;
+        border: none;
+        margin-right: 10px;
+        margin-left: 10px;
+      }
+
+      .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+        background-color: #333;
+        color: #fff;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+
+      .dataTables_wrapper .dataTables_filter input {
+        padding: 0.5em;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+      }
+
+      .dataTables_wrapper .dataTables_info {
+        font-size: 12px;
+
+        margin-top: 20px;
+        margin-bottom: 20px;
       }
     </style>
   </head>
@@ -721,7 +784,49 @@
               <div class="container-fluid p-0">
                 <h1 class="h3 mb-3">Banco de<strong> Números</strong></h1>
 
-                <div class="row"></div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <table
+                          id="tablenumbers"
+                          class="display"
+                          style="width: 100%"
+                        >
+                          <thead>
+                            <tr>
+                              <th>Grupo</th>
+                              <th>Local</th>
+                              <th>Nome</th>
+                              <th>Número</th>
+                              <th>Data</th>
+                              <th>Botões</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>a</td>
+                              <td>a</td>
+                              <td>a</td>
+                              <td>a</td>
+                              <td>a</td>
+                              <td>
+                                <button
+                                  onclick="sendMessageTo(number)"
+                                >
+                                  <i
+                                    class="align-middle"
+                                    data-feather="send"
+                                  ></i>
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </main>
           </div>
@@ -748,4 +853,24 @@
   </body>
   <script src="../assets/js/app.js"></script>
   <script src="../assets/js/index.js"></script>
+  <script>
+    const $ = require("jQuery");
+    const jQuery = require("jQuery");
+  </script>
+  <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"
+  ></script>
+  <script>
+    $(document).ready(function () {
+      $("#tablenumbers").DataTable({
+        language: {
+          url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json",
+        },
+        paging: true,
+        ordering: true,
+        info: true,
+      });
+    });
+  </script>
 </html>

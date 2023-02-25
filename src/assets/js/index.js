@@ -14,7 +14,7 @@ let db;
 try {
   db = JSON.parse(fs.readFileSync(__dirname + '/../datanum.json', 'utf-8'));
 } catch (error) {
-  saveDb({numbers: []});
+  saveDb({business: []});
   db = JSON.parse(fs.readFileSync(__dirname + '/../datanum.json', 'utf-8'));
 }
 
@@ -175,4 +175,44 @@ function cleanConsole() {
 
 addLineConsole('...', 'success', false);
 cleanConsole();
+
+function addLineTable(grupo, local, nome, numero, data) {
+  // Cria um novo elemento <tr>
+  const newRow = document.createElement('tr');
+
+  // Cria as células da nova linha e adiciona os valores correspondentes
+  const grupoCell = document.createElement('td');
+  grupoCell.textContent = grupo;
+  const localCell = document.createElement('td');
+  localCell.textContent = local;
+  const nomeCell = document.createElement('td');
+  nomeCell.textContent = nome;
+  const numeroCell = document.createElement('td');
+  numeroCell.textContent = numero;
+  const dataCell = document.createElement('td');
+  dataCell.textContent = data;
+  const sendButtonCell = document.createElement('td');
+  const sendButton = document.createElement('button');
+  sendButton.setAttribute('onclick', `sendMessageTo("${numero}")`);
+  const sendIcon = document.createElement('i');
+  sendIcon.classList.add('align-middle');
+  sendIcon.setAttribute('data-feather', 'send');
+  sendButton.appendChild(sendIcon);
+  sendButtonCell.appendChild(sendButton);
+
+  // Adiciona as células à nova linha
+  newRow.appendChild(grupoCell);
+  newRow.appendChild(localCell);
+  newRow.appendChild(nomeCell);
+  newRow.appendChild(numeroCell);
+  newRow.appendChild(dataCell);
+  newRow.appendChild(sendButtonCell);
+
+  // Adiciona a nova linha à tabela
+  const tableBody = document.querySelector('#tablenumbers tbody');
+  tableBody.appendChild(newRow);
+
+  // Atualiza os ícones Feather
+  feather.replace();
+}
 

@@ -24,7 +24,7 @@ module.exports.run = async () => {
       __dirname + '/../../datanum.json', 'utf-8',
   ));
   setStatus('Checando números');
-  if (db.numbers.length === 0) {
+  if (db.business.length === 0) {
     setStatus('Nenhum número encontrado!');
     return alert('Não há nenhum número salvo para fazer a reprospecção!');
   }
@@ -34,7 +34,7 @@ module.exports.run = async () => {
   const continuereProspect = confirm('Deseja enviar as mensagens agora?');
 
   if (continuereProspect) {
-    addLineConsole(db.numbers, 'success', true);
+    addLineConsole(db.business, 'success', true);
 
     fs.readdir(`${__dirname}/../../medias`, async (err, filesLoaded) => {
       filesLoaded.forEach((file) => {
@@ -42,21 +42,21 @@ module.exports.run = async () => {
       });
 
       setStatus(`Encontrei ${files.length} para envio.`);
-      for (let index = 0; index < db.numbers.length; index++) {
+      for (let index = 0; index < db.business.length; index++) {
         setProgress(1);
         setStatus(`Tempo ${config.intervalTime}s`);
         await sleep(config.intervalTime);
         setStatus('Enviando');
         setProgress(2);
         try {
-          await client.sendMessage(db.numbers[index].number, text.toString());
+          await client.sendMessage(db.business[index].number, text.toString());
         } catch (err) {
           alert('Ocorreu um erro ao enviar mensagem: ' + err);
         }
 
         files.forEach(async (f) => {
           try {
-            await sendImage(client, db.numbers[index].number, '', f);
+            await sendImage(client, db.business[index].number, '', f);
           } catch (err) {
             alert('Ocorreu um erro ao enviar arquivos: ' + err);
           }

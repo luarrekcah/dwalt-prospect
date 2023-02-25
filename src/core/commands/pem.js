@@ -1,23 +1,19 @@
+/* eslint-disable max-len */
 const SerpApi = require('google-search-results-nodejs');
 const fs = require('fs');
 const client = require('../index');
 const {ipcRenderer} = require('electron');
 const {sendImage, saveDb} = require('../../utils');
 
-const sleep = (s) => {
-  return new Promise((resolve) => setTimeout(resolve, s * 1000));
-};
-
-const setStatus = (arg) => {
-  document.getElementById('statusShow').innerText = arg;
-};
-
-const setProgress = (step) => {
-  document.getElementById('progressBar').value = step;
-};
+const sleep = (s) => new Promise((resolve) => setTimeout(resolve, s * 1000));
+const setStatus = (arg) =>
+  (document.getElementById('statusShow').innerText = arg);
+const setProgress = (step) =>
+  (document.getElementById('progressBar').value = step);
 
 module.exports.run = async () => {
   setProgress(0);
+
   const {text, type, location, apiKey, config} = JSON.parse(
       fs.readFileSync(__dirname + '/../../data.json', 'utf8'),
   );
@@ -25,13 +21,14 @@ module.exports.run = async () => {
   const search = new SerpApi.GoogleSearch(apiKey);
 
   setStatus('[Lendo dados anteriores]');
+
   let db;
   try {
     db = JSON.parse(
         fs.readFileSync(__dirname + '/../../datanum.json', 'utf-8'),
     );
   } catch (error) {
-    saveDb({numbers: []});
+    saveDb({business: []});
     db = JSON.parse(
         fs.readFileSync(__dirname + '/../../datanum.json', 'utf-8'),
     );
@@ -41,9 +38,11 @@ module.exports.run = async () => {
     !text ||
     !type ||
     !location ||
+    !apiKey ||
     text === '' ||
     type === '' ||
-    location === ''
+    location === '' ||
+    apiKey === ''
   ) {
     setStatus('[Cancelado]');
     ipcRenderer.send('notification', 'Erro, dados em falta.');
@@ -52,28 +51,45 @@ module.exports.run = async () => {
 
   setStatus('[Dados verificados]');
 
-  const chatNumbers = [];
-  const numbers = [];
-  const removed = [];
-  const nonWhatsapp = [];
+  // All chats from device
+  const localChats = [];
+  // All files
   const files = [];
-  const toDbNumbers = db.numbers || [];
+  // Load array with business stored
+  const business = db.business || [];
+  // Push only numbers to check
+  const onlyBusinessNumbers = [];
+  // Array to add numbers who will be sent
+  let numbers = [];
 
+  // check if business exists and add numbers to array
+  if (business.length !== 0) {
+    business.forEach((b) => {
+      onlyBusinessNumbers.push(b.number);
+    });
+  }
+
+  // Load chats and add to localchats
   const chats = await client.getChats();
 
   chats.forEach((c) => {
-    chatNumbers.push(c.id._serialized);
+    localChats.push(c.id._serialized);
+    addLineConsole(c.id._serialized, 'info', false);
   });
 
-  document.getElementById('myChats').innerText = chatNumbers.length;
+  // refresh value on front
+  document.getElementById('myChats').innerText = localChats.length;
 
-  setStatus(`Leitura de números concluída. ${chatNumbers.length} chats.`);
+  // warn user
+  setStatus(`Leitura de números concluída. ${localChats.length} chats.`);
 
   if (config.blockOldNumbers) {
     setStatus('[BLOQUEIO DE MENSAGENS REPETIDAS ATIVO]');
   } else {
     setStatus('[SEM BLOQUEIO DE MENSAGENS REPETIDAS ATIVO]');
   }
+
+  // search
 
   const q = `${type.toLowerCase()} ${location.toLowerCase()}`;
 
@@ -82,9 +98,11 @@ module.exports.run = async () => {
       files.push(`${__dirname}/../../medias/${file}`);
     });
 
+
     setStatus(`Encontrei ${files.length} arquivos para envio.`);
 
     ipcRenderer.send('notification', 'Pesquisando...');
+
 
     for (let index = 0; index < 25; index++) {
       search.json(
@@ -96,120 +114,114 @@ module.exports.run = async () => {
             q,
           },
           (result) => {
-            if (result.local_results === undefined) return;
-            result.local_results.forEach((i) => {
-              if (i.phone === undefined) return;
-              const formated = i.phone
-                  .replaceAll('+', '')
-                  .replaceAll(' ', '')
-                  .replaceAll('-', '')
-                  .replaceAll('(', '')
-                  .replaceAll(')', '');
-              if (formated.slice(4).startsWith('9')) {
-                if (chatNumbers.includes(`${formated}`)) {
-                  removed.push(`${formated}@c.us`);
-                } else {
-                  setStatus('Verificando números');
-                  if (config.blockOldNumbers) {
-                    if (
-                      chatNumbers.includes(
-                          `${formated.slice(0, 4) + formated.slice(5)}`,
-                      )
-                    ) {
-                      return;
-                    }
-                    numbers.push(
-                        `${formated.slice(0, 4) + formated.slice(5)}@c.us`,
-                    );
-                  } else {
-                    numbers.push(
-                        `${formated.slice(0, 4) + formated.slice(5)}@c.us`,
-                    );
-                  }
+            const localResults = result.local_results;
+            if (!localResults) {
+              return;
+            }
+
+            localResults.forEach((i) => {
+              const phone = i.phone;
+              if (!phone) {
+                return;
+              }
+
+              const formatted = phone.replace(/[\s()+-]/g, '');
+              if (formatted.slice(4).startsWith('9')) {
+                const formattedWithoutFourthDigit = formatted.slice(0, 4) + formatted.slice(5);
+                if (localChats.includes(formatted)) {
+                  return;
                 }
-              } else {
-                nonWhatsapp.push(formated);
+
+                setStatus('Verificando números');
+                if (config.blockOldNumbers && localChats.includes(formattedWithoutFourthDigit)) {
+                  return;
+                }
+
+                addLineConsole(i, 'info', true);
+
+                if (!onlyBusinessNumbers.includes(`${formattedWithoutFourthDigit}@c.us`)) {
+                  business.push({
+                    title: i.title,
+                    number: `${formattedWithoutFourthDigit}@c.us`,
+                    type: i.type,
+                    local: location,
+                    group: type,
+                    date: new Date().toLocaleDateString(),
+                  });
+                }
+
+                numbers.push(`${formattedWithoutFourthDigit}@c.us`);
               }
             });
           },
       );
     }
 
-    /* TESTING
     numbers = [];
     numbers = ['556892186647@c.us'];
-    */
 
     setTimeout(async () => {
       if (numbers.length === 0) {
-        return alert(
-            `Nenhum número válido encontrado
-                 para sua pesquisa. Tente alterar.`,
-        );
+        alert('Nenhum número válido encontrado para sua pesquisa. Tente alterar.');
+        return;
       }
-      alert(
-          `Coletei ${numbers.length} números válidos de empresas.`,
-      );
+
+      alert(`Coletei ${numbers.length} números válidos de empresas.`);
       addLineConsole(numbers, 'success', true);
+
       const continueProspect = confirm('Deseja enviar as mensagens agora?');
 
       if (continueProspect) {
-        for (let index = 0; index < numbers.length; index++) {
-          if (chatNumbers.includes(numbers[index]) && config.blockOldNumbers) {
-            return;
-          }
-          setProgress(1);
-          setStatus(`Tempo ${config.intervalTime}s`);
-          await sleep(config.intervalTime);
-          setStatus('Enviando');
-          setProgress(2);
-          let today = new Date();
-          const dd = String(today.getDate()).padStart(2, '0');
-          const mm = String(today.getMonth() + 1).padStart(2, '0');
-          const yyyy = today.getFullYear();
+        try {
+          await Promise.all(numbers.map(async (number) => {
+            if (chatNumbers.includes(number) && config.blockOldNumbers) {
+              return;
+            }
 
-          today = dd + '-' + mm + '-' + yyyy;
+            setProgress(1);
+            setStatus(`Tempo ${config.intervalTime}s`);
+            await sleep(config.intervalTime);
+            setStatus('Enviando');
+            setProgress(2);
 
-          try {
-            await client.sendMessage(numbers[index], text.toString());
-          } catch (err) {
-            addLineConsole(err, 'error', true);
-          }
-
-          files.forEach(async (f) => {
             try {
-              await sendImage(client, numbers[index], '', f);
+              await client.sendMessage(number, text.toString());
             } catch (err) {
               addLineConsole(err, 'error', true);
             }
-          });
 
-          if (!chatNumbers.includes(numbers[index])) {
-            toDbNumbers.push({number: numbers[index], date: today});
-          }
+            await Promise.all(files.map(async (f) => {
+              try {
+                await sendImage(client, number, '', f);
+              } catch (err) {
+                addLineConsole(err, 'error', true);
+              }
+            }));
 
-          setProgress(3);
+            setProgress(3);
 
-          const numeroAtual = Number(
-              document.getElementById('sendCount').innerText,
-          );
+            const numeroAtual = Number(document.getElementById('sendCount').innerText);
 
-          document.getElementById('sendCount').innerText = numeroAtual + 1;
+            document.getElementById('sendCount').innerText = numeroAtual + 1;
 
-          setProgress(0);
-          setStatus(`Ok`);
+            setProgress(0);
+            setStatus('Ok');
+          }));
+        } catch (err) {
+          addLineConsole(err, 'error', true);
         }
       } else {
         alert('Ok, cancelado.');
       }
 
-      addLineConsole(toDbNumbers, 'success', true);
-      setStatus(`Gravando ${toDbNumbers.length} numeros na memória.`);
+      addLineConsole(business, 'success', true);
+      setStatus(`Gravando ${business.length} numeros na memória.`);
 
       saveDb({
-        numbers: toDbNumbers,
+        business: business,
       });
-      setStatus(`Gravação concluída.`);
+
+      setStatus('Gravação concluída.');
     }, 5000);
   });
 };

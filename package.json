@@ -7,7 +7,7 @@
   "build": {
     "appId": "com.dlwalt.prospect",
     "compression": "maximum"
-},
+  },
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
@@ -28,6 +28,7 @@
     "electron-squirrel-startup": "^1.0.0",
     "electron-winstaller": "^5.1.0",
     "google-search-results-nodejs": "^2.1.0",
+    "jquery": "^3.6.3",
     "puppeteer-core": "^19.7.1",
     "puppeteer-in-electron": "^3.0.5",
     "qr-image": "^3.2.0",

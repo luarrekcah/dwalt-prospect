@@ -17,7 +17,7 @@ const messageHandler = require(`./handler/message`);
 const readyHandler = require(`./handler/ready`);
 const qrHandler = require(`./handler/qr`);
 const disconnectedHandler = require(`./handler/disconnected`);
-const {setGraph, saveDb} = require('../utils');
+const {setGraph, saveDb, updateTable} = require('../utils');
 
 client.on('qr', (qr) => {
   return qrHandler.run(qr);
@@ -42,13 +42,16 @@ try {
 }
 
 setGraph();
+updateTable();
 try {
   fs.watch(__dirname + '/../datanum.json', () => {
     setGraph();
+    updateTable();
   });
 } catch (error) {
-  saveDb({numbers: []});
+  saveDb({business: []});
   setGraph();
+  document.querySelector('#tablenumbers tbody').innerHTML = '';
 }
 
 if (apiKey === '') {
