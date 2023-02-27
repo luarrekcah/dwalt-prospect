@@ -1,1 +1,628 @@
-{"business":[{"title":"Skinao Bar E Lanchonete","number":"556881187480@c.us","type":"Bar","local":"acrelandia","group":"lanchonete","date":"25/02/2023"},{"title":"Restaurante e lanchonete sabor do Acre","number":"556899741766@c.us","type":"Restaurant","local":"acrelandia","group":"lanchonete","date":"25/02/2023"},{"title":"Clécia Burger","number":"556892462102@c.us","type":"Hamburger restaurant","local":"acrelandia","group":"lanchonete","date":"25/02/2023"},{"title":"Pizzaria do Brito","number":"556899789152@c.us","type":"Pizza restaurant","local":"acrelandia","group":"lanchonete","date":"25/02/2023"},{"title":"Panificadora Pão café","number":"556899068519@c.us","type":"Snack bar","local":"acrelandia","group":"lanchonete","date":"25/02/2023"},{"title":"Cantinho da Jasmina","number":"556892065135@c.us","type":"Restaurant","local":"acrelandia","group":"lanchonete","date":"25/02/2023"},{"title":"Restaurante das Meninas","number":"556892288737@c.us","type":"Restaurant","local":"acrelandia","group":"lanchonete","date":"25/02/2023"},{"title":"SORVETERIA VITÓRIA","number":"556899884550@c.us","type":"Sundae restaurant","local":"acrelandia","group":"lanchonete","date":"22/02/2023"},{"title":"Panificadora  Souza","number":"556899993806@c.us","type":"Steamed bun shop","local":"acrelandia","group":"lanchonete","date":"22/02/2023"},{"title":"PANIFICADORA COELHO","number":"556892023980@c.us","type":"Steamed bun shop","local":"acrelandia","group":"lanchonete","date":"22/02/2023"},{"title":"Mercearia e Distribuidora js","number":"556892349964@c.us","type":"Bar","local":"acrelandia","group":"lanchonete","date":"25/02/2023"},{"title":"JP'Lanches","number":"556892519796@c.us","type":"Snack bar","local":"acrelandia","group":"lanchonete","date":"25/02/2023"},{"title":"Restaurante Passarinho, Km 90","number":"556899026293@c.us","type":"Snack bar","local":"acrelandia","group":"lanchonete","date":"25/02/2023"},{"title":"Supermercado capixaba","number":"556892123079@c.us","type":"Supermarket","local":"acrelandia","group":"lanchonete","date":"25/02/2023"},{"title":"Mercantil Ramos","number":"556896031090@c.us","type":"Supermarket","local":"acrelandia","group":"lanchonete","date":"25/02/2023"},{"title":"Tampinha Fest Club e Restaurante Familiar","number":"556881248799@c.us","type":"Event planner","local":"acrelandia","group":"lanchonete","date":"25/02/2023"},{"title":"Drogaria Brasil","number":"556899371538@c.us","type":"Drug store","local":"acrelandia","group":"lanchonete","date":"25/02/2023"},{"title":"Auto Posto Progresso - Acrelândia","number":"556881110646@c.us","type":"Petrol Pump","local":"acrelandia","group":"lanchonete","date":"25/02/2023"},{"title":"Regina Lanches","number":"556892382795@c.us","type":"Snack bar","local":"acrelandia","group":"lanchonete","date":"25/02/2023"},{"title":"Bendita Restaurante","number":"556892074145@c.us","type":"Restaurant","local":"acrelandia","group":"lanchonete","date":"25/02/2023"},{"title":"Pousada Verde","number":"556892086913@c.us","type":"Inn","local":"acrelandia","group":"lanchonete","date":"25/02/2023"},{"title":"Moda Atual","number":"556892062738@c.us","type":"Clothing store","local":"acrelandia","group":"lanchonete","date":"25/02/2023"},{"title":"Azuri Engenharia","number":"556899384295@c.us","type":"Engineering consultant","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Prática Engenharia Ltda","number":"556793374000@c.us","type":"Home builder","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Solu's Engenharia","number":"556899816618@c.us","type":"Civil engineering company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"JR Engenharia","number":"556899530590@c.us","type":"Construction company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"IDEALI - Arquitetura e Engenharia | Cursos","number":"556892466179@c.us","type":"Construction company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Àlbero Engenharia","number":"556899481288@c.us","type":"Engineering consultant","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"D W ARQUITETURA E ENGENHARIA","number":"556884179143@c.us","type":"Architect","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Renove Engenharia","number":"556899788963@c.us","type":"Corporate office","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Haus Engenharia","number":"556899451514@c.us","type":"Construction company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"…","number":"556899819209@c.us","type":"Electrical engineer","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"AMARO Arquitetura e Engenharia","number":"556899869988@c.us","type":"Architect","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"CONSTRUTORA TERPLAN","number":"556899856670@c.us","type":"Earth works company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"NORTH CONSTRUTORA","number":"556892821778@c.us","type":"Building firm","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Charbel de Albuquerque Arquitetura","number":"556892383832@c.us","type":"Interior architect office","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Hevea Vivence Residence","number":"556892045501@c.us","type":"Apartment complex","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Espaço Adriana Pontes","number":"556899566765@c.us","type":"Hair salon","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Arena Beach Rio Branco","number":"556892236859@c.us","type":"Athletic field","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Meta Amazon Solution","number":"556881206044@c.us","type":"Blueprint service","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Rondon Elevadores","number":"556984223384@c.us","type":"Elevator service","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Grupo Safety Ocupacional","number":"556899126006@c.us","type":"Occupational safety and health","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"SK SERVIÇOS TÉCNICOS","number":"556899145407@c.us","type":"Civil engineering company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"ELS Engenharia Diagnóstica e Avaliação de Imóveis","number":"556892034280@c.us","type":"Civil engineering company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Atmus Energia Solar - Grupo Elite","number":"556892224693@c.us","type":"Construction company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"E J ENGENHARIA LTDA","number":"556899864427@c.us","type":"Building firm","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Interplay Paisagismo","number":"556899740302@c.us","type":"Lawn care service","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Carlos Henrique Arquitetura","number":"556892113898@c.us","type":"Architect","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Ecopower - Energia Solar","number":"556892117041@c.us","type":"Solar energy equipment supplier","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"MensurArq","number":"553299951906@c.us","type":"Topography company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Marinho Engenharia RJ","number":"552177370533@c.us","type":"Civil engineering company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"HTS ENGENHARIA","number":"555191099084@c.us","type":"Civil engineering company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Zenital Engenharia e Topografia","number":"553291214995@c.us","type":"Engineer","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Doutor Resolve Reparos e Reformas Rio Branco","number":"556899728670@c.us","type":"Construction company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"UNAMA - Rio Branco","number":"556896089343@c.us","type":"University","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"TPC ENGENHARIA","number":"554198831817@c.us","type":"Civil engineer","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"GSEC Engenharia","number":"552199872023@c.us","type":"Civil engineering company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Dommus Arquitetura e Engenharia Ltda","number":"556892150460@c.us","type":"Interior architect office","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Haus Engenharia","number":"556899451514@c.us","type":"Real Estate Builders & Construction Company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"AMARO Arquitetura e Engenharia","number":"556899869988@c.us","type":"Architect","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"CONSTRUTORA TERPLAN","number":"556899856670@c.us","type":"Earth works company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"CASA3 - Engenharia & Consultoria Empresarial","number":"556892087676@c.us","type":"Real Estate Builders & Construction Company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Construtora SUGOI - Imóveis - Apartamentos em Rio Branco, Acre","number":"556892327465@c.us","type":"Real Estate Builders & Construction Company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Conceitos Engenharia Soluções Elétricas","number":"556899748671@c.us","type":"Electrical installation service","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"AA Topografia e Engenharia","number":"556899321593@c.us","type":"Topography company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"DuSOL Engenharia Solar","number":"556899611567@c.us","type":"Solar energy equipment supplier","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"GPM ARQUITETURA E CONSTRUÇÃO","number":"556899174000@c.us","type":"Architect","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Construtop Piscinas","number":"556892415235@c.us","type":"Construction company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"WMC SERVIÇOS DE MANUTENÇÃO PREDIAL","number":"556892132722@c.us","type":"Home help","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Acos Constru��ões","number":"556892290117@c.us","type":"Construction company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"DDMK Eletrotécnica","number":"556899151783@c.us","type":"Electronic engineer","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"AcSolar","number":"556884021671@c.us","type":"Solar energy equipment supplier","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"ELEMAQ ENGENHARIA","number":"556899633708@c.us","type":"Electric utility company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Microsaga Engenharia","number":"556899546010@c.us","type":"Corporate office","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Canizio e Castro Engenharia ltda","number":"556892147612@c.us","type":"Building firm","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Aillez Engenharia","number":"556899030232@c.us","type":"Solar energy equipment supplier","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Zero 1 Soluções e Engenharia","number":"556899144186@c.us","type":"Corporate office","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"Agro com Elas","number":"556899699147@c.us","type":"Engineering consultant","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"RESPLAN Engenharia e Energia Solar","number":"556892029070@c.us","type":"Solar energy company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"AA Topografia e Engenharia","number":"556899321593@c.us","type":"Topography company","local":"rio branco","group":"engenharia","date":"25/02/2023"},{"title":"DuSOL Engenharia Solar","number":"556899611567@c.us","type":"Solar energy equipment supplier","local":"rio branco","group":"engenharia","date":"25/02/2023"}]}
+{
+  "business": [
+    {
+      "title": "Skinao Bar E Lanchonete",
+      "number": "556881187480@c.us",
+      "type": "Bar",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Restaurante e lanchonete sabor do Acre",
+      "number": "556899741766@c.us",
+      "type": "Restaurant",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Clécia Burger",
+      "number": "556892462102@c.us",
+      "type": "Hamburger restaurant",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Pizzaria do Brito",
+      "number": "556899789152@c.us",
+      "type": "Pizza restaurant",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Panificadora Pão café",
+      "number": "556899068519@c.us",
+      "type": "Snack bar",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Cantinho da Jasmina",
+      "number": "556892065135@c.us",
+      "type": "Restaurant",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Restaurante das Meninas",
+      "number": "556892288737@c.us",
+      "type": "Restaurant",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "SORVETERIA VITÓRIA",
+      "number": "556899884550@c.us",
+      "type": "Sundae restaurant",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "22/02/2023"
+    },
+    {
+      "title": "Panificadora  Souza",
+      "number": "556899993806@c.us",
+      "type": "Steamed bun shop",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "22/02/2023"
+    },
+    {
+      "title": "PANIFICADORA COELHO",
+      "number": "556892023980@c.us",
+      "type": "Steamed bun shop",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "22/02/2023"
+    },
+    {
+      "title": "Mercearia e Distribuidora js",
+      "number": "556892349964@c.us",
+      "type": "Bar",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "JP'Lanches",
+      "number": "556892519796@c.us",
+      "type": "Snack bar",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Restaurante Passarinho, Km 90",
+      "number": "556899026293@c.us",
+      "type": "Snack bar",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Mercantil Ramos",
+      "number": "556896031090@c.us",
+      "type": "Supermarket",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Tampinha Fest Club e Restaurante Familiar",
+      "number": "556881248799@c.us",
+      "type": "Event planner",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Drogaria Brasil",
+      "number": "556899371538@c.us",
+      "type": "Drug store",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Auto Posto Progresso - Acrelândia",
+      "number": "556881110646@c.us",
+      "type": "Petrol Pump",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Regina Lanches",
+      "number": "556892382795@c.us",
+      "type": "Snack bar",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Bendita Restaurante",
+      "number": "556892074145@c.us",
+      "type": "Restaurant",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Pousada Verde",
+      "number": "556892086913@c.us",
+      "type": "Inn",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Moda Atual",
+      "number": "556892062738@c.us",
+      "type": "Clothing store",
+      "local": "acrelandia",
+      "group": "lanchonete",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Azuri Engenharia",
+      "number": "556899384295@c.us",
+      "type": "Engineering consultant",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Prática Engenharia Ltda",
+      "number": "556793374000@c.us",
+      "type": "Home builder",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Solu's Engenharia",
+      "number": "556899816618@c.us",
+      "type": "Civil engineering company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "JR Engenharia",
+      "number": "556899530590@c.us",
+      "type": "Construction company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "IDEALI - Arquitetura e Engenharia | Cursos",
+      "number": "556892466179@c.us",
+      "type": "Construction company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Àlbero Engenharia",
+      "number": "556899481288@c.us",
+      "type": "Engineering consultant",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "D W ARQUITETURA E ENGENHARIA",
+      "number": "556884179143@c.us",
+      "type": "Architect",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Renove Engenharia",
+      "number": "556899788963@c.us",
+      "type": "Corporate office",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Haus Engenharia",
+      "number": "556899451514@c.us",
+      "type": "Construction company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "AMARO Arquitetura e Engenharia",
+      "number": "556899869988@c.us",
+      "type": "Architect",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "CONSTRUTORA TERPLAN",
+      "number": "556899856670@c.us",
+      "type": "Earth works company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "NORTH CONSTRUTORA",
+      "number": "556892821778@c.us",
+      "type": "Building firm",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Charbel de Albuquerque Arquitetura",
+      "number": "556892383832@c.us",
+      "type": "Interior architect office",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Hevea Vivence Residence",
+      "number": "556892045501@c.us",
+      "type": "Apartment complex",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Espaço Adriana Pontes",
+      "number": "556899566765@c.us",
+      "type": "Hair salon",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Arena Beach Rio Branco",
+      "number": "556892236859@c.us",
+      "type": "Athletic field",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Meta Amazon Solution",
+      "number": "556881206044@c.us",
+      "type": "Blueprint service",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Rondon Elevadores",
+      "number": "556984223384@c.us",
+      "type": "Elevator service",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Grupo Safety Ocupacional",
+      "number": "556899126006@c.us",
+      "type": "Occupational safety and health",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "SK SERVIÇOS TÉCNICOS",
+      "number": "556899145407@c.us",
+      "type": "Civil engineering company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "ELS Engenharia Diagnóstica e Avaliação de Imóveis",
+      "number": "556892034280@c.us",
+      "type": "Civil engineering company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Atmus Energia Solar - Grupo Elite",
+      "number": "556892224693@c.us",
+      "type": "Construction company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "E J ENGENHARIA LTDA",
+      "number": "556899864427@c.us",
+      "type": "Building firm",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Interplay Paisagismo",
+      "number": "556899740302@c.us",
+      "type": "Lawn care service",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Carlos Henrique Arquitetura",
+      "number": "556892113898@c.us",
+      "type": "Architect",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Ecopower - Energia Solar",
+      "number": "556892117041@c.us",
+      "type": "Solar energy equipment supplier",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "MensurArq",
+      "number": "553299951906@c.us",
+      "type": "Topography company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Marinho Engenharia RJ",
+      "number": "552177370533@c.us",
+      "type": "Civil engineering company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "HTS ENGENHARIA",
+      "number": "555191099084@c.us",
+      "type": "Civil engineering company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Zenital Engenharia e Topografia",
+      "number": "553291214995@c.us",
+      "type": "Engineer",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Doutor Resolve Reparos e Reformas Rio Branco",
+      "number": "556899728670@c.us",
+      "type": "Construction company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "UNAMA - Rio Branco",
+      "number": "556896089343@c.us",
+      "type": "University",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "GSEC Engenharia",
+      "number": "552199872023@c.us",
+      "type": "Civil engineering company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Dommus Arquitetura e Engenharia Ltda",
+      "number": "556892150460@c.us",
+      "type": "Interior architect office",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Haus Engenharia",
+      "number": "556899451514@c.us",
+      "type": "Real Estate Builders & Construction Company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "AMARO Arquitetura e Engenharia",
+      "number": "556899869988@c.us",
+      "type": "Architect",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "CONSTRUTORA TERPLAN",
+      "number": "556899856670@c.us",
+      "type": "Earth works company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "CASA3 - Engenharia & Consultoria Empresarial",
+      "number": "556892087676@c.us",
+      "type": "Real Estate Builders & Construction Company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Construtora SUGOI - Imóveis - Apartamentos em Rio Branco, Acre",
+      "number": "556892327465@c.us",
+      "type": "Real Estate Builders & Construction Company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Conceitos Engenharia Soluções Elétricas",
+      "number": "556899748671@c.us",
+      "type": "Electrical installation service",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "AA Topografia e Engenharia",
+      "number": "556899321593@c.us",
+      "type": "Topography company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "DuSOL Engenharia Solar",
+      "number": "556899611567@c.us",
+      "type": "Solar energy equipment supplier",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "GPM ARQUITETURA E CONSTRUÇÃO",
+      "number": "556899174000@c.us",
+      "type": "Architect",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Construtop Piscinas",
+      "number": "556892415235@c.us",
+      "type": "Construction company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "WMC SERVIÇOS DE MANUTENÇÃO PREDIAL",
+      "number": "556892132722@c.us",
+      "type": "Home help",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Acos Constru��ões",
+      "number": "556892290117@c.us",
+      "type": "Construction company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "DDMK Eletrotécnica",
+      "number": "556899151783@c.us",
+      "type": "Electronic engineer",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "AcSolar",
+      "number": "556884021671@c.us",
+      "type": "Solar energy equipment supplier",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "ELEMAQ ENGENHARIA",
+      "number": "556899633708@c.us",
+      "type": "Electric utility company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Microsaga Engenharia",
+      "number": "556899546010@c.us",
+      "type": "Corporate office",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Canizio e Castro Engenharia ltda",
+      "number": "556892147612@c.us",
+      "type": "Building firm",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Aillez Engenharia",
+      "number": "556899030232@c.us",
+      "type": "Solar energy equipment supplier",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Zero 1 Soluções e Engenharia",
+      "number": "556899144186@c.us",
+      "type": "Corporate office",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "Agro com Elas",
+      "number": "556899699147@c.us",
+      "type": "Engineering consultant",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "RESPLAN Engenharia e Energia Solar",
+      "number": "556892029070@c.us",
+      "type": "Solar energy company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "AA Topografia e Engenharia",
+      "number": "556899321593@c.us",
+      "type": "Topography company",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    },
+    {
+      "title": "DuSOL Engenharia Solar",
+      "number": "556899611567@c.us",
+      "type": "Solar energy equipment supplier",
+      "local": "rio branco",
+      "group": "engenharia",
+      "date": "25/02/2023"
+    }
+  ]
+}

@@ -1,75 +1,28 @@
+/* eslint-disable max-len */
+/* eslint-disable new-cap */
 const fs = require('fs');
 const {MessageMedia} = require('whatsapp-web.js');
+// Lê o arquivo de dados e armazena no objeto "db"
 
-const getData = () => {
-  let db;
-  try {
-    db = JSON.parse(fs.readFileSync(__dirname + '/../datanum.json', 'utf-8'));
-  } catch (error) {
-    saveDb({business: []});
-    db = JSON.parse(fs.readFileSync(__dirname + '/../datanum.json', 'utf-8'));
-  }
-
-  const week = {
-    pri: 0,
-    seg: 0,
-    ter: 0,
-    qua: 0,
-    qui: 0,
-    sex: 0,
-    set: 0,
-  };
-
-  const today = new Date();
-  const dd = String(today.getDate()).padStart(2, '0');
-  const mm = String(today.getMonth() + 1).padStart(2, '0');
-  const yyyy = today.getFullYear();
-
-  db.business.forEach((n) => {
-    switch (n.date) {
-      case `${dd - 6}-${mm}-${yyyy}`:
-        week.pri++;
-        break;
-      case `${dd - 5}-${mm}-${yyyy}`:
-        week.seg++;
-        break;
-      case `${dd - 4}-${mm}-${yyyy}`:
-        week.ter++;
-        break;
-      case `${dd - 3}-${mm}-${yyyy}`:
-        week.qua++;
-        break;
-      case `${dd - 2}-${mm}-${yyyy}`:
-        week.qui++;
-        break;
-      case `${dd - 1}-${mm}-${yyyy}`:
-        week.sex++;
-        break;
-      case `${dd}-${mm}-${yyyy}`:
-        week.set++;
-        break;
-    }
-  });
-
-  return [week.pri, week.seg, week.ter, week.qua, week.qui, week.sex, week.set];
-};
-
+// Define a função para obter as etiquetas (nomes dos grupos de negócios)
 const getLabels = () => {
-  const today = new Date();
-  const dd = String(today.getDate()).padStart(2, '0');
-  const mm = String(today.getMonth() + 1).padStart(2, '0');
-
-  return [
-    dd - 6 + '/' + mm,
-    dd - 5 + '/' + mm,
-    dd - 4 + '/' + mm,
-    dd - 3 + '/' + mm,
-    dd - 2 + '/' + mm,
-    dd - 1 + '/' + mm,
-    dd + '/' + mm,
-  ];
+  const db = JSON.parse(fs.readFileSync(__dirname + '/../datanum.json', 'utf8'));
+  const groups = [...new Set(db.business.map((n) => n.group))];
+  return groups;
 };
 
+// Define a função para obter os dados (contagens de negócios por grupo)
+const getData = () => {
+  const db = JSON.parse(fs.readFileSync(__dirname + '/../datanum.json', 'utf8'));
+  const groups = {};
+  db.business.forEach((n) => {
+    if (!groups[n.group]) {
+      groups[n.group] = 0;
+    }
+    groups[n.group]++;
+  });
+  return Object.values(groups);
+};
 module.exports = {
   saveData: (data) => {
     const toStringData = JSON.stringify(data);
@@ -101,30 +54,39 @@ module.exports = {
     );
     document.getElementById('numbersSaved').innerText = db.business.length;
     new Chart(document.getElementById('chartjs-dashboard-line'), {
-      type: 'line',
+      type: 'bar',
       data: {
         labels: getLabels(),
-        datasets: [
-          {
-            label: 'Quantidade de números',
-            data: getData(),
-            backgroundColor: window.theme.success,
-            fill: false,
-          },
-        ],
+        datasets: [{
+          label: 'Quantidade de negócios',
+          data: getData(),
+          backgroundColor: window.theme.success,
+          fill: false,
+        }],
       },
       options: {
         plugins: {
-          filler: {
-            propagate: false,
-          },
           title: {
             display: true,
-            text: 'Quantidade de números',
+            text: 'Quantidade de negócios por tipo',
           },
         },
-        interaction: {
-          intersect: false,
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Quantidade de negócios',
+            },
+          }],
+          xAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Tipo de negócio',
+            },
+          }],
         },
       },
     });
@@ -150,5 +112,17 @@ module.exports = {
     db.business.forEach((i) => {
       addLineTable(i.group, i.local, i.title, i.number, i.date);
     });
+  },
+  searchBusiness: (query) => {
+    // Lê o arquivo JSON e converte em um objeto JavaScript
+    const db = JSON.parse(fs.readFileSync(__dirname + '/../datanum.json', 'utf-8'));
+
+    // Filtra os elementos do array 'business' que correspondem à pesquisa
+    const results = db.business.filter((item) => {
+      // Converte todas as chaves do objeto em uma string e verifica se a string inclui a pesquisa
+      return Object.values(item).join('').toLowerCase().includes(query.toLowerCase());
+    });
+
+    return results;
   },
 };

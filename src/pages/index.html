@@ -18,6 +18,10 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"
+    />
     <style>
       body {
         height: 100vh;
@@ -159,6 +163,20 @@
 
         margin-top: 20px;
         margin-bottom: 20px;
+      }
+
+      .buttonsTable {
+        border: none;
+        padding: 10px;
+        border-radius: 10px;
+        color: #3b7ddd;
+        margin: 10px;
+        transition: all 0.3s ease-out;
+      }
+
+      .buttonsTable:hover {
+        background-color: #3b7ddd;
+        color: #fff;
       }
     </style>
   </head>
@@ -783,11 +801,59 @@
             <main class="content">
               <div class="container-fluid p-0">
                 <h1 class="h3 mb-3">Banco de<strong> Números</strong></h1>
-
+                <div id="ex1" class="modal">
+                  <h1>Adicione uma empresa nova</h1>
+                  <hr>
+                  <form id="addBusiness">
+                    <label>Grupo</label>
+                    <input type="text" id="grupo" class="form-control" />
+                    <label>Local</label>
+                    <input type="text" id="local" class="form-control" />
+                    <label>Nome da Empresa</label>
+                    <input type="text" id="nome" class="form-control" />
+                    <label>Número da empresa</label>
+                    <input type="text" id="numero" placeholder="+55 XX XXXXX-XXXX" class="form-control" />
+                    <label>Tipo</label>
+                    <input type="text" id="tipo" class="form-control" />
+                    <label>Data de adesão</label>
+                    <input type="date" id="data" class="form-control" />
+                    <hr>
+                    <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Adicionar</button>
+                  </form>
+                 
+                </div>
                 <div class="row">
                   <div class="col-12">
                     <div class="card">
                       <div class="card-body">
+                        <p>
+                          Caso queira enviar para um grupo específico, pesquise
+                          algum dado em comum dos números e clique em
+                          "prospectar todos abaixo".
+                        </p>
+                        <div
+                          style="
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: space-between;
+                            margin-bottom: 40px;
+                          "
+                        >
+                          <button
+                            class="btn btn-primary btn-lg"
+                            id="prospectAll"
+                          >
+                            Prospectar todos abaixo
+                          </button>
+                          <a
+                            class="btn btn-primary btn-lg"
+                            id="addBusiness"
+                            href="#ex1"
+                            rel="modal:open"
+                            >Adicionar empresa</a
+                          >
+                        </div>
+
                         <table
                           id="tablenumbers"
                           class="display"
@@ -811,9 +877,7 @@
                               <td>a</td>
                               <td>a</td>
                               <td>
-                                <button
-                                  onclick="sendMessageTo(number)"
-                                >
+                                <button onclick="sendMessageTo(number)">
                                   <i
                                     class="align-middle"
                                     data-feather="send"
@@ -861,6 +925,7 @@
     type="text/javascript"
     src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"
   ></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
   <script>
     $(document).ready(function () {
       $("#tablenumbers").DataTable({

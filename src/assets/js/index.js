@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 /* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 /* eslint-disable no-unused-vars */
@@ -8,8 +9,9 @@ const data = JSON.parse(
     fs.readFileSync(__dirname + '/../data.json', 'utf8'),
 );
 
+const {saveData, saveDb, updateTable, setGraph, searchBusiness} = require('../utils');
 
-const {saveData, saveDb} = require('../utils');
+const prospectAll = document.getElementById('prospectAll');
 
 let db;
 try {
@@ -124,8 +126,16 @@ reprospect.addEventListener('click', () => {
 });
 
 function sendMessageTo(n) {
-  const sendMessage = require('../core/commands/unique');
-  sendMessage.run(n);
+  const shouldSendMessage = confirm('Enviar mensagem para essa empresa?');
+  if (shouldSendMessage ) {
+    const sendMessage = require('../core/commands/unique');
+    sendMessage.run(n);
+  }
+}
+
+function sendMessages(array) {
+  const sendMessages = require('../core/commands/sendMessages');
+  sendMessages.run(array);
 }
 
 const toBase64 = (file) =>
@@ -209,12 +219,24 @@ function addLineTable(grupo, local, nome, numero, data) {
   dataCell.textContent = data;
   const sendButtonCell = document.createElement('td');
   const sendButton = document.createElement('button');
+  const deleteButton = document.createElement('button');
   sendButton.setAttribute('onclick', `sendMessageTo("${numero}")`);
+  sendButton.setAttribute('class', `buttonsTable`);
+  deleteButton.setAttribute('onclick', `deleteBusiness("${numero}")`);
+  deleteButton.setAttribute('class', `buttonsTable`);
   const sendIcon = document.createElement('i');
   sendIcon.classList.add('align-middle');
   sendIcon.setAttribute('data-feather', 'send');
+
+  const deleteIcon = document.createElement('i');
+  deleteIcon.classList.add('align-middle');
+  deleteIcon.setAttribute('data-feather', 'trash');
+
   sendButton.appendChild(sendIcon);
+
+  deleteButton.appendChild(deleteIcon);
   sendButtonCell.appendChild(sendButton);
+  sendButtonCell.appendChild(deleteButton);
 
   // Adiciona as células à nova linha
   newRow.appendChild(grupoCell);
@@ -232,3 +254,79 @@ function addLineTable(grupo, local, nome, numero, data) {
   feather.replace();
 }
 
+function deleteBusiness(numberToDelete) {
+  const shouldDelete = confirm('Você deseja deletar essa empresa?');
+  if (shouldDelete ) {
+    const businessList = JSON.parse(fs.readFileSync(__dirname + '/../datanum.json', 'utf-8'));
+    const newBusinessList = businessList.business.filter((business) => business.number !== numberToDelete);
+    saveDb({business: newBusinessList});
+    updateTable();
+  }
+}
+
+const form = document.querySelector('#addBusiness');
+
+form.addEventListener('submit', (event) => {
+  // Previne o envio do formulário e recarregamento da página
+  event.preventDefault();
+
+  // Coleta os valores dos inputs
+  const grupo = document.querySelector('#grupo').value;
+  const local = document.querySelector('#local').value;
+  const tipo = document.querySelector('#tipo').value;
+  const nome = document.querySelector('#nome').value;
+  const numero = document.querySelector('#numero').value;
+  let data = document.querySelector('#data').value;
+
+  // Formata a data para o padrão DD/MM/YYYY
+  data = data.split('-').reverse().join('/');
+
+  // Remove os caracteres especiais do número e acrescenta o sufixo "@c.us"
+  const numeroFormatado = numero.replace(/[+\-()]/g, '') + '@c.us';
+
+  // Imprime os valores coletados e formatados no console
+  console.log('Grupo:', grupo);
+  console.log('Local:', local);
+  console.log('Nome da Empresa:', nome);
+  console.log('Número da empresa:', numeroFormatado);
+  console.log('Data de adesão:', data);
+
+  const db = JSON.parse(fs.readFileSync(__dirname + '/../datanum.json', 'utf-8'));
+
+  db.business.push({
+    title: nome,
+    number: numero,
+    type: tipo,
+    local,
+    group: grupo,
+    date: data,
+  });
+
+  saveDb({business: db.business});
+
+  // Limpa os inputs após a submissão do formulário
+  form.reset();
+  updateTable();
+  setGraph();
+});
+
+
+prospectAll.addEventListener('click', () => {
+  // Obter uma referência para a tabela DataTable
+  const table = $('#tablenumbers').DataTable();
+
+  // Obter o valor de pesquisa atual
+  const pesquisa = table.search();
+
+  if (pesquisa === '') return alert('Digite algo no campo de pesquisa');
+
+  addLineConsole(pesquisa, 'info', false);
+
+  const numbers = searchBusiness(pesquisa);
+  const warnBox = confirm(`Deseja enviar mensagens agora para ${numbers.length} empresas?`);
+  if (warnBox) {
+    sendMessages(numbers);
+  } else {
+    return;
+  }
+});
