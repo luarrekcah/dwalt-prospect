@@ -106,7 +106,8 @@ function createVerificationWindow() {
     height: 300,
     show: false,
     webPreferences: {
-      nodeIntegration: false,
+      nodeIntegration: true,
+      contextIsolation: false,
     },
     icon: __dirname + '/assets/icon.png',
   });
