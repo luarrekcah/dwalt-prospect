@@ -526,8 +526,9 @@
                         <h5 class="card-title mb-0">Comando prospecção</h5>
                         <p>
                           Esse gatilho dispara as mensagens para os números com
-                          os dados informados ou você pode optar por cancelar o disparo,
-                          o bot vai salvar todos os números no banco automaticamente.
+                          os dados informados ou você pode optar por cancelar o
+                          disparo, o bot vai salvar todos os números no banco
+                          automaticamente.
                         </p>
                       </div>
                       <div class="card-body">
@@ -821,6 +822,13 @@
                           algum dado em comum dos números e clique em
                           "prospectar todos abaixo".
                         </p>
+                        <b>Reinicie o bot caso a tabela não atualize.</b>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-body">
                         <div
                           style="
                             display: flex;
@@ -833,14 +841,17 @@
                             class="btn btn-primary btn-lg"
                             id="prospectAll"
                           >
-                          <i class="align-middle" data-feather="send"></i>
+                            <i class="align-middle" data-feather="send"></i>
                             Prospectar todos abaixo
                           </button>
                           <button class="btn btn-danger btn-lg" id="deleteAll">
                             <i class="align-middle" data-feather="trash"></i>
                             Deletar todos abaixo
                           </button>
-                          <button class="btn btn-success btn-lg" id="exportExcel">
+                          <button
+                            class="btn btn-success btn-lg"
+                            id="exportExcel"
+                          >
                             <i class="align-middle" data-feather="database"></i>
                             Exportar tabela
                           </button>
@@ -849,12 +860,13 @@
                             id="addBusiness"
                             href="#ex1"
                             rel="modal:open"
-                            >
+                          >
                             <i class="align-middle" data-feather="plus"></i>
                             Adicionar empresa</a
                           >
                         </div>
-
+                        <hr />
+                        <br />
                         <table
                           id="tablenumbers"
                           class="display"
