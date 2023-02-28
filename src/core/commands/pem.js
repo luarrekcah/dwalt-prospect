@@ -18,7 +18,13 @@ module.exports.run = async () => {
       fs.readFileSync(__dirname + '/../../data.json', 'utf8'),
   );
 
-  const search = new SerpApi.GoogleSearch(apiKey);
+  let search;
+  try {
+    search = new SerpApi.GoogleSearch(apiKey);
+  } catch (e) {
+    addLineConsole(e, 'error', true);
+    alert('Ocorreu um erro com a chave da API, verifique.');
+  }
 
   setStatus('[Lendo dados anteriores]');
 
@@ -60,7 +66,7 @@ module.exports.run = async () => {
   // Push only numbers to check
   const onlyBusinessNumbers = [];
   // Array to add numbers who will be sent
-  let numbers = [];
+  const numbers = [];
 
   // check if business exists and add numbers to array
   if (business.length !== 0) {
@@ -157,12 +163,9 @@ module.exports.run = async () => {
       );
     }
 
-    numbers = [];
-    numbers = ['556892186647@c.us'];
-
     setTimeout(async () => {
       if (numbers.length === 0) {
-        alert('Nenhum número válido encontrado para sua pesquisa. Tente alterar.');
+        alert('Nenhum número válido encontrado para sua pesquisa. Tente alterar ou verifique sua API.');
         return;
       }
 
@@ -173,9 +176,10 @@ module.exports.run = async () => {
 
       if (continueProspect) {
         try {
-          await Promise.all(numbers.map(async (number) => {
-            if (chatNumbers.includes(number) && config.blockOldNumbers) {
-              return;
+          for (let i = 0; i < numbers.length; i++) {
+            const number = numbers[i];
+            if (chats.includes(number) && config.blockOldNumbers) {
+              continue;
             }
 
             setProgress(1);
@@ -190,13 +194,14 @@ module.exports.run = async () => {
               addLineConsole(err, 'error', true);
             }
 
-            await Promise.all(files.map(async (f) => {
+            for (let j = 0; j < files.length; j++) {
+              const f = files[j];
               try {
                 await sendImage(client, number, '', f);
               } catch (err) {
                 addLineConsole(err, 'error', true);
               }
-            }));
+            }
 
             setProgress(3);
 
@@ -206,12 +211,12 @@ module.exports.run = async () => {
 
             setProgress(0);
             setStatus('Ok');
-          }));
+          }
         } catch (err) {
           addLineConsole(err, 'error', true);
         }
       } else {
-        alert('Ok, cancelado.');
+        alert('Ok, cancelei o envio mas os números foram salvos no banco e você pode consultar.');
       }
 
       addLineConsole(business, 'success', true);

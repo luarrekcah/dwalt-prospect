@@ -1,4 +1,5 @@
-const {app, BrowserWindow, Menu, ipcMain, Notification} = require('electron');
+/* eslint-disable max-len */
+const {app, BrowserWindow, Menu, ipcMain, Notification, dialog} = require('electron');
 const path = require('path');
 // const electronReload = require('electron-reload');
 const {production} = require('../config.json');
@@ -105,8 +106,7 @@ function createVerificationWindow() {
     height: 300,
     show: false,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
+      nodeIntegration: false,
     },
     icon: __dirname + '/assets/icon.png',
   });
@@ -189,6 +189,18 @@ app.on('ready', () => {
       // Handle error
         createVerificationWindow();
         console.error(error);
+      });
+});
+
+ipcMain.on('open-file-dialog', (event) => {
+  dialog.showSaveDialog({defaultPath: app.getPath('downloads') + '/empresas.xlsx',
+    filters: [{name: 'Excel Workbook', extensions: ['xlsx']}]})
+      .then((result) => {
+        if (!result.canceled) {
+          event.reply('file-dialog-result', result.filePath);
+        }
+      }).catch((err) => {
+        console.error(err);
       });
 });
 

@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable new-cap */
 const fs = require('fs');
+const XLSX = require('xlsx');
 const {MessageMedia} = require('whatsapp-web.js');
 // Lê o arquivo de dados e armazena no objeto "db"
 
@@ -107,7 +108,13 @@ module.exports = {
         fs.readFileSync(__dirname + '/../datanum.json', 'utf8'),
     );
 
-    document.querySelector('#tablenumbers tbody').innerHTML = '';
+    const tbody =
+    document.querySelector('#tablenumbers tbody');
+    tbody.innerHTML = '';
+
+    while (tbody.firstChild) {
+      tbody.removeChild(tbody.firstChild);
+    }
 
     db.business.forEach((i) => {
       addLineTable(i.group, i.local, i.title, i.number, i.date);
@@ -124,5 +131,9 @@ module.exports = {
     });
 
     return results;
+  },
+  exportTable: (table, filePath) => {
+    const wb = XLSX.utils.table_to_book(table);
+    XLSX.writeFile(wb, filePath );
   },
 };

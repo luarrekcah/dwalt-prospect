@@ -5,13 +5,22 @@
 const fs = require('fs');
 const {ipcRenderer} = require('electron');
 
-const data = JSON.parse(
-    fs.readFileSync(__dirname + '/../data.json', 'utf8'),
-);
+const data = JSON.parse(fs.readFileSync(__dirname + '/../data.json', 'utf8'));
 
-const {saveData, saveDb, updateTable, setGraph, searchBusiness} = require('../utils');
+const {
+  saveData,
+  saveDb,
+  updateTable,
+  setGraph,
+  searchBusiness,
+  exportTable,
+} = require('../utils');
 
 const prospectAll = document.getElementById('prospectAll');
+
+const deleteAll = document.getElementById('deleteAll');
+
+const exportExcel = document.getElementById('exportExcel');
 
 let db;
 try {
@@ -28,12 +37,14 @@ document.getElementById('where').value = data.location;
 document.getElementById('apikey').value = data.apiKey;
 
 const swithScreen = (arg) => {
-  const screensID = ['indexPage',
+  const screensID = [
+    'indexPage',
     'SearchPage',
     'FilesPage',
     'ConfigPage',
     'Console',
-    'BankNumbers'];
+    'BankNumbers',
+  ];
   screensID.forEach((s) => {
     if (s !== arg) {
       document.getElementById(s).style.display = 'none';
@@ -44,14 +55,11 @@ const swithScreen = (arg) => {
 
 require('../core');
 
-
 const infoSave = document.getElementById('infoSave');
 const configSave = document.getElementById('configSave');
 
 const testProspect = document.getElementById('sendTest');
 const prospect = document.getElementById('sendProspect');
-
-const reprospect = document.getElementById('sendReprospect');
 
 const formFile = document.getElementById('formFile');
 
@@ -60,8 +68,7 @@ const list = document.getElementById('list');
 document.getElementById('sendTime').value = data.config.intervalTime;
 document.getElementById('showTime').innerText = data.config.intervalTime;
 document.getElementById('blockOldNumbers').checked =
-data.config.blockOldNumbers;
-
+  data.config.blockOldNumbers;
 
 const readFiles = () => {
   formFile.value = '';
@@ -87,15 +94,13 @@ const deleteFile = async (file) => {
   });
 };
 
-
 const save = () => {
   saveData({
     text: document.getElementById('text').value,
     type: document.getElementById('businesstype').value,
     location: document.getElementById('where').value,
     apiKey: document.getElementById('apikey').value,
-    config:
-    {
+    config: {
       blockOldNumbers: document.getElementById('blockOldNumbers').checked,
       intervalTime: Number(document.getElementById('sendTime').value),
     },
@@ -120,14 +125,9 @@ prospect.addEventListener('click', () => {
   pemCommand.run();
 });
 
-reprospect.addEventListener('click', () => {
-  const repCommand = require('../core/commands/reprospect');
-  repCommand.run();
-});
-
 function sendMessageTo(n) {
   const shouldSendMessage = confirm('Enviar mensagem para essa empresa?');
-  if (shouldSendMessage ) {
+  if (shouldSendMessage) {
     const sendMessage = require('../core/commands/unique');
     sendMessage.run(n);
   }
@@ -166,7 +166,7 @@ formFile.addEventListener('change', (event) => {
 // eslint-disable-next-line require-jsdoc
 function switchTime() {
   document.getElementById('showTime').innerText =
-  document.getElementById('sendTime').value;
+    document.getElementById('sendTime').value;
 }
 
 function addLineConsole(line, type, isObject) {
@@ -202,9 +202,12 @@ function addLineTable(grupo, local, nome, numero, data) {
   const digitos = numero.replace(/\D/g, '');
 
   // Formata os dígitos em um número de telefone com código de país, código de área e número
-  const telefoneFormatado = `+${digitos.slice(0, 2)} ${digitos.slice(2, 4)} ${digitos.slice(4, 8)}-${digitos.slice(8)}`;
+  const telefoneFormatado = `+${digitos.slice(0, 2)} ${digitos.slice(
+      2,
+      4,
+  )} ${digitos.slice(4, 8)}-${digitos.slice(8)}`;
 
-  console.log(telefoneFormatado);
+  // console.log(telefoneFormatado);
 
   // Cria as células da nova linha e adiciona os valores correspondentes
   const grupoCell = document.createElement('td');
@@ -256,9 +259,13 @@ function addLineTable(grupo, local, nome, numero, data) {
 
 function deleteBusiness(numberToDelete) {
   const shouldDelete = confirm('Você deseja deletar essa empresa?');
-  if (shouldDelete ) {
-    const businessList = JSON.parse(fs.readFileSync(__dirname + '/../datanum.json', 'utf-8'));
-    const newBusinessList = businessList.business.filter((business) => business.number !== numberToDelete);
+  if (shouldDelete) {
+    const businessList = JSON.parse(
+        fs.readFileSync(__dirname + '/../datanum.json', 'utf-8'),
+    );
+    const newBusinessList = businessList.business.filter(
+        (business) => business.number !== numberToDelete,
+    );
     saveDb({business: newBusinessList});
     updateTable();
   }
@@ -291,7 +298,9 @@ form.addEventListener('submit', (event) => {
   console.log('Número da empresa:', numeroFormatado);
   console.log('Data de adesão:', data);
 
-  const db = JSON.parse(fs.readFileSync(__dirname + '/../datanum.json', 'utf-8'));
+  const db = JSON.parse(
+      fs.readFileSync(__dirname + '/../datanum.json', 'utf-8'),
+  );
 
   db.business.push({
     title: nome,
@@ -310,7 +319,6 @@ form.addEventListener('submit', (event) => {
   setGraph();
 });
 
-
 prospectAll.addEventListener('click', () => {
   // Obter uma referência para a tabela DataTable
   const table = $('#tablenumbers').DataTable();
@@ -323,10 +331,59 @@ prospectAll.addEventListener('click', () => {
   addLineConsole(pesquisa, 'info', false);
 
   const numbers = searchBusiness(pesquisa);
-  const warnBox = confirm(`Deseja enviar mensagens agora para ${numbers.length} empresas?`);
+  const warnBox = confirm(
+      `Deseja enviar mensagens agora para ${numbers.length} empresas?`,
+  );
   if (warnBox) {
     sendMessages(numbers);
   } else {
     return;
+  }
+});
+
+deleteAll.addEventListener('click', () => {
+  // Obter uma referência para a tabela DataTable
+  const table = $('#tablenumbers').DataTable();
+
+  // Obter o valor de pesquisa atual
+  const pesquisa = table.search();
+
+  if (pesquisa === '') return alert('Digite algo no campo de pesquisa');
+
+  addLineConsole(pesquisa, 'info', false);
+
+  const numbers = searchBusiness(pesquisa);
+  const warnBox = confirm(`Deseja deletar ${numbers.length} empresas?`);
+  if (warnBox) {
+    const businessList = JSON.parse(
+        fs.readFileSync(__dirname + '/../datanum.json', 'utf-8'),
+    );
+    const newBusinessList = businessList.business.filter((business) => {
+      for (let i = 0; i < numbers.length; i++) {
+        if (business.number === numbers[i].number) {
+          return false;
+        }
+      }
+      return true;
+    });
+    saveDb({business: newBusinessList});
+    updateTable();
+  } else {
+    return;
+  }
+});
+
+exportExcel.addEventListener('click', () => {
+  ipcRenderer.send('open-file-dialog');
+});
+
+ipcRenderer.on('file-dialog-result', (event, filePath) => {
+  const table = document.getElementById('tablenumbers');
+  try {
+    exportTable(table, filePath);
+    alert('Arquivo salvo!');
+  } catch (error) {
+    addLineConsole(error, 'error', true);
+    return alert('Ocorreu um erro ao exportar a tabela.');
   }
 });

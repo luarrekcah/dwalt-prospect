@@ -33,7 +33,8 @@
     "puppeteer-in-electron": "^3.0.5",
     "qr-image": "^3.2.0",
     "serpapi": "^1.1.1",
-    "whatsapp-web.js": "^1.19.4"
+    "whatsapp-web.js": "^1.19.4",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.5",
