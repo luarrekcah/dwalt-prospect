@@ -101,3 +101,5 @@ src/datanum.json
 license.key
 
 dist
+
+*.exe

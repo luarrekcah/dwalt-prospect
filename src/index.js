@@ -6,6 +6,8 @@ const {production} = require('../config.json');
 const fs = require('fs');
 const {default: axios} = require('axios');
 
+const {autoUpdater} = require('electron-updater');
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -191,6 +193,8 @@ app.on('ready', () => {
         createVerificationWindow();
         console.error(error);
       });
+
+  autoUpdater.checkForUpdatesAndNotify();
 });
 
 ipcMain.on('open-file-dialog', (event) => {
@@ -228,3 +232,24 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 // electronReload(`${__dirname}/core`);
+
+autoUpdater.on('update-available', () => {
+  console.log('update-available');
+});
+
+
+autoUpdater.on('checking-for-update', () => {
+  console.log('checking-for-update');
+});
+
+
+autoUpdater.on('download-progress', () => {
+  console.log('download-progress');
+});
+
+
+autoUpdater.on('update-downloaded', () => {
+  console.log('update-downloaded');
+});
+
+
