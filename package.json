@@ -1,11 +1,17 @@
 {
   "name": "Prospect",
   "productName": "Prospect",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Um programa windows para prospecção de clientes.",
   "main": "src/index.js",
   "build": {
     "appId": "com.dlwalt.prospect",
+    "productName": "Prospect",
+    "win": {
+      "target": "nsis",
+      "icon": "./src/assets/icon.co",
+      "publisherName": "D | Walt Engenharia"
+    },
     "compression": "maximum",
     "publish": [
       {
