@@ -44,7 +44,7 @@ IF EXIST .wwebjs_auth (
 color 0A
 echo Compilando o aplicativo Prospect...
 color 07
-electron-builder -p always
+npm run package
 
 color 0A
 echo Compilação concluída com sucesso!
