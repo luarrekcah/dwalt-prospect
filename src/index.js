@@ -111,7 +111,7 @@ function createVerificationWindow() {
       nodeIntegration: true,
       contextIsolation: false,
     },
-    icon: __dirname + '/assets/icon.png',
+    icon: path.join(__dirname, 'assets', 'icon.png'),
   });
 
   verificationWindow.setMenu(null);
@@ -136,7 +136,7 @@ const createWindow = () => {
       nodeIntegration: true,
       contextIsolation: false,
     },
-    icon: __dirname + '/assets/icon.png',
+    icon: path.join(__dirname, 'assets', 'icon.png'),
   });
 
   // and load the index.html of the app.
@@ -233,23 +233,43 @@ app.on('activate', () => {
 // code. You can also put them in separate files and import them here.
 // electronReload(`${__dirname}/core`);
 
-autoUpdater.on('update-available', () => {
-  console.log('update-available');
-});
-
-
 autoUpdater.on('checking-for-update', () => {
   console.log('checking-for-update');
 });
 
+autoUpdater.on('update-available', () => {
+  console.log('update-available');
+  dialog.showMessageBox({
+    type: 'info',
+    title: 'Atualização disponível',
+    message: 'Uma nova versão do aplicativo está disponível. Deseja atualizar agora?',
+    buttons: ['Sim', 'Não'],
+    defaultId: 0,
+    cancelId: 1,
+  }).then((result) => {
+    if (result.response === 0) {
+      autoUpdater.downloadUpdate();
+    }
+  });
+});
 
 autoUpdater.on('download-progress', () => {
   console.log('download-progress');
 });
 
-
 autoUpdater.on('update-downloaded', () => {
-  console.log('update-downloaded');
+  dialog.showMessageBox({
+    type: 'info',
+    title: 'Atualização Baixada',
+    message: 'Quer instalar agora? Isso vai reiniciar seu prospect!',
+    buttons: ['Sim', 'Não'],
+    defaultId: 0,
+    cancelId: 1,
+  }).then((result) => {
+    if (result.response === 0) {
+      autoUpdater.quitAndInstall();
+    }
+  });
 });
 
 

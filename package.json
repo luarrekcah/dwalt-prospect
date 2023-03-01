@@ -1,12 +1,17 @@
 {
   "name": "Prospect",
   "productName": "Prospect",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Um programa windows para prospecção de clientes.",
   "main": "src/index.js",
   "build": {
     "appId": "com.dlwalt.prospect",
+    "icon": "src/assets/icon.png",
     "productName": "Prospect",
+    "files": [
+      "dist/**/*",
+      "src/assets/icon.*"
+    ],
     "win": {
       "target": "nsis",
       "icon": "./src/assets/icon.co",
