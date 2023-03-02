@@ -6,7 +6,6 @@ const {production} = require('../config.json');
 const fs = require('fs');
 const {default: axios} = require('axios');
 const log = require('electron-log');
-const {autoUpdater} = require('electron-updater');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -164,7 +163,6 @@ const validateDate = (dateString) => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-  autoUpdater.checkForUpdatesAndNotify();
   axios
       .get('https://api-dlwalt.glitch.me/verify', {params: {key: licenseKey}})
       .then((r) => {
@@ -174,7 +172,7 @@ app.on('ready', () => {
             try {
               verificationWindow.close();
             } catch (error) {
-            // nothing
+              console.log(error);
             }
             createWindow();
           } else {
@@ -234,55 +232,4 @@ app.on('activate', () => {
 
 log.log(`App version ${app.getVersion()}`);
 
-autoUpdater.on('checking-for-update', () => {
-  log.info('checking-for-update');
-});
-
-autoUpdater.on('update-available', () => {
-  log.info('update-available');
-  dialog.showMessageBox({
-    type: 'info',
-    title: 'Atualização disponível',
-    message: 'Uma nova versão do aplicativo está disponível. Deseja atualizar agora?',
-    buttons: ['Sim', 'Não'],
-    defaultId: 0,
-    cancelId: 1,
-  }).then((result) => {
-    if (result.response === 0) {
-      autoUpdater.downloadUpdate();
-    }
-  });
-});
-
-autoUpdater.on('download-progress', (progressObj) => {
-  const {percent, transferred, total} = progressObj;
-  log.info(`Downloaded ${percent}% (${transferred}/${total} bytes)`);
-});
-
-autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-  const dialogOpts = {
-    type: 'info',
-    buttons: ['Reiniciar', 'Depois'],
-    title: 'Atualização baixada',
-    message: `Uma nova versão (${releaseName}) foi baixada, o app será atualizado assim que você sair ou reiniciar o prospect.`,
-  };
-
-  dialog.showMessageBox(dialogOpts).then((returnValue) => {
-    if (returnValue.response === 0) {
-      try {
-        autoUpdater.quitAndInstall();
-      } catch (error) {
-        log.error(error);
-      }
-    }
-  });
-});
-
-autoUpdater.on('update-not-available', (err) => {
-  log.info('update-not-available');
-});
-
-autoUpdater.on('error', (err) => {
-  log.error('Error in auto updater. ' + err);
-});
 
