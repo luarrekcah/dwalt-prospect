@@ -43,7 +43,10 @@
     "electron-squirrel-startup": "^1.0.0",
     "electron-winstaller": "^5.1.0",
     "google-search-results-nodejs": "^2.1.0",
+    "jQuery": "^1.7.4",
     "jquery": "^3.6.3",
+    "os": "^0.1.2",
+    "puppeteer": "^19.7.2",
     "puppeteer-core": "^19.7.2",
     "puppeteer-in-electron": "^3.0.5",
     "qr-image": "^3.2.0",
@@ -58,7 +61,7 @@
     "@electron-forge/maker-squirrel": "^6.0.5",
     "@electron-forge/maker-zip": "^6.0.5",
     "electron": "23.1.1",
-    "electron-builder": "^23.6.0",
+    "electron-builder": "^22.10.3",
     "eslint": "^8.35.0",
     "eslint-config-google": "^0.14.0"
   }

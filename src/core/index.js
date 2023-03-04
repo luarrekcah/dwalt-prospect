@@ -1,12 +1,27 @@
 const {Client, LocalAuth} = require('whatsapp-web.js');
+const puppeteer = require('puppeteer-core');
+const os = require('os');
+
+let chromePath;
+
+if (os.platform() === 'linux') {
+  chromePath = '/usr/bin/google-chrome-stable';
+} else if (os.platform() === 'win32') {
+  chromePath = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
+} else {
+  console.log('Sistema operacional não suportado.');
+  process.exit(1);
+}
+
 const client = new Client({
   restartOnAuthFail: true,
   authStrategy: new LocalAuth(),
   puppeteer: {
-    executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
+    executablePath: chromePath,
     args: ['--no-sandbox'],
   },
 });
+
 const {getAccount} = require('serpapi');
 
 const {apiKey} = JSON.parse(
