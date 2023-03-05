@@ -44,6 +44,7 @@ const swithScreen = (arg) => {
     'ConfigPage',
     'Console',
     'BankNumbers',
+    'Responses',
   ];
   screensID.forEach((s) => {
     if (s !== arg) {

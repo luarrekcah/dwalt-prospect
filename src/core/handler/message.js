@@ -1,3 +1,4 @@
+const {Buttons} = require('whatsapp-web.js');
 const {updateChats} = require('../../utils');
 
 module.exports.run = async (client, message) => {
@@ -8,7 +9,9 @@ module.exports.run = async (client, message) => {
 
   // addLineConsole(message, 'info', true);
 
-  if (message.body === '!ping') {
-    client.sendMessage(message.from, 'Dados coletados.');
+  if (message.body === '!test') {
+    const button = new Buttons('Button body', [{body: 'bt1'},
+      {body: 'bt2'}, {body: 'bt3'}], 'title', 'footer');
+    client.sendMessage(message.from, button);
   }
 };

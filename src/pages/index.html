@@ -288,6 +288,16 @@
                   <span class="align-middle">Banco</span>
                 </a>
               </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link"
+                  href="#"
+                  onclick="swithScreen('Responses')"
+                >
+                  <i class="align-middle" data-feather="message-square"></i>
+                  <span class="align-middle">Respostas</span>
+                </a>
+              </li>
               <li class="sidebar-header">Outros</li>
 
               <li class="sidebar-item">
@@ -921,6 +931,156 @@
                     </button>
                   </div>
                 </div>
+              </div>
+            </main>
+          </div>
+          <!--RESPONSE-->
+          <div id="Responses" style="display: none">
+            <main class="content">
+              <div class="container-fluid p-0">
+                <h1 class="h3 mb-3">Automação -<strong> Respostas</strong></h1>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <p>
+                          Crie respostas automáticas para mensagens de contatos.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <button
+                          class="btn btn-primary"
+                          style="margin-bottom: 20px"
+                          id="addBtn"
+                        >
+                          Adicionar Resposta Simples
+                        </button>
+                        <div id="questionsDiv">
+                          <div id="question-list"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <script>
+                  let questionCounter = 0;
+
+                  const addQuestion = () => {
+                    questionCounter++;
+                    const questionList =
+                      document.getElementById("question-list");
+                    const questionDiv = document.createElement("div");
+                    questionDiv.classList.add("card", "mb-3");
+
+                    const questionCardBody = document.createElement("div");
+                    questionCardBody.classList.add("card-body");
+
+                    const questionTitle = document.createElement("h5");
+                    questionTitle.classList.add("card-title");
+                    questionTitle.textContent = `Mensagem ${questionCounter}`;
+
+                    const questionFormGroup1 = document.createElement("div");
+                    questionFormGroup1.classList.add("form-group");
+
+                    const questionLabel1 = document.createElement("label");
+                    questionLabel1.setAttribute(
+                      "for",
+                      `question${questionCounter}`
+                    );
+                    questionLabel1.textContent = "Mensagem:";
+
+                    const questionInput = document.createElement("input");
+                    questionInput.setAttribute("type", "text");
+                    questionInput.classList.add("form-control");
+                    questionInput.setAttribute(
+                      "id",
+                      `question${questionCounter}`
+                    );
+                    questionInput.setAttribute(
+                      "name",
+                      `question${questionCounter}`
+                    );
+                    questionInput.setAttribute("required", "");
+
+                    const questionFormGroup2 = document.createElement("div");
+                    questionFormGroup2.classList.add("form-group");
+
+                    const questionLabel2 = document.createElement("label");
+                    questionLabel2.setAttribute(
+                      "for",
+                      `answer${questionCounter}`
+                    );
+                    questionLabel2.textContent = "Resposta:";
+
+                    const answerInput = document.createElement("input");
+                    answerInput.setAttribute("type", "text");
+                    answerInput.classList.add("form-control");
+                    answerInput.setAttribute("id", `answer${questionCounter}`);
+                    answerInput.setAttribute(
+                      "name",
+                      `answer${questionCounter}`
+                    );
+                    answerInput.setAttribute("required", "");
+
+                    const removeQuestionButton =
+                      document.createElement("button");
+                    removeQuestionButton.classList.add("btn", "btn-danger");
+                    removeQuestionButton.textContent = "Apagar";
+                    removeQuestionButton.setAttribute(
+                      "onclick",
+                      `removeQuestion(${questionCounter})`
+                    );
+
+                    questionFormGroup1.appendChild(questionLabel1);
+                    questionFormGroup1.appendChild(questionInput);
+                    questionCardBody.appendChild(questionTitle);
+                    questionCardBody.appendChild(questionFormGroup1);
+                    questionFormGroup2.appendChild(questionLabel2);
+                    questionFormGroup2.appendChild(answerInput);
+                    questionCardBody.appendChild(questionFormGroup2);
+                    questionCardBody.appendChild(removeQuestionButton);
+                    questionDiv.appendChild(questionCardBody);
+                    questionList.appendChild(questionDiv);
+                  };
+
+                  const removeQuestion = (questionNumber) => {
+                    const questionDiv = document
+                      .getElementById(`question${questionNumber}`)
+                      .closest(".card.mb-3");
+                    questionDiv.remove();
+                    questionCounter--;
+                  };
+
+                  const getQuestionsAndAnswers = () => {
+                    const questions = [];
+                    const questionElements =
+                      document.querySelectorAll(".card.mb-3");
+                    questionElements.forEach((questionElement) => {
+                      const questionTitle = questionElement.querySelector(
+                        "input[id^='question']"
+                      ).value;
+                      const answerInput = questionElement.querySelector(
+                        "input[id^='answer']"
+                      );
+                      const answer = answerInput.value;
+                      questions.push({
+                        type: 'text',
+                        question: questionTitle,
+                        answer: answer,
+                      });
+                    });
+                    return JSON.stringify(questions);
+                  };
+
+                  document
+                    .getElementById("addBtn")
+                    .addEventListener("click", addQuestion);
+                </script>
               </div>
             </main>
           </div>
