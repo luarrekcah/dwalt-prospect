@@ -1,6 +1,6 @@
 const client = require('../index');
 const fs = require('fs');
-const {sendImage} = require('../../utils');
+const {sendImage, randomNumberGen} = require('../../utils');
 
 const sleep = (s) => {
   return new Promise((resolve) => setTimeout(resolve, s * 1000));
@@ -49,14 +49,16 @@ module.exports.run = async () => {
         setStatus('Enviando');
         setProgress(2);
         try {
-          await client.sendMessage(db.business[index].number, text.toString());
+          const id = randomNumberGen();
+          await client.sendMessage(db.business[index].number,
+              `${text.toString()}\n\nID:${id}`);
         } catch (err) {
           alert('Ocorreu um erro ao enviar mensagem: ' + err);
         }
 
         files.forEach(async (f) => {
           try {
-            await sendImage(client, db.business[index].number, '', f);
+            await sendImage(client, db.business[index].number, `ID:${id}`, f);
           } catch (err) {
             alert('Ocorreu um erro ao enviar arquivos: ' + err);
           }

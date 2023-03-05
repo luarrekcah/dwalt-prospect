@@ -136,4 +136,11 @@ module.exports = {
     const wb = XLSX.utils.table_to_book(table);
     XLSX.writeFile(wb, filePath );
   },
+  randomNumberGen: () => {
+    let numeros = '';
+    for (let i = 0; i < 10; i++) {
+      numeros += Math.floor(Math.random() * 10);
+    }
+    return numeros;
+  },
 };

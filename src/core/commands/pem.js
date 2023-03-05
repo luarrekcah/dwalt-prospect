@@ -3,7 +3,7 @@ const SerpApi = require('google-search-results-nodejs');
 const fs = require('fs');
 const client = require('../index');
 const {ipcRenderer} = require('electron');
-const {sendImage, saveDb} = require('../../utils');
+const {sendImage, saveDb, randomNumberGen} = require('../../utils');
 
 const sleep = (s) => new Promise((resolve) => setTimeout(resolve, s * 1000));
 const setStatus = (arg) =>
@@ -189,7 +189,8 @@ module.exports.run = async () => {
             setProgress(2);
 
             try {
-              await client.sendMessage(number, text.toString());
+              const id = randomNumberGen();
+              await client.sendMessage(number, `${text.toString()}\n\nID:${id}`);
             } catch (err) {
               addLineConsole(err, 'error', true);
             }
@@ -197,7 +198,7 @@ module.exports.run = async () => {
             for (let j = 0; j < files.length; j++) {
               const f = files[j];
               try {
-                await sendImage(client, number, '', f);
+                await sendImage(client, number, `ID:${id}`, f);
               } catch (err) {
                 addLineConsole(err, 'error', true);
               }

@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 const client = require('../index');
-const {sendImage} = require('../../utils');
+const {sendImage, randomNumberGen} = require('../../utils');
 
 module.exports.run = async (number) => {
   const data = JSON.parse(
@@ -19,10 +19,12 @@ module.exports.run = async (number) => {
         files.push(`${__dirname}/../../medias/${file}`);
       });
 
-      client.sendMessage(number, `${data.text}`);
+      const id = randomNumberGen();
+
+      client.sendMessage(number, `${data.text}\n\nID:${id}`);
 
       files.forEach(async (f) => {
-        await sendImage(client, number, '', f);
+        await sendImage(client, number, `ID:${id}`, f);
       });
 
       document.getElementById('sendCount').innerText = numeroAtual + 1;
