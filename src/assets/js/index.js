@@ -4,9 +4,6 @@
 /* eslint-disable no-unused-vars */
 const fs = require('fs');
 const {ipcRenderer} = require('electron');
-
-const data = JSON.parse(fs.readFileSync(__dirname + '/../data.json', 'utf8'));
-
 const {
   saveData,
   saveDb,
@@ -14,7 +11,16 @@ const {
   setGraph,
   searchBusiness,
   exportTable,
+  saveQ,
 } = require('../utils');
+const data = JSON.parse(fs.readFileSync(__dirname + '/../data.json', 'utf8'));
+
+let responsesq;
+try {
+  responsesq = JSON.parse(fs.readFileSync(__dirname + '/../responses.json', 'utf8'));
+} catch (error) {
+  saveQ([]);
+}
 
 const prospectAll = document.getElementById('prospectAll');
 
@@ -373,6 +379,101 @@ deleteAll.addEventListener('click', () => {
     return;
   }
 });
+
+if (responsesq && responsesq.length !== 0) {
+  responsesq.forEach((question, i) => {
+    const questionDiv = document.createElement('div');
+    questionDiv.classList.add('card', 'mb-3');
+
+    const questionCardBody = document.createElement('div');
+    questionCardBody.classList.add('card-body');
+
+    const questionTitle = document.createElement('h5');
+    questionTitle.classList.add('card-title');
+    questionTitle.textContent = `Mensagem`;
+
+    const questionFormGroup1 = document.createElement('div');
+    questionFormGroup1.classList.add('form-group');
+
+    const questionLabel1 = document.createElement('label');
+    questionLabel1.setAttribute('for', `question${i + 1}`);
+    questionLabel1.textContent = 'Mensagem:';
+
+    const questionInput = document.createElement('input');
+    questionInput.setAttribute('type', 'text');
+    questionInput.classList.add('form-control');
+    questionInput.setAttribute('id', `question${i + 1}`);
+    questionInput.setAttribute('name', `question${i + 1}`);
+    questionInput.setAttribute('required', '');
+    questionInput.value = question.question;
+
+    const questionFormGroup2 = document.createElement('div');
+    questionFormGroup2.classList.add('form-group');
+
+    const questionLabel2 = document.createElement('label');
+    questionLabel2.setAttribute('for', `answer${i + 1}`);
+    questionLabel2.textContent = 'Resposta:';
+
+    const answerInput = document.createElement('input');
+    answerInput.setAttribute('type', 'text');
+    answerInput.classList.add('form-control');
+    answerInput.setAttribute('id', `answer${i + 1}`);
+    answerInput.setAttribute('name', `answer${i + 1}`);
+    answerInput.setAttribute('required', '');
+    answerInput.value = question.answer;
+
+    const fileFormGroup = document.createElement('div');
+    fileFormGroup.classList.add('form-group');
+
+    const fileLabel = document.createElement('label');
+    fileLabel.setAttribute('for', `file${i + 1}`);
+    fileLabel.textContent = 'Arquivo:';
+
+    const fileInput = document.createElement('input');
+    fileInput.setAttribute('type', 'file');
+    fileInput.classList.add('form-control-file');
+    fileInput.setAttribute('id', `file${i + 1}`);
+    fileInput.setAttribute('name', `file${i + 1}`);
+    fileInput.setAttribute('multiple', 'true');
+    fileInput.value = question.files.join(', ');
+
+    const removeQuestionButton = document.createElement('button');
+    removeQuestionButton.classList.add('btn', 'btn-danger');
+    removeQuestionButton.textContent = 'Apagar';
+    removeQuestionButton.setAttribute('onclick', `removeQuestion(${i + 1})`);
+
+    questionFormGroup1.appendChild(questionLabel1);
+    questionFormGroup1.appendChild(questionInput);
+    questionCardBody.appendChild(questionTitle);
+    questionCardBody.appendChild(questionFormGroup1);
+    questionFormGroup2.appendChild(questionLabel2);
+    questionFormGroup2.appendChild(answerInput);
+    questionCardBody.appendChild(questionFormGroup2);
+    fileFormGroup.appendChild(fileLabel);
+    fileFormGroup.appendChild(fileInput);
+    questionCardBody.appendChild(fileFormGroup);
+    questionCardBody.appendChild(removeQuestionButton);
+    questionDiv.appendChild(questionCardBody);
+
+    const questionList = document.getElementById('question-list');
+    questionList.appendChild(questionDiv);
+  });
+}
+
+document.getElementById('saveQuestions').addEventListener('click', async () => {
+  const q = await getQuestionsAndAnswers();
+  alert('Preferências salvas.');
+  saveQ(q);
+});
+
+document.getElementById('deleteAllQuestions').addEventListener('click', async () => {
+  const confirmDQ = confirm('Tem certeza que deseja apagar todas as respostas?');
+  if (confirmDQ) {
+    alert('Todas as respostas foram deletadas');
+    saveQ([]);
+  }
+});
+
 
 exportExcel.addEventListener('click', () => {
   ipcRenderer.send('open-file-dialog');

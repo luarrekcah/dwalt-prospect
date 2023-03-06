@@ -961,7 +961,7 @@
                           <div class="col">
                             <button
                               class="btn btn-primary"
-                              style="margin-bottom: 20px"
+                              style="margin-bottom: 20px; width: 100%"
                               id="addBtn"
                             >
                               Adicionar Resposta Simples
@@ -970,12 +970,23 @@
                           <div class="col">
                             <button
                               class="btn btn-success"
-                              style="margin-bottom: 20px"
+                              style="margin-bottom: 20px;width: 100%"
                               id="saveQuestions"
                             >
-                              Salvar
+                              Aplicar
                             </button>
                           </div>
+
+                          <div class="col">
+                            <button
+                              class="btn btn-danger"
+                              style="margin-bottom: 20px; width: 100%"
+                              id="deleteAllQuestions"
+                            >
+                              Apagar tudo
+                            </button>
+                          </div>
+
                         </div>
                       </div>
                     </div>
@@ -1007,7 +1018,7 @@
 
                     const questionTitle = document.createElement("h5");
                     questionTitle.classList.add("card-title");
-                    questionTitle.textContent = `Mensagem ${questionCounter}`;
+                    questionTitle.textContent = `Mensagem`;
 
                     const questionFormGroup1 = document.createElement("div");
                     questionFormGroup1.classList.add("form-group");
@@ -1143,7 +1154,7 @@
                         files: files,
                       });
                     }
-                    return JSON.stringify(questions);
+                    return questions
                   };
 
                   document

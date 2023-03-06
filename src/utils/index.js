@@ -39,6 +39,15 @@ module.exports = {
       addLineConsole(error, 'error', true);
     }
   },
+  saveQ: (data) => {
+    const toStringData = JSON.stringify(data);
+    try {
+      fs.writeFileSync(`${__dirname}/../responses.json`, toStringData);
+    } catch (error) {
+      addLineConsole('error when writing json: ', 'error', false);
+      addLineConsole(error, 'error', true);
+    }
+  },
   sendImage: async (client, phone, caption = '', path) => {
     return new Promise(async function(resolve, reject) {
       const media = MessageMedia.fromFilePath(path);

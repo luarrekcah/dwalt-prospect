@@ -1,5 +1,4 @@
 const {Client, LocalAuth} = require('whatsapp-web.js');
-const puppeteer = require('puppeteer-core');
 const os = require('os');
 
 let chromePath;
