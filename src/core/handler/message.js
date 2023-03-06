@@ -22,9 +22,11 @@ module.exports.run = async (client, message) => {
             question.toLowerCase())) {
           client.sendMessage(message.from, responses[index].answer);
           if (responses[index].files.length !== 0) {
-            responses[index].files.forEach((file) => {
-              sendImage(client, message.from, ``, file.base64);
-            });
+            for (let i = 0; i < responses[index].files.length; i++) {
+              const file = responses[index].files[i];
+              const media = new MessageMedia('image/png', file.base64);
+              sendImage(client, message.from, ``, media);
+            }
           }
         }
       } else {

@@ -36,7 +36,6 @@ try {
   db = JSON.parse(fs.readFileSync(__dirname + '/../datanum.json', 'utf-8'));
 }
 
-// Preloads
 document.getElementById('text').value = data.text;
 document.getElementById('businesstype').value = data.type;
 document.getElementById('where').value = data.location;
@@ -92,9 +91,7 @@ const readFiles = () => {
 };
 readFiles();
 
-// eslint-disable-next-line no-unused-vars
 const deleteFile = async (file) => {
-  // na vdd isso aqui é usado simkk
   fs.unlink(`${__dirname}/../medias/${file}`, (err) => {
     if (err) throw err;
     readFiles();
@@ -170,7 +167,6 @@ formFile.addEventListener('change', (event) => {
   });
 });
 
-// eslint-disable-next-line require-jsdoc
 function switchTime() {
   document.getElementById('showTime').innerText =
     document.getElementById('sendTime').value;
@@ -202,21 +198,15 @@ addLineConsole('...', 'success', false);
 cleanConsole();
 
 function addLineTable(grupo, local, nome, numero, data) {
-  // Cria um novo elemento <tr>
   const newRow = document.createElement('tr');
 
-  // Extrai apenas os dígitos do número de telefone
   const digitos = numero.replace(/\D/g, '');
 
-  // Formata os dígitos em um número de telefone com código de país, código de área e número
   const telefoneFormatado = `+${digitos.slice(0, 2)} ${digitos.slice(
       2,
       4,
   )} ${digitos.slice(4, 8)}-${digitos.slice(8)}`;
 
-  // console.log(telefoneFormatado);
-
-  // Cria as células da nova linha e adiciona os valores correspondentes
   const grupoCell = document.createElement('td');
   grupoCell.textContent = grupo;
   const localCell = document.createElement('td');
@@ -248,7 +238,6 @@ function addLineTable(grupo, local, nome, numero, data) {
   sendButtonCell.appendChild(sendButton);
   sendButtonCell.appendChild(deleteButton);
 
-  // Adiciona as células à nova linha
   newRow.appendChild(grupoCell);
   newRow.appendChild(localCell);
   newRow.appendChild(nomeCell);
@@ -256,11 +245,9 @@ function addLineTable(grupo, local, nome, numero, data) {
   newRow.appendChild(dataCell);
   newRow.appendChild(sendButtonCell);
 
-  // Adiciona a nova linha à tabela
   const tableBody = document.querySelector('#tablenumbers tbody');
   tableBody.appendChild(newRow);
 
-  // Atualiza os ícones Feather
   feather.replace();
 }
 
@@ -281,10 +268,8 @@ function deleteBusiness(numberToDelete) {
 const form = document.querySelector('#addBusiness');
 
 form.addEventListener('submit', (event) => {
-  // Previne o envio do formulário e recarregamento da página
   event.preventDefault();
 
-  // Coleta os valores dos inputs
   const grupo = document.querySelector('#grupo').value;
   const local = document.querySelector('#local').value;
   const tipo = document.querySelector('#tipo').value;
@@ -292,13 +277,10 @@ form.addEventListener('submit', (event) => {
   const numero = document.querySelector('#numero').value;
   let data = document.querySelector('#data').value;
 
-  // Formata a data para o padrão DD/MM/YYYY
   data = data.split('-').reverse().join('/');
 
-  // Remove os caracteres especiais do número e acrescenta o sufixo "@c.us"
   const numeroFormatado = numero.replace(/[+\-()]/g, '') + '@c.us';
 
-  // Imprime os valores coletados e formatados no console
   console.log('Grupo:', grupo);
   console.log('Local:', local);
   console.log('Nome da Empresa:', nome);
@@ -380,6 +362,25 @@ deleteAll.addEventListener('click', () => {
   }
 });
 
+function dataURLtoFile(dataurl, filename) {
+  const arr = dataurl.split(','); const mime = arr[0].match(/:(.*?);/)[1];
+  const bstr = atob(arr[1]); let n = bstr.length; const u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], filename, {type: mime});
+}
+
+const createFileList = (files) => {
+  const dataTransfer = new DataTransfer();
+  files.forEach((file) => {
+    const fileObj = dataURLtoFile(file.base64, file.name);
+    dataTransfer.items.add(fileObj);
+  });
+  return dataTransfer.files;
+};
+
+
 if (responsesq && responsesq.length !== 0) {
   responsesq.forEach((question, i) => {
     const questionDiv = document.createElement('div');
@@ -435,7 +436,8 @@ if (responsesq && responsesq.length !== 0) {
     fileInput.setAttribute('id', `file${i + 1}`);
     fileInput.setAttribute('name', `file${i + 1}`);
     fileInput.setAttribute('multiple', 'true');
-    fileInput.value = question.files.join(', ');
+
+    fileInput.files = createFileList(question.files || []);
 
     const removeQuestionButton = document.createElement('button');
     removeQuestionButton.classList.add('btn', 'btn-danger');
@@ -473,7 +475,6 @@ document.getElementById('deleteAllQuestions').addEventListener('click', async ()
     saveQ([]);
   }
 });
-
 
 exportExcel.addEventListener('click', () => {
   ipcRenderer.send('open-file-dialog');
