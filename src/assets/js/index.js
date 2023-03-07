@@ -14,21 +14,81 @@ const {
   saveQ,
 } = require('../utils');
 const data = JSON.parse(fs.readFileSync(__dirname + '/../data.json', 'utf8'));
+const {decode} = require('base64-arraybuffer');
 
+const prospectAll = document.getElementById('prospectAll');
+const deleteAll = document.getElementById('deleteAll');
+const exportExcel = document.getElementById('exportExcel');
+const infoSave = document.getElementById('infoSave');
+const configSave = document.getElementById('configSave');
+const testProspect = document.getElementById('sendTest');
+const prospect = document.getElementById('sendProspect');
+const formFile = document.getElementById('formFile');
+const list = document.getElementById('list');
+const addBusiness = document.querySelector('#addBusiness');
+
+let questionCounter = 0;
 let responsesq;
+let db;
+
+const deleteFile = async (file) => {
+  fs.unlink(`${__dirname}/../medias/${file}`, (err) => {
+    if (err) throw err;
+    readFiles();
+  });
+};
+
+const save = () => {
+  saveData({
+    text: document.getElementById('text').value,
+    type: document.getElementById('businesstype').value,
+    location: document.getElementById('where').value,
+    apiKey: document.getElementById('apikey').value,
+    config: {
+      blockOldNumbers: document.getElementById('blockOldNumbers').checked,
+      intervalTime: Number(document.getElementById('sendTime').value),
+    },
+  });
+};
+
+function sendMessageTo(n) {
+  const shouldSendMessage = confirm('Enviar mensagem para essa empresa?');
+  if (shouldSendMessage) {
+    const sendMessage = require('../core/commands/unique');
+    sendMessage.run(n);
+  }
+}
+
+function sendMessages(array) {
+  const sendMessages = require('../core/commands/sendMessages');
+  sendMessages.run(array);
+}
+
+const toBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+
+
+const readFileAsDataURL = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+};
+
+
 try {
   responsesq = JSON.parse(fs.readFileSync(__dirname + '/../responses.json', 'utf8'));
 } catch (error) {
   saveQ([]);
 }
 
-const prospectAll = document.getElementById('prospectAll');
-
-const deleteAll = document.getElementById('deleteAll');
-
-const exportExcel = document.getElementById('exportExcel');
-
-let db;
 try {
   db = JSON.parse(fs.readFileSync(__dirname + '/../datanum.json', 'utf-8'));
 } catch (error) {
@@ -61,16 +121,6 @@ const swithScreen = (arg) => {
 
 require('../core');
 
-const infoSave = document.getElementById('infoSave');
-const configSave = document.getElementById('configSave');
-
-const testProspect = document.getElementById('sendTest');
-const prospect = document.getElementById('sendProspect');
-
-const formFile = document.getElementById('formFile');
-
-const list = document.getElementById('list');
-
 document.getElementById('sendTime').value = data.config.intervalTime;
 document.getElementById('showTime').innerText = data.config.intervalTime;
 document.getElementById('blockOldNumbers').checked =
@@ -91,26 +141,6 @@ const readFiles = () => {
 };
 readFiles();
 
-const deleteFile = async (file) => {
-  fs.unlink(`${__dirname}/../medias/${file}`, (err) => {
-    if (err) throw err;
-    readFiles();
-  });
-};
-
-const save = () => {
-  saveData({
-    text: document.getElementById('text').value,
-    type: document.getElementById('businesstype').value,
-    location: document.getElementById('where').value,
-    apiKey: document.getElementById('apikey').value,
-    config: {
-      blockOldNumbers: document.getElementById('blockOldNumbers').checked,
-      intervalTime: Number(document.getElementById('sendTime').value),
-    },
-  });
-};
-
 infoSave.addEventListener('click', () => {
   save();
 });
@@ -128,27 +158,6 @@ prospect.addEventListener('click', () => {
   const pemCommand = require('../core/commands/pem');
   pemCommand.run();
 });
-
-function sendMessageTo(n) {
-  const shouldSendMessage = confirm('Enviar mensagem para essa empresa?');
-  if (shouldSendMessage) {
-    const sendMessage = require('../core/commands/unique');
-    sendMessage.run(n);
-  }
-}
-
-function sendMessages(array) {
-  const sendMessages = require('../core/commands/sendMessages');
-  sendMessages.run(array);
-}
-
-const toBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
 
 formFile.addEventListener('change', (event) => {
   const selectedFiles = [...formFile.files];
@@ -265,9 +274,7 @@ function deleteBusiness(numberToDelete) {
   }
 }
 
-const form = document.querySelector('#addBusiness');
-
-form.addEventListener('submit', (event) => {
+addBusiness.addEventListener('submit', (event) => {
   event.preventDefault();
 
   const grupo = document.querySelector('#grupo').value;
@@ -303,7 +310,7 @@ form.addEventListener('submit', (event) => {
   saveDb({business: db.business});
 
   // Limpa os inputs após a submissão do formulário
-  form.reset();
+  addBusiness.reset();
   updateTable();
   setGraph();
 });
@@ -363,12 +370,15 @@ deleteAll.addEventListener('click', () => {
 });
 
 function dataURLtoFile(dataurl, filename) {
-  const arr = dataurl.split(','); const mime = arr[0].match(/:(.*?);/)[1];
-  const bstr = atob(arr[1]); let n = bstr.length; const u8arr = new Uint8Array(n);
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n);
+  const regex = /^data:image\/(png|jpeg|jpg);base64,/;
+  const match = dataurl.match(regex);
+  if (!match) {
+    throw new Error('Invalid data URL');
   }
-  return new File([u8arr], filename, {type: mime});
+  const base64 = dataurl.replace(match[0], '');
+  const arrayBuffer = decode(base64);
+  const file = new File([arrayBuffer], filename, {type: match[0].slice(5, -7)});
+  return file;
 }
 
 const createFileList = (files) => {
@@ -383,6 +393,7 @@ const createFileList = (files) => {
 
 if (responsesq && responsesq.length !== 0) {
   responsesq.forEach((question, i) => {
+    questionCounter++;
     const questionDiv = document.createElement('div');
     questionDiv.classList.add('card', 'mb-3');
 
@@ -479,6 +490,152 @@ document.getElementById('deleteAllQuestions').addEventListener('click', async ()
 exportExcel.addEventListener('click', () => {
   ipcRenderer.send('open-file-dialog');
 });
+
+const addQuestion = () => {
+  questionCounter++;
+  const questionList =
+                      document.getElementById('question-list');
+  const questionDiv = document.createElement('div');
+  questionDiv.classList.add('card', 'mb-3');
+
+  const questionCardBody = document.createElement('div');
+  questionCardBody.classList.add('card-body');
+
+  const questionTitle = document.createElement('h5');
+  questionTitle.classList.add('card-title');
+  questionTitle.textContent = `Mensagem`;
+
+  const questionFormGroup1 = document.createElement('div');
+  questionFormGroup1.classList.add('form-group');
+
+  const questionLabel1 = document.createElement('label');
+  questionLabel1.setAttribute(
+      'for',
+      `question${questionCounter}`,
+  );
+  questionLabel1.textContent = 'Mensagem:';
+
+  const questionInput = document.createElement('input');
+  questionInput.setAttribute('type', 'text');
+  questionInput.classList.add('form-control');
+  questionInput.setAttribute(
+      'id',
+      `question${questionCounter}`,
+  );
+  questionInput.setAttribute(
+      'name',
+      `question${questionCounter}`,
+  );
+  questionInput.setAttribute('required', '');
+
+  const questionFormGroup2 = document.createElement('div');
+  questionFormGroup2.classList.add('form-group');
+
+  const questionLabel2 = document.createElement('label');
+  questionLabel2.setAttribute(
+      'for',
+      `answer${questionCounter}`,
+  );
+  questionLabel2.textContent = 'Resposta:';
+
+  const answerInput = document.createElement('input');
+  answerInput.setAttribute('type', 'text');
+  answerInput.classList.add('form-control');
+  answerInput.setAttribute('id', `answer${questionCounter}`);
+  answerInput.setAttribute(
+      'name',
+      `answer${questionCounter}`,
+  );
+  answerInput.setAttribute('required', '');
+
+  const fileFormGroup = document.createElement('div');
+  fileFormGroup.classList.add('form-group');
+
+  const fileLabel = document.createElement('label');
+  fileLabel.setAttribute('for', `file${questionCounter}`);
+  fileLabel.textContent = 'Arquivo:';
+
+  const fileInput = document.createElement('input');
+  fileInput.setAttribute('type', 'file');
+  fileInput.classList.add('form-control-file');
+  fileInput.setAttribute('id', `file${questionCounter}`);
+  fileInput.setAttribute('name', `file${questionCounter}`);
+  fileInput.setAttribute('multiple', `true`);
+
+  const removeQuestionButton =
+                      document.createElement('button');
+  removeQuestionButton.classList.add('btn', 'btn-danger');
+  removeQuestionButton.textContent = 'Apagar';
+  removeQuestionButton.setAttribute(
+      'onclick',
+      `removeQuestion(${questionCounter})`,
+  );
+
+  questionFormGroup1.appendChild(questionLabel1);
+  questionFormGroup1.appendChild(questionInput);
+  questionCardBody.appendChild(questionTitle);
+  questionCardBody.appendChild(questionFormGroup1);
+  questionFormGroup2.appendChild(questionLabel2);
+  questionFormGroup2.appendChild(answerInput);
+  questionCardBody.appendChild(questionFormGroup2);
+  fileFormGroup.appendChild(fileLabel);
+  fileFormGroup.appendChild(fileInput);
+  questionCardBody.appendChild(fileFormGroup);
+  questionCardBody.appendChild(removeQuestionButton);
+  questionDiv.appendChild(questionCardBody);
+  questionList.appendChild(questionDiv);
+};
+
+const removeQuestion = (questionNumber) => {
+  const questionDiv = document
+      .getElementById(`question${questionNumber}`)
+      .closest('.card.mb-3');
+  questionDiv.remove();
+  questionCounter--;
+};
+
+const getQuestionsAndAnswers = async () => {
+  const questions = [];
+  const questionElements =
+                      document.querySelectorAll('.card.mb-3');
+  for (let i = 0; i < questionElements.length; i++) {
+    const questionElement = questionElements[i];
+    const questionTitle = questionElement.querySelector(
+        'input[id^=\'question\']',
+    ).value;
+    const answerInput = questionElement.querySelector(
+        'input[id^=\'answer\']',
+    );
+    const answer = answerInput.value;
+    const files = [];
+    const fileInputs =
+                        questionElement.querySelectorAll('input[type=\'file\']');
+    for (let j = 0; j < fileInputs.length; j++) {
+      const fileInput = fileInputs[j];
+      for (let k = 0; k < fileInput.files.length; k++) {
+        const file = fileInput.files[k];
+        const base64 = await readFileAsDataURL(file);
+        files.push({
+          name: file.name,
+          type: file.type,
+          size: file.size,
+          base64,
+        });
+      }
+    }
+    questions.push({
+      type: 'text',
+      question: questionTitle,
+      answer: answer,
+      files: files,
+    });
+  }
+  return questions;
+};
+
+document
+    .getElementById('addBtn')
+    .addEventListener('click', addQuestion);
 
 ipcRenderer.on('file-dialog-result', (event, filePath) => {
   const table = document.getElementById('tablenumbers');

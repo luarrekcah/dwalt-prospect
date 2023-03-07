@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-const {app, BrowserWindow, Menu, ipcMain, Notification, dialog} = require('electron');
+const {app, BrowserWindow, Menu, ipcMain, Notification, dialog, shell} = require('electron');
 const path = require('path');
 // const electronReload = require('electron-reload');
 const {production} = require('../config.json');
@@ -159,10 +159,49 @@ const validateDate = (dateString) => {
   return inputDate >= currentDate;
 };
 
+const checkVersion = (actual) => {
+  const atualNumbers = actual.split('.').map(Number);
+  return fetch(`https://api.github.com/repos/luarrekcah/dwalt-prospect/tags`)
+      .then((response) => response.json())
+      .then((tags) => {
+        const latestTag = tags.find((tag) => {
+          const numbers = tag.name.split('.').map(Number);
+          for (let i = 0; i < numbers.length; i++) {
+            if (numbers[i] > atualNumbers[i]) {
+              return true;
+            } else if (numbers[i] < atualNumbers[i]) {
+              return false;
+            }
+          }
+          return false;
+        });
+
+        if (latestTag) {
+          dialog.showMessageBox(mainWindow, {
+            type: 'info',
+            message: `Nova versão disponível: ${latestTag.name}.`,
+            buttons: ['Baixar', 'Cancelar'],
+          }).then((response) => {
+            if (response.response === 0) {
+              shell.openExternal(`https://github.com/luarrekcah/dwalt-prospect/releases/download/${latestTag.name}/ProspectSetup.exe`);
+            } else {
+              return;
+            }
+          });
+        } else {
+          console.log('Você está usando a versão mais recente.');
+        }
+      })
+      .catch((error) => {
+        console.error(`Ocorreu um erro ao buscar as tags do repositório luarrekcah/dwalt-prospect: ${error}`);
+      });
+};
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', () => {
+app.on('ready', async () => {
+  await checkVersion(app.getVersion());
   axios
       .get('https://api-dlwalt.glitch.me/verify', {params: {key: licenseKey}})
       .then((r) => {
@@ -170,7 +209,9 @@ app.on('ready', () => {
         if (data) {
           if (validateDate(data.validUntil) && data.lockedAcess === false) {
             try {
-              verificationWindow.close();
+              if (verificationWindow !== undefined) {
+                verificationWindow.close();
+              }
             } catch (error) {
               console.log(error);
             }

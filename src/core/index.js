@@ -31,10 +31,20 @@ const messageHandler = require(`./handler/message`);
 const readyHandler = require(`./handler/ready`);
 const qrHandler = require(`./handler/qr`);
 const disconnectedHandler = require(`./handler/disconnected`);
+const loadingScreenHandler = require(`./handler/loadingScreen`);
+const authenticatedHandler = require(`./handler/authenticated`);
 const {setGraph, saveDb, updateTable} = require('../utils');
 
 client.on('qr', (qr) => {
   return qrHandler.run(qr);
+});
+
+client.on('authenticated', () => {
+  return authenticatedHandler.run();
+});
+
+client.on('loading_screen', (percent) => {
+  return loadingScreenHandler.run(percent);
 });
 
 client.on('ready', async () => {
@@ -45,6 +55,12 @@ client.on('message', (message) => {
   return messageHandler.run(client, message);
 });
 
+client.on('auth_failure', () => {
+  document.getElementById('divInitial').innerHTML =
+     `<p>Erro</p>
+     <b>Ocorreu um erro na autenticação, tente novamente.</b>`;
+});
+
 client.on('disconnected', () => {
   return disconnectedHandler.run();
 });
@@ -52,6 +68,8 @@ client.on('disconnected', () => {
 try {
   client.initialize();
 } catch (error) {
+  client.initialize();
+  alert(`Ocorreu um erro ao iniciar o bot: ${error}`);
   addLineConsole(error, 'error', true);
 }
 

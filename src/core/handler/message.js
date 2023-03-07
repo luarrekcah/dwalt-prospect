@@ -1,5 +1,5 @@
-const {Buttons} = require('whatsapp-web.js');
-const {updateChats, sendImage} = require('../../utils');
+const {Buttons, MessageMedia} = require('whatsapp-web.js');
+const {updateChats} = require('../../utils');
 
 module.exports.run = async (client, message) => {
   updateChats(client);
@@ -24,8 +24,9 @@ module.exports.run = async (client, message) => {
           if (responses[index].files.length !== 0) {
             for (let i = 0; i < responses[index].files.length; i++) {
               const file = responses[index].files[i];
-              const media = new MessageMedia('image/png', file.base64);
-              sendImage(client, message.from, ``, media);
+              const media = new MessageMedia(file.type, file.base64);
+              client
+                  .sendMessage(message.from, media, {caption: ''});
             }
           }
         }

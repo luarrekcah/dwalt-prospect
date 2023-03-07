@@ -303,7 +303,32 @@
                   <span class="align-middle">Respostas</span>
                 </a>
               </li>
+              <!--
               <li class="sidebar-header">Outros</li>
+
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link"
+                  target="_blank"
+                  href="https://prospect.dlwalt.com"
+                >
+                  <i class="align-middle" data-feather="globe"></i>
+                  <span class="align-middle">Site</span>
+                </a>
+              </li>
+
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link"
+                  href="https://wa.me/+556892402096"
+                >
+                  <i class="align-middle" data-feather="tool"></i>
+                  <span class="align-middle">Suporte Técnico</span>
+                </a>
+              </li>
+              -->
+
+              <li class="sidebar-header">Avançado</li>
 
               <li class="sidebar-item">
                 <a
@@ -970,7 +995,7 @@
                           <div class="col">
                             <button
                               class="btn btn-success"
-                              style="margin-bottom: 20px;width: 100%"
+                              style="margin-bottom: 20px; width: 100%"
                               id="saveQuestions"
                             >
                               Aplicar
@@ -986,7 +1011,6 @@
                               Apagar tudo
                             </button>
                           </div>
-
                         </div>
                       </div>
                     </div>
@@ -1001,166 +1025,6 @@
                     </div>
                   </div>
                 </div>
-
-                <script>
-                  let questionCounter = 0;
-                  let fileCounter = 0;
-
-                  const addQuestion = () => {
-                    questionCounter++;
-                    const questionList =
-                      document.getElementById("question-list");
-                    const questionDiv = document.createElement("div");
-                    questionDiv.classList.add("card", "mb-3");
-
-                    const questionCardBody = document.createElement("div");
-                    questionCardBody.classList.add("card-body");
-
-                    const questionTitle = document.createElement("h5");
-                    questionTitle.classList.add("card-title");
-                    questionTitle.textContent = `Mensagem`;
-
-                    const questionFormGroup1 = document.createElement("div");
-                    questionFormGroup1.classList.add("form-group");
-
-                    const questionLabel1 = document.createElement("label");
-                    questionLabel1.setAttribute(
-                      "for",
-                      `question${questionCounter}`
-                    );
-                    questionLabel1.textContent = "Mensagem:";
-
-                    const questionInput = document.createElement("input");
-                    questionInput.setAttribute("type", "text");
-                    questionInput.classList.add("form-control");
-                    questionInput.setAttribute(
-                      "id",
-                      `question${questionCounter}`
-                    );
-                    questionInput.setAttribute(
-                      "name",
-                      `question${questionCounter}`
-                    );
-                    questionInput.setAttribute("required", "");
-
-                    const questionFormGroup2 = document.createElement("div");
-                    questionFormGroup2.classList.add("form-group");
-
-                    const questionLabel2 = document.createElement("label");
-                    questionLabel2.setAttribute(
-                      "for",
-                      `answer${questionCounter}`
-                    );
-                    questionLabel2.textContent = "Resposta:";
-
-                    const answerInput = document.createElement("input");
-                    answerInput.setAttribute("type", "text");
-                    answerInput.classList.add("form-control");
-                    answerInput.setAttribute("id", `answer${questionCounter}`);
-                    answerInput.setAttribute(
-                      "name",
-                      `answer${questionCounter}`
-                    );
-                    answerInput.setAttribute("required", "");
-
-                    const fileFormGroup = document.createElement("div");
-                    fileFormGroup.classList.add("form-group");
-
-                    const fileLabel = document.createElement("label");
-                    fileLabel.setAttribute("for", `file${questionCounter}`);
-                    fileLabel.textContent = "Arquivo:";
-
-                    const fileInput = document.createElement("input");
-                    fileInput.setAttribute("type", "file");
-                    fileInput.classList.add("form-control-file");
-                    fileInput.setAttribute("id", `file${questionCounter}`);
-                    fileInput.setAttribute("name", `file${questionCounter}`);
-                    fileInput.setAttribute("multiple", `true`);
-
-                    const removeQuestionButton =
-                      document.createElement("button");
-                    removeQuestionButton.classList.add("btn", "btn-danger");
-                    removeQuestionButton.textContent = "Apagar";
-                    removeQuestionButton.setAttribute(
-                      "onclick",
-                      `removeQuestion(${questionCounter})`
-                    );
-
-                    questionFormGroup1.appendChild(questionLabel1);
-                    questionFormGroup1.appendChild(questionInput);
-                    questionCardBody.appendChild(questionTitle);
-                    questionCardBody.appendChild(questionFormGroup1);
-                    questionFormGroup2.appendChild(questionLabel2);
-                    questionFormGroup2.appendChild(answerInput);
-                    questionCardBody.appendChild(questionFormGroup2);
-                    fileFormGroup.appendChild(fileLabel);
-                    fileFormGroup.appendChild(fileInput);
-                    questionCardBody.appendChild(fileFormGroup);
-                    questionCardBody.appendChild(removeQuestionButton);
-                    questionDiv.appendChild(questionCardBody);
-                    questionList.appendChild(questionDiv);
-                  };
-
-                  const removeQuestion = (questionNumber) => {
-                    const questionDiv = document
-                      .getElementById(`question${questionNumber}`)
-                      .closest(".card.mb-3");
-                    questionDiv.remove();
-                    questionCounter--;
-                  };
-
-                  const readFileAsDataURL = (file) => {
-                    return new Promise((resolve, reject) => {
-                      const reader = new FileReader();
-                      reader.onload = () => resolve(reader.result);
-                      reader.onerror = reject;
-                      reader.readAsDataURL(file);
-                    });
-                  };
-
-                  const getQuestionsAndAnswers = async () => {
-                    const questions = [];
-                    const questionElements =
-                      document.querySelectorAll(".card.mb-3");
-                    for (let i = 0; i < questionElements.length; i++) {
-                      const questionElement = questionElements[i];
-                      const questionTitle = questionElement.querySelector(
-                        "input[id^='question']"
-                      ).value;
-                      const answerInput = questionElement.querySelector(
-                        "input[id^='answer']"
-                      );
-                      const answer = answerInput.value;
-                      const files = [];
-                      const fileInputs =
-                        questionElement.querySelectorAll("input[type='file']");
-                      for (let j = 0; j < fileInputs.length; j++) {
-                        const fileInput = fileInputs[j];
-                        for (let k = 0; k < fileInput.files.length; k++) {
-                          const file = fileInput.files[k];
-                          const base64 = await readFileAsDataURL(file);
-                          files.push({
-                            name: file.name,
-                            type: file.type,
-                            size: file.size,
-                            base64,
-                          });
-                        }
-                      }
-                      questions.push({
-                        type: "text",
-                        question: questionTitle,
-                        answer: answer,
-                        files: files,
-                      });
-                    }
-                    return questions
-                  };
-
-                  document
-                    .getElementById("addBtn")
-                    .addEventListener("click", addQuestion);
-                </script>
               </div>
             </main>
           </div>
