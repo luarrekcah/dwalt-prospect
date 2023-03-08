@@ -49,7 +49,7 @@ const menuList = [
         accelerator: 'CmdOrCtrl+T',
         click: (item, focusedWindow) => {
           if (focusedWindow) {
-            fs.rmdir(
+            fs.rm(
                 `${__dirname}/../.wwebjs_auth`,
                 {recursive: true},
                 (err) => {

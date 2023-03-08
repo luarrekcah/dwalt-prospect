@@ -18,10 +18,6 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
       rel="stylesheet"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"
-    />
     <style>
       body {
         height: 100vh;
@@ -183,7 +179,56 @@
         margin-top: 20px;
         margin-bottom: 20px;
       }
+
+      .modal {
+        display: none; /* Esconde o modal por padrão */
+        position: fixed; /* Mantém o modal no mesmo lugar mesmo quando a página é rolada */
+        z-index: 1; /* Coloca o modal acima de outros elementos na página */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.4
+        ); /* Cor de fundo semi-transparente */
+      }
+
+      .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-height: 80%;
+        overflow-y: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        overflow: auto; /* Adiciona rolagem ao modal */
+      }
+
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
     </style>
+    <script>
+      const $ = require("jQuery");
+      const jQuery = require("jQuery");
+    </script>
   </head>
 
   <body>
@@ -835,37 +880,6 @@
             <main class="content">
               <div class="container-fluid p-0">
                 <h1 class="h3 mb-3">Banco de<strong> Números</strong></h1>
-                <div id="ex1" class="modal">
-                  <h1>Adicione uma empresa nova</h1>
-                  <hr />
-                  <form id="addBusiness">
-                    <label>Grupo</label>
-                    <input type="text" id="grupo" class="form-control" />
-                    <label>Local</label>
-                    <input type="text" id="local" class="form-control" />
-                    <label>Nome da Empresa</label>
-                    <input type="text" id="nome" class="form-control" />
-                    <label>Número da empresa</label>
-                    <input
-                      type="text"
-                      id="numero"
-                      placeholder="+55 XX XXXXX-XXXX"
-                      class="form-control"
-                    />
-                    <label>Tipo</label>
-                    <input type="text" id="tipo" class="form-control" />
-                    <label>Data de adesão</label>
-                    <input type="date" id="data" class="form-control" />
-                    <hr />
-                    <button
-                      type="submit"
-                      class="btn btn-primary btn-lg"
-                      style="width: 100%"
-                    >
-                      Adicionar
-                    </button>
-                  </form>
-                </div>
                 <div class="row">
                   <div class="col-12">
                     <div class="card">
@@ -908,17 +922,66 @@
                             <i class="align-middle" data-feather="database"></i>
                             Exportar tabela
                           </button>
-                          <a
-                            class="btn btn-primary btn-lg"
-                            id="addBusiness"
-                            href="#ex1"
-                            rel="modal:open"
-                          >
+                          <a class="btn btn-primary btn-lg" id="open-modal">
                             <i class="align-middle" data-feather="plus"></i>
                             Adicionar empresa</a
                           >
                         </div>
                         <hr />
+                        <div id="modal" class="modal">
+                          <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <h1>Adicione uma empresa nova</h1>
+                            <hr />
+                            <form id="addBusiness">
+                              <label>Grupo</label>
+                              <input
+                                type="text"
+                                id="grupo"
+                                class="form-control"
+                              />
+                              <label>Local</label>
+                              <input
+                                type="text"
+                                id="local"
+                                class="form-control"
+                              />
+                              <label>Nome da Empresa</label>
+                              <input
+                                type="text"
+                                id="nome"
+                                class="form-control"
+                              />
+                              <label>Número da empresa</label>
+                              <input
+                                type="text"
+                                id="numero"
+                                placeholder="+55 XX XXXXX-XXXX"
+                                class="form-control"
+                              />
+                              <label>Tipo</label>
+                              <input
+                                type="text"
+                                id="tipo"
+                                class="form-control"
+                              />
+                              <label>Data de adesão</label>
+                              <input
+                                type="date"
+                                id="data"
+                                class="form-control"
+                              />
+                              <hr />
+                              <button
+                                type="submit"
+                                class="btn btn-primary btn-lg"
+                                style="width: 100%"
+                              >
+                                Adicionar
+                              </button>
+                            </form>
+                          </div>
+                        </div>
                         <br />
                         <table
                           id="tablenumbers"
@@ -987,7 +1050,7 @@
                     <div class="card">
                       <div class="card-body">
                         <p>
-                          Crie respostas automáticas para mensagens de contatos. 
+                          Crie respostas automáticas para mensagens de contatos.
                         </p>
                         <p>
                           O gatilho funciona da seguinte maneira: Se a mensagem
@@ -999,7 +1062,10 @@
                           >Mensagens maiusculas, minusculas ou ambas não vai
                           atrapalhar o gatilho.
                         </b>
-                        <p>Recomendado: Use essa função para respostas específicas.</p>
+                        <p>
+                          Recomendado: Use essa função para respostas
+                          específicas.
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -1058,15 +1124,10 @@
   </body>
   <script src="../assets/js/app.js"></script>
   <script src="../assets/js/index.js"></script>
-  <script>
-    const $ = require("jQuery");
-    const jQuery = require("jQuery");
-  </script>
   <script
     type="text/javascript"
     src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"
   ></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
   <script>
     $(document).ready(function () {
       $("#tablenumbers").DataTable({
@@ -1078,5 +1139,27 @@
         info: true,
       });
     });
+  </script>
+
+  <script>
+    const openModalBtn = document.getElementById("open-modal");
+
+    const modal = document.getElementById("modal");
+
+    const closeModalBtn = document.getElementsByClassName("close")[0];
+
+    openModalBtn.onclick = function () {
+      modal.style.display = "block";
+    };
+
+    closeModalBtn.onclick = function () {
+      modal.style.display = "none";
+    };
+
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
   </script>
 </html>
