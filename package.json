@@ -51,6 +51,7 @@
     "puppeteer-core": "^19.7.2",
     "puppeteer-in-electron": "^3.0.5",
     "qr-image": "^3.2.0",
+    "rimraf": "^4.3.1",
     "serpapi": "^1.1.1",
     "whatsapp-web.js": "github:pedroslopez/whatsapp-web.js#fix-buttons-list",
     "xlsx": "^0.18.5"

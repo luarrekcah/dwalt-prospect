@@ -43,7 +43,7 @@ module.exports.run = async () => {
           await sendImage(client, testNumber, '', f);
         });
 
-        document.getElementById('sendCount').innerText = numeroAtual + 1;
+        document.getElementById('sendCount').innerText = Number(document.getElementById('sendCount').innerText) + 1;
 
         alert('Enviado.');
       }

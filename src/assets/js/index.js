@@ -3,6 +3,7 @@
 /* eslint-disable require-jsdoc */
 /* eslint-disable no-unused-vars */
 const fs = require('fs');
+const rimraf = require('rimraf');
 const {ipcRenderer} = require('electron');
 const {
   saveData,
@@ -586,13 +587,23 @@ const addQuestion = () => {
   questionList.appendChild(questionDiv);
 };
 
-const removeQuestion = (questionNumber) => {
+const removeQuestion = async (questionNumber) => {
   const questionDiv = document
       .getElementById(`question${questionNumber}`)
       .closest('.card.mb-3');
+  const dirPath = __dirname + `/../questions/${questionNumber}`;
+
   questionDiv.remove();
   questionCounter--;
+
+  try {
+    await fs.promises.rmdir(dirPath, {recursive: true});
+  } catch (error) {
+    console.log(`Failed to remove the directory ${dirPath}.`, error);
+    return;
+  }
 };
+
 
 const getQuestionsAndAnswers = async () => {
   const questions = [];
@@ -615,11 +626,21 @@ const getQuestionsAndAnswers = async () => {
       for (let k = 0; k < fileInput.files.length; k++) {
         const file = fileInput.files[k];
         const base64 = await readFileAsDataURL(file);
+        const dirPath = __dirname + `/../questions/${i+1}`;
+        try {
+          await fs.promises.access(dirPath, fs.constants.F_OK);
+        } catch (error) {
+          await fs.promises.mkdir(dirPath, {recursive: true});
+        }
+        const newPath = `${dirPath}/${file.name}`;
+        await fs.promises.writeFile(newPath, base64, {encoding: 'base64'});
+
         files.push({
           name: file.name,
           type: file.type,
           size: file.size,
           base64,
+          path: newPath,
         });
       }
     }
@@ -632,6 +653,7 @@ const getQuestionsAndAnswers = async () => {
   }
   return questions;
 };
+
 
 document
     .getElementById('addBtn')

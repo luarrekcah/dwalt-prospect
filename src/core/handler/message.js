@@ -1,5 +1,6 @@
-const {Buttons, MessageMedia} = require('whatsapp-web.js');
-const {updateChats} = require('../../utils');
+const {Buttons} = require('whatsapp-web.js');
+const {updateChats, sendImage} = require('../../utils');
+const fs = require('fs');
 
 module.exports.run = async (client, message) => {
   updateChats(client);
@@ -8,8 +9,7 @@ module.exports.run = async (client, message) => {
   if (message.type !== 'chat') return;
 
   // addLineConsole(message, 'info', true);
-  const responses =
-  JSON.parse(
+  const responses = JSON.parse(
       fs.readFileSync(__dirname + '/../../responses.json', 'utf8'),
   );
 
@@ -18,17 +18,34 @@ module.exports.run = async (client, message) => {
     for (let index = 0; index < responses.length; index++) {
       if (responses[index].type === 'text') {
         // simple message
-        if (message.body.toLowerCase().includes(responses[index].
-            question.toLowerCase())) {
+        if (
+          message.body
+              .toLowerCase()
+              .includes(responses[index].question.toLowerCase())
+        ) {
           client.sendMessage(message.from, responses[index].answer);
-          if (responses[index].files.length !== 0) {
-            for (let i = 0; i < responses[index].files.length; i++) {
-              const file = responses[index].files[i];
-              const media = new MessageMedia(file.type, file.base64);
-              client
-                  .sendMessage(message.from, media, {caption: ''});
-            }
-          }
+          fs.readdir(
+              `${__dirname}/../../questions/${index + 1}`,
+              async (err, filesLoaded) => {
+                const files = [];
+
+                filesLoaded.forEach((file) => {
+                  files.push(
+                      `${__dirname}/../../questions/${index + 1}/${file}`,
+                  );
+                });
+
+                for (let j = 0; j < files.length; j++) {
+                  const f = files[j];
+                  try {
+                    await sendImage(client, message.from, ``, f);
+                  } catch (err) {
+                    addLineConsole(err, 'error', true);
+                    console.log(err);
+                  }
+                }
+              },
+          );
         }
       } else {
         // buttons
@@ -36,10 +53,13 @@ module.exports.run = async (client, message) => {
     }
   }
 
-
   if (message.body === '!btton') {
-    const button = new Buttons('Corpo do botao', [{body: 'bt1'},
-      {body: 'bt2'}, {body: 'bt3'}], 'Titulo', 'footer');
+    const button = new Buttons(
+        'Corpo do botao',
+        [{body: 'bt1'}, {body: 'bt2'}, {body: 'bt3'}],
+        'Titulo',
+        'footer',
+    );
     client.sendMessage(message.from, button);
   }
 };
