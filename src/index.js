@@ -76,6 +76,12 @@ if (!production) {
   });
 }
 
+
+
+
+
+
+
 let verificationWindow;
 // eslint-disable-next-line require-jsdoc
 function generateLicenseKey() {
