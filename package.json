@@ -29,7 +29,8 @@
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\"",
     "build": "rmdir /s /q Prospect-installers && rmdir /s /q Prospect-win32-x64 && electron-packager . --icon=src/assets/icon.ico && node build",
-    "builder": "electron-builder build"
+    "builder": "electron-builder build",
+    "production": "electron-packager . --icon=src/assets/icon.ico --prune && node build"
   },
   "keywords": [],
   "author": {
@@ -42,7 +43,6 @@
     "base64-arraybuffer": "^1.0.2",
     "electron-log": "^5.0.0-beta.16",
     "electron-squirrel-startup": "^1.0.0",
-    "electron-winstaller": "^5.1.0",
     "google-search-results-nodejs": "^2.1.0",
     "jQuery": "^1.7.4",
     "os": "^0.1.2",
@@ -55,8 +55,6 @@
   "devDependencies": {
     "@electron-forge/cli": "^6.0.5",
     "electron": "23.1.1",
-    "electron-builder": "^24.0.0",
-    "eslint": "^8.35.0",
-    "eslint-config-google": "^0.14.0"
+    "electron-winstaller": "^5.1.0"
   }
 }

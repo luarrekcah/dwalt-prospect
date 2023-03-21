@@ -107,8 +107,6 @@ module.exports.run = async () => {
 
     setStatus(`Encontrei ${files.length} arquivos para envio.`);
 
-    ipcRenderer.send('notification', 'Pesquisando...');
-
 
     for (let index = 0; index < 25; index++) {
       search.json(
@@ -179,9 +177,8 @@ module.exports.run = async () => {
           for (let i = 0; i < numbers.length; i++) {
             const number = numbers[i];
             if (chats.includes(number) && config.blockOldNumbers) {
-              continue;
-            }
-
+              return;
+            } else {
             setProgress(1);
             setStatus(`Tempo ${config.intervalTime}s`);
             await sleep(config.intervalTime);
@@ -212,6 +209,7 @@ module.exports.run = async () => {
 
             setProgress(0);
             setStatus('Ok');
+            }
           }
         } catch (err) {
           addLineConsole(err, 'error', true);
