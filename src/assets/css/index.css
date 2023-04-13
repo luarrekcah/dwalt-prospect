@@ -1,0 +1,377 @@
+body {
+  height: 100vh;
+}
+
+/* Personaliza o scroll */
+::-webkit-scrollbar {
+  width: 5px; /* largura do scroll */
+}
+
+/* Define a aparência do scroll */
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* cor do fundo do scroll */
+}
+
+/* Define a aparência do medidor do scroll */
+::-webkit-scrollbar-thumb {
+  background-color: #007bff; /* cor do medidor */
+  border-radius: 10px; /* borda arredondada */
+}
+
+/* Define a aparência do medidor do scroll quando passa o mouse sobre ele */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #0062cc; /* cor do medidor quando passa o mouse */
+}
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #fff;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+
+.dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 40px;
+  border-radius: 30px;
+  box-shadow: 0px 0px 10px rgb(0 0 0 / 30%);
+}
+
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.btn-space {
+  margin-right: 10px;
+}
+
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: none;
+  align-items: center;
+}
+
+.notification.show {
+  display: block;
+  display: flex;
+}
+
+/* adiciona estilo ao ícone */
+.notification .icon {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.notification.alert {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.notification.warning {
+  background-color: #ff9800;
+  color: #fff;
+}
+
+.notification.danger {
+  background-color: #e91e63;
+  color: #fff;
+}
+
+.notification.info {
+  background-color: #2196f3;
+  color: #fff;
+}
+
+.notification.success {
+  background-color: #16b601;
+  color: #fff;
+}
+
+.notification .icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  display: inline-block;
+  background-size: contain;
+}
+
+.notification.alert .icon {
+  background-image: url("alert-icon.png");
+}
+
+.notification.warning .icon {
+  background-image: url("warning-icon.png");
+}
+
+.notification.danger .icon {
+  background-image: url("danger-icon.png");
+}
+
+.notification.info .icon {
+  background-image: url("info-icon.png");
+}
+
+.notification.success .icon {
+  background-image: url("check-icon.png");
+}
+
+#console {
+  position: relative;
+  background-color: #222;
+  color: #eee;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 14px;
+  height: 400px;
+  overflow-y: scroll;
+  padding: 10px;
+}
+
+#console h2 {
+  font-size: 18px;
+  color: #fff;
+  margin: 0 0 10px 0;
+}
+
+#console ul {
+  list-style: none;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#console li {
+  margin: 0;
+  padding: 0;
+}
+
+#console .error {
+  color: #f44336;
+}
+
+#console .warning {
+  color: #ff9800;
+}
+
+#console .success {
+  color: #4caf50;
+}
+
+#console .info {
+  color: #2196f3;
+}
+
+#console .debug {
+  color: #9c27b0;
+}
+
+.btn-clear-console {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #fff;
+}
+
+.btn-clear-console:hover {
+  color: rgb(0, 0, 0);
+  background-color: #ddd;
+}
+
+.btn-clear-console:focus {
+  outline: none;
+}
+
+.btn-clear-console i {
+  display: block;
+  width: 16px;
+  height: 16px;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/**/
+table.dataTable {
+  width: 100%;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.dataTables_length {
+  margin-bottom: 20px;
+}
+
+.dataTables_filter {
+  margin-bottom: 20px;
+}
+
+table.dataTable thead th {
+  padding: 8px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+}
+
+table.dataTable tbody td {
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+table.dataTable tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  padding: 0.5em 1em;
+  border-radius: 3px;
+  background-color: #e0e0e0;
+  color: #333;
+  border: none;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #333;
+  color: #fff;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+  padding: 0.5em;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+.dataTables_wrapper .dataTables_info {
+  font-size: 12px;
+
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.buttonsTable {
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  color: #3b7ddd;
+  margin: 10px;
+  transition: all 0.3s ease-out;
+}
+
+.buttonsTable:hover {
+  background-color: #3b7ddd;
+  color: #fff;
+}
+
+.form-group {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.modal {
+  display: none; /* Esconde o modal por padrão */
+  position: fixed; /* Mantém o modal no mesmo lugar mesmo quando a página é rolada */
+  z-index: 1; /* Coloca o modal acima de outros elementos na página */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* Cor de fundo semi-transparente */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-height: 80%;
+  overflow-y: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: auto; /* Adiciona rolagem ao modal */
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}

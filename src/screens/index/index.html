@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="pr-br">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <title>Prospect</title>
+
+  <link href="../../assets/css/app.css" rel="stylesheet" />
+  <link href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/css/index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+</head>
+
+<body>
+  <!--BODY 1-->
+  <div id="loginBody">
+    <div class="wrapper">
+      <div class="main">
+        <main class="d-flex w-100" style="background-color: #326abc;">
+          <div class="container d-flex flex-column">
+            <div class="row vh-100">
+              <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+                <div class="d-table-cell align-middle">
+                  <div class="text-center mt-4">
+                    <img src="../../assets/icon.png" width="150" id="imgBot" alt="">
+                  </div>
+                  <div class="text-center">
+                    <img src="" style="display: none; padding: 24px;
+                    background-color: white;
+                    border-radius: 30px;
+                    margin: 20px;" alt="" srcset="" width="200px" id="qr" />
+                    <div id="divInitial">
+                      <div class="lds-ellipsis">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+  <!--BODY 2-->
+  <div id="loggedBody" style="display: none">
+    <div class="wrapper">
+      <nav id="sidebar" class="sidebar js-sidebar">
+        <div class="sidebar-content js-simplebar">
+          <a class="sidebar-brand" href="#">
+            <span class="align-middle">Prospect</span>
+          </a>
+
+          <ul class="sidebar-nav">
+            <li class="sidebar-header">Atalhos</li>
+
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#" onclick="swithScreen('indexPage')">
+                <i class="align-middle" data-feather="sliders"></i>
+                <span class="align-middle">Principal</span>
+              </a>
+            </li>
+
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#" onclick="swithScreen('SearchPage')">
+                <i class="align-middle" data-feather="user"></i>
+                <span class="align-middle">Pesquisa</span>
+              </a>
+            </li>
+
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#" onclick="swithScreen('FilesPage')">
+                <i class="align-middle" data-feather="log-in"></i>
+                <span class="align-middle">Arquivos</span>
+              </a>
+            </li>
+
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#" onclick="swithScreen('ConfigPage')">
+                <i class="align-middle" data-feather="settings"></i>
+                <span class="align-middle">Configuração</span>
+              </a>
+            </li>
+            <li class="sidebar-header">Funções adicionais</li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#" onclick="swithScreen('BankNumbers')">
+                <i class="align-middle" data-feather="database"></i>
+                <span class="align-middle">Banco</span>
+              </a>
+            </li>
+
+            <li class="sidebar-header">Avançado</li>
+
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#" onclick="swithScreen('Console')">
+                <i class="align-middle" data-feather="monitor"></i>
+                <span class="align-middle">Console</span>
+              </a>
+            </li>
+          </ul>
+          <div class="sidebar-cta">
+            <div class="sidebar-cta-content">
+              <strong class="d-inline-block mb-2">Canais de informação</strong>
+              <div class="mb-3 text-sm">
+                <ul>
+                  <li><b>Site:</b> prospect.dlwalt.com</li>
+                  <li><b>Suporte Técnico:</b> +55 68 9240-2096</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="main">
+        <nav class="navbar navbar-expand navbar-light navbar-bg">
+          <a class="sidebar-toggle js-sidebar-toggle">
+            <i class="hamburger align-self-center"></i>
+          </a>
+          <div class="navbar-collapse collapse">
+            <ul class="navbar-nav navbar-align">
+
+              <li class="nav-item dropdown" style="margin-right: 25px;">
+                <a><b>LIMITE DE USO:</b> <b style="color: red" id="usedApiHeader">0</b>/<b
+                    style="color: rgb(4, 160, 4);" id="remainingApi">0</b></a>
+              </li>
+
+
+              <li class="nav-item dropdown">
+                <a><i class="fas fa-key"></i><b id="licenseKey">0000-0000-0000-0000</b></a>
+              </li>
+
+            </ul>
+          </div>
+        </nav>
+
+        <div id="indexPage">
+          <main class="content">
+            <div class="container-fluid p-0">
+              <h1 class="h3 mb-3">Dashboard de<strong> Análises</strong></h1>
+
+              <div class="row">
+                <div class="col-xl-6 col-xxl-5 d-flex">
+                  <div class="w-100">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col mt-0">
+                                <h5 class="card-title">Números no banco</h5>
+                              </div>
+
+                              <div class="col-auto">
+                                <div class="stat text-primary">
+                                  <i class="fas fa-users"></i>
+                                </div>
+                              </div>
+                            </div>
+                            <h1 class="mt-1 mb-3" id="numbersSaved">0</h1>
+                          </div>
+                        </div>
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col mt-0">
+                                <h5 class="card-title">Meus chats</h5>
+                              </div>
+
+                              <div class="col-auto">
+                                <div class="stat text-primary">
+                                  <i class="fas fa-comment-dots"></i>
+                                </div>
+                              </div>
+                            </div>
+                            <h1 class="mt-1 mb-3" id="myChats">0</h1>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col mt-0">
+                                <h5 class="card-title">
+                                  Envios nessa sessão
+                                </h5>
+                              </div>
+
+                              <div class="col-auto">
+                                <div class="stat text-primary">
+                                  <i class="fas fa-paper-plane"></i>
+                                </div>
+                              </div>
+                            </div>
+                            <h1 class="mt-1 mb-3" id="sendCount">0</h1>
+                          </div>
+                        </div>
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col mt-0">
+                                <h5 class="card-title">
+                                  Whatsapp
+                                </h5>
+                              </div>
+                              <div class="col-auto">
+                                <div class="stat text-primary">
+                                  <i class="fab fa-whatsapp-square"></i>
+                                </div>
+                              </div>
+                            </div>
+                            <div id="deviceInfos"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-6 col-xxl-7">
+                  <div class="card flex-fill w-100">
+                    <div class="card-header">
+                      <h5 class="card-title mb-0">Uso do sistema</h5>
+                    </div>
+                    <div class="card-body py-3">
+                      <div class="chart chart-sm">
+                        <div class="chartjs-size-monitor">
+                          <div class="chartjs-size-monitor-expand">
+                            <div class=""></div>
+                          </div>
+                          <div class="chartjs-size-monitor-shrink">
+                            <div class=""></div>
+                          </div>
+                        </div>
+                        <canvas id="chartjs-dashboard-line" style="display: block; width: 489px; height: 252px"
+                          width="489" height="252" class="chartjs-render-monitor"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <h1 class="h3 mb-3">Gatilhos dos<strong> Comandos</strong></h1>
+
+              <div class="row">
+                <div class="col-12 col-lg-6">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="card-title mb-0">Comando de teste</h5>
+                    </div>
+                    <div class="card-body">
+                      <input type="text" id="testNumber" placeholder="556899999999" class="form-control" />
+                      <hr />
+                      <button class="btn btn-primary btn-lg" style="width: 100%" id="sendTest">
+                        Prospectar teste
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="card-title mb-0">Comando prospecção</h5>
+                      <p>
+                        Esse gatilho dispara as mensagens para os números com
+                        os dados informados ou você pode optar por cancelar o
+                        disparo, o bot vai salvar todos os números no banco
+                        automaticamente.
+                      </p>
+                    </div>
+                    <div class="card-body">
+                      <button class="btn btn-primary btn-lg" style="width: 100%" id="sendProspect">
+                        Prospectar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <h1 class="h3 mb-3">Dados da<strong> API</strong></h1>
+
+              <div class="row">
+                <div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-3">
+                  <div class="card flex-fill w-100">
+                    <div class="card-header">
+                      <h5 class="card-title mb-0">
+                        Uso (atualiza a cada 60s)
+                      </h5>
+                    </div>
+                    <div class="card-body d-flex" id="useApiWarn"></div>
+                    <div class="card-body d-flex" id="useApiBody">
+                      <div class="align-self-center w-100">
+                        <div class="py-3">
+                          <div class="chart chart-xs">
+                            <div class="chartjs-size-monitor">
+                              <div class="chartjs-size-monitor-expand">
+                                <div class=""></div>
+                              </div>
+                              <div class="chartjs-size-monitor-shrink">
+                                <div class=""></div>
+                              </div>
+                            </div>
+                            <canvas id="chartjs-dashboard-pie" width="394" height="200" style="
+                                  display: block;
+                                  width: 394px;
+                                  height: 200px;
+                                " class="chartjs-render-monitor"></canvas>
+                          </div>
+                        </div>
+
+                        <table class="table mb-0">
+                          <tbody>
+                            <tr>
+                              <td>Usado</td>
+                              <td class="text-end" id="usedApi">
+                                Carregando... 60s
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Total</td>
+                              <td class="text-end" id="limitApi">
+                                Carregando... 60s
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+        <div id="SearchPage" style="display: none">
+          <main class="content">
+            <div class="container-fluid p-0">
+              <h1 class="h3 mb-3">
+                Configuração de<strong> Pesquisa</strong>
+              </h1>
+              <div class="row">
+                <div class="col-12 col-lg-6">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="card-title mb-0">Texto para enviar</h5>
+                    </div>
+                    <div class="card-body">
+                      <textarea class="form-control" id="text" rows="2"></textarea>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="card-title mb-0">Onde?</h5>
+                    </div>
+                    <div class="card-body">
+                      <input type="text" id="where" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="card-title mb-0">
+                        Para que tipo de empresa?
+                      </h5>
+                    </div>
+                    <div class="card-body">
+                      <input type="text" id="businesstype" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-body">
+                      <button class="btn btn-primary btn-lg" style="width: 100%" id="infoSave">
+                        Salvar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+        <div id="FilesPage" style="display: none">
+          <main class="content">
+            <div class="container-fluid p-0">
+              <h1 class="h3 mb-3">
+                Configuração de<strong> Arquivos</strong>
+              </h1>
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <ul class="list-group" id="list" style="margin-top: 20px"></ul>
+                      <div class="mb-3">
+                        <label for="formFile" class="form-label">Adicione os arquivos de envio.</label>
+                        <input class="form-control" multiple type="file" id="formFile" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+        <div id="ConfigPage" style="display: none">
+          <main class="content">
+            <div class="container-fluid p-0">
+              <h1 class="h3 mb-3">
+                Configuração do<strong> Sistema</strong>
+              </h1>
+              <div class="row">
+                <div class="col-12 col-lg-6">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="card-title mb-0">Chave da API</h5>
+                    </div>
+                    <div class="card-body">
+                      <input type="text" id="apikey" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="card-title mb-0">Intervalo de envio</h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="mb-3">
+                        <label for="sendTime" class="form-label">Intervalo de envio
+                          <b id="showTime"></b> segundos</label>
+                        <input type="range" onchange="switchTime()" class="form-range" min="3" max="15" id="sendTime" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="card-title mb-0">Checkboxes</h5>
+                    </div>
+                    <div class="card-body">
+                      <div>
+                        <label class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="blockOldNumbers" />
+                          <span class="form-check-label">
+                            Bloquear números repetidos
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <div class="card-body">
+                      <button class="btn btn-primary btn-lg" style="width: 100%" id="configSave">
+                        Salvar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+        <!--BANK-->
+        <div id="BankNumbers" style="display: none">
+          <main class="content">
+            <div class="container-fluid p-0">
+              <h1 class="h3 mb-3">Banco de<strong> Números</strong></h1>
+              <div class="row">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <p>
+                        Caso queira enviar para um grupo específico, pesquise
+                        algum dado em comum dos números e clique em
+                        "prospectar todos abaixo".
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <div style="
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: space-between;
+                            margin-bottom: 40px;
+                          ">
+                        <button class="btn btn-primary btn-sm" id="prospectAll">
+                          <i class="align-middle" data-feather="send"></i>
+                          Prospectar todos abaixo
+                        </button>
+                        <button class="btn btn-danger btn-sm" id="deleteAll">
+                          <i class="align-middle" data-feather="trash"></i>
+                          Deletar todos abaixo
+                        </button>
+                        <button class="btn btn-success btn-sm" id="exportExcel">
+                          <i class="align-middle" data-feather="database"></i>
+                          Exportar
+                        </button>
+                        <button class="btn btn-success btn-sm" id="importExcel">
+                          <i class="align-middle" data-feather="database"></i>
+                          Importar
+                        </button>
+                        <a class="btn btn-primary btn-sm" id="open-modal">
+                          <i class="align-middle" data-feather="plus"></i>
+                          Adicionar empresa</a>
+                      </div>
+                      <hr />
+                      <div id="modal" class="modal">
+                        <div class="modal-content">
+                          <span class="close">&times;</span>
+                          <h1>Adicione uma empresa nova</h1>
+                          <hr />
+                          <form id="addBusiness">
+                            <label>Grupo</label>
+                            <input type="text" id="grupo" class="form-control" />
+                            <label>Local</label>
+                            <input type="text" id="local" class="form-control" />
+                            <label>Nome da Empresa</label>
+                            <input type="text" id="nome" class="form-control" />
+                            <label>Número da empresa</label>
+                            <input type="text" id="numero" placeholder="+55 XX XXXXX-XXXX" class="form-control" />
+                            <label>Data de adesão</label>
+                            <input type="date" id="data" class="form-control" />
+                            <hr />
+                            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%">
+                              Adicionar
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                      <br />
+                      <table id="tablenumbers" class="display" style="width: 100%">
+                        <thead>
+                          <tr>
+                            <th>Grupo</th>
+                            <th>Local</th>
+                            <th>Nome</th>
+                            <th>Número</th>
+                            <th>Data</th>
+                            <th>Botões</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+        <!--CONSOLE-->
+        <div id="Console" style="display: none">
+          <main class="content">
+            <div class="container-fluid p-0">
+              <h1 class="h3 mb-3">Avançado -<strong> Console</strong></h1>
+
+              <div class="row">
+                <div id="console">
+                  <ul id="console-list"></ul>
+                  <button onclick="cleanConsole()" class="btn-clear-console">
+                    <i class="align-middle" data-feather="trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<div class="notification">
+  <i class="icon"></i>
+  <div class="message"></div>
+</div>
+<script>window.$ = window.jQuery = require('jquery');</script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#tablenumbers").DataTable({
+      language: {
+        url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json",
+      },
+      paging: true,
+      ordering: true,
+      info: true,
+    });
+  });
+</script>
+<script src="../../assets/js/app.js"></script>
+<script src="./renderer.js"></script>
+<script src="./index.js"></script>
+
+</html>

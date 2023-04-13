@@ -1,153 +1,152 @@
-const {Client, LocalAuth} = require('whatsapp-web.js');
-const os = require('os');
+const { ipcMain } = require("electron");
+const venom = require("venom-bot");
+const { sendToRenderer } = require("./functions/electron");
+const fs = require("fs");
+const { getData } = require("../sysutils");
+const { LICENSE_FILE_PATH, ROOT_DIR } = require("../paths");
+const log = require("electron-log");
 
-let chromePath;
+const licenseKey = fs.readFileSync(LICENSE_FILE_PATH, "utf-8").trim();
 
-if (os.platform() === 'linux') {
-  chromePath = '/usr/bin/google-chrome-stable';
-} else if (os.platform() === 'win32') {
-  chromePath = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
-} else {
-  console.log('Sistema operacional não suportado.');
-  process.exit(1);
-}
-
-const client = new Client({
-  restartOnAuthFail: true,
-  authStrategy: new LocalAuth(),
-  puppeteer: {
-    executablePath: chromePath,
-    args: ['--no-sandbox'],
-  },
-});
-
-const {getAccount} = require('serpapi');
-
-const {apiKey} = JSON.parse(
-    fs.readFileSync(__dirname + '/../data.json', 'utf8'),
-);
-
-const messageHandler = require(`./handler/message`);
-const readyHandler = require(`./handler/ready`);
-const qrHandler = require(`./handler/qr`);
-const disconnectedHandler = require(`./handler/disconnected`);
-const loadingScreenHandler = require(`./handler/loadingScreen`);
-const authenticatedHandler = require(`./handler/authenticated`);
-const {setGraph, saveDb, updateTable} = require('../utils');
-
-client.on('qr', (qr) => {
-  return qrHandler.run(qr);
-});
-
-client.on('authenticated', () => {
-  return authenticatedHandler.run();
-});
-
-client.on('loading_screen', (percent) => {
-  return loadingScreenHandler.run(percent);
-});
-
-client.on('ready', async () => {
-  return readyHandler.run(client);
-});
-
-client.on('message', (message) => {
-  return messageHandler.run(client, message);
-});
-
-client.on('auth_failure', () => {
-  document.getElementById('divInitial').innerHTML =
-     `<p>Erro</p>
-     <b>Ocorreu um erro na autenticação, tente novamente.</b>`;
-});
-
-client.on('disconnected', () => {
-  return disconnectedHandler.run();
-});
-
-try {
-  client.initialize();
-} catch (error) {
-  client.initialize();
-  alert(`Ocorreu um erro ao iniciar o bot: ${error}`);
-  addLineConsole(error, 'error', true);
-}
-
-setGraph();
-updateTable();
-try {
-  fs.watch(__dirname + '/../datanum.json', () => {
-    setGraph();
-    updateTable();
-  });
-} catch (error) {
-  saveDb({business: []});
-  setGraph();
-  document.querySelector('#tablenumbers tbody').innerHTML = '';
-}
-
-if (apiKey === '') {
-  document.getElementById('useApiBody').style.display = `none`;
-
-  document.getElementById('useApiWarn').
-      innerHTML = `<b>Adicione uma chave primeiro!</b>`;
-}
-
-setInterval(async () => {
-  if (apiKey === '') {
-    document.getElementById('useApiBody').
-        style.display = `none`;
-
-    document.getElementById('useApiWarn').
-        innerHTML = `<b>Adicione uma chave primeiro!</b>`;
-    return;
-  } else {
-    document.getElementById('useApiBody').
-        style.display = `block`;
-
-    document.getElementById('useApiWarn').
-        style.display = `none`;
+const updateApiUsage = () => {
+  const data = getData("keys");
+  if (data.apiKey !== "") {
+    fetch(`https://serpapi.com/account?api_key=${data.apiKey}`)
+      .then((strRes) => strRes.json())
+      .then((jsonRes) => {
+        sendToRenderer("onApiUsage", jsonRes);
+      })
+      .catch((error) => {
+        console.error(error);
+        log.warn(error);
+      });
   }
-  let info;
+};
+
+const handleQr = (base64Qr) => {
+  sendToRenderer("qrCode", base64Qr);
+  console.log(base64Qr);
+};
+
+const handleStatusSession = (statusSession) => {
+  sendToRenderer("statusSession", statusSession);
+  switch (statusSession) {
+    case "successChat":
+      // Show screen dashboard normal
+      console.log("Logado");
+      break;
+    case "deviceNotConnected":
+      console.log("Aparelho não conectado");
+      break;
+    case "erroPageWhatsapp":
+      console.log("Erro na pagina do wpp");
+      break;
+  }
+};
+
+const start = async (client) => {
+  require("../listener").run(client, ipcMain);
+
+  client.onMessage((message) => {
+    require("./handler/message").run(client, message);
+  });
+
+  client.onStateChange((state) => {
+    console.log("State changed: ", state);
+    // force whatsapp take over
+    if ("CONFLICT".includes(state)) client.useHere();
+    // detect disconnect on whatsapp
+    if ("UNPAIRED".includes(state)) console.log("logout");
+
+    sendToRenderer("notify", { type: "info", message: state });
+  });
+
+  let time = 0;
+  client.onStreamChange((state) => {
+    console.log("State Connection Stream: " + state);
+    sendToRenderer("notify", { type: "info", message: state });
+    clearTimeout(time);
+    if (state === "DISCONNECTED" || state === "SYNCING") {
+      time = setTimeout(() => {
+        client.close();
+      }, 80000);
+    }
+
+    if (state === "LOGOUT") {
+    }
+  });
+
+  client.onAddedToGroup((chatEvent) => {
+    sendToRenderer("notify", {
+      type: "info",
+      message: "Você acabou de ser adicionado em um grupo.",
+    });
+  });
+
+  client.onIncomingCall(async (call) => {
+    sendToRenderer("notify", {
+      type: "info",
+      message: "Você está recebendo uma ligação.",
+    });
+  });
+
+  const startupData = {};
+
+  startupData.keys = getData("keys");
+  startupData.bankLength = getData("db").length;
+  startupData.db = getData("db");
+
+  sendToRenderer("startupProgram", startupData);
+
+  sendToRenderer("deviceInfos", {
+    WAVersion: await client.getWAVersion(),
+  });
+
+  sendToRenderer("licenseKey", licenseKey);
+
+  updateApiUsage();
+  setInterval(() => {
+    updateApiUsage();
+  }, 60000);
+
   try {
-    info = await getAccount({api_key: apiKey});
+    const chats = await client.getAllChats();
+    sendToRenderer("chatLength", chats.length);
   } catch (error) {
-    addLineConsole(error, 'error', true);
-  }
+    // Try again
+    log.warn(error);
+    console.log(error);
+    const chats = await client.getAllChats();
+    sendToRenderer("chatLength", chats.length);
 
-  if (info !== undefined) {
-    document.getElementById('usedApi').innerText = info.searches_per_month -
-    info.plan_searches_left;
-    document.getElementById('limitApi').innerText = info.searches_per_month;
-  } else {
-    document.getElementById('usedApi').innerText = 'Ocorreu um erro...';
-    document.getElementById('limitApi').innerText = 'Ocorreu um erro...';
+    sendToRenderer("notify", {
+      type: "danger",
+      message:
+        "Ocorreu um erro na inicialização do bot, tentamos iniciar o programa normalmente, caso seus valores fiquem zerados, reinicie o programa.",
+    });
   }
+};
 
-  new Chart(document.getElementById('chartjs-dashboard-pie'), {
-    type: 'pie',
-    data: {
-      labels: ['Utilizado', 'Disponível'],
-      datasets: [{
-        data: [info === undefined ? (0, 0) : (info.searches_per_month -
-          info.plan_searches_left, info.plan_searches_left)],
-        backgroundColor: [
-          window.theme.danger,
-          window.theme.success,
-        ],
-        borderWidth: 5,
-      }],
+venom
+  .create(
+    "prospect",
+    (base64Qr) => {
+      handleQr(base64Qr);
     },
-    options: {
-      responsive: !window.MSInputMethodContext,
-      maintainAspectRatio: false,
-      legend: {
-        display: false,
-      },
-      cutoutPercentage: 75,
+    (statusSession) => {
+      handleStatusSession(statusSession);
     },
+    {
+      logQR: false,
+      multidevice: true,
+      disableWelcome: true,
+      mkdirFolderToken: ROOT_DIR,
+    }
+  )
+  .then((client) => {
+    start(client);
+  })
+  .catch((erro) => {
+    console.log(erro);
+    log.warn(error);
   });
-}, 60*1000);
-
-
-module.exports = client;

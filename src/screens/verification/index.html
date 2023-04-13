@@ -4,15 +4,13 @@
     <meta charset="UTF-8">
     <title>Verificação</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link href="../assets/css/app.css" rel="stylesheet" />
+    <link href="../../assets/css/app.css" rel="stylesheet" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
-   
-
     <div id="loginBody">
         <div class="wrapper">
           <div class="main">
@@ -30,10 +28,8 @@
                       <div class="card">
                         <div class="card-body">
                           <div class="text-center">
-                            
                             <h6 id="key">Chave: </h6>
                             <small>Forneça essa chave para o responsável do bot</small>
-                            
                           </div>
                         </div>
                       </div>
@@ -45,11 +41,6 @@
           </div>
         </div>
       </div>
-    <script>
-      const { ipcRenderer } = require('electron');
-      ipcRenderer.on('key', (event, key) => {
-        document.getElementById('key').innerHTML = `Chave: ${key}`;
-      });
-    </script>
+    <script src="./renderer.js"></script>
   </body>
 </html>

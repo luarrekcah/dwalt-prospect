@@ -1,60 +1,84 @@
 {
-  "name": "Prospect",
-  "productName": "Prospect",
-  "version": "1.3.3",
-  "description": "Um programa windows para prospecção de clientes.",
+  "name": "prospect",
+  "description": "App para prospecção",
+  "version": "2.0.0",
   "main": "src/index.js",
+  "author": {
+    "name": "RaulRodrigues",
+    "url": "https://devluar.com"
+  },
   "build": {
     "appId": "com.dlwalt.prospect",
-    "icon": "src/assets/icon.png",
-    "productName": "Prospect",
-    "win": {
-      "target": "nsis",
-      "icon": "src/assets/icon.ico",
-      "publisherName": "D | Walt Engenharia"
-    },
+    "asar": true,
     "compression": "maximum",
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "luarrekcah",
-        "repo": "dwalt-prospect"
-      }
-    ]
+    "files": [
+      "**/*",
+      "!node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+      "!node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+      "!node_modules/*/test{,s}",
+      "!node_modules/.bin",
+      "!node_modules/**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,user,suo,cache,log,pdb}"
+    ],
+    "productName": "Prospect",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis-web",
+      "icon": "./src/assets/icon.ico",
+      "publish": [
+        {
+          "provider": "github",
+          "owner": "luarrekcah",
+          "repo": "dwalt-prospect"
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "./src/assets/icon.ico",
+      "uninstallerIcon": "./src/assets/icon.ico",
+      "installerHeaderIcon": "./src/assets/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "nsisWeb": {
+      "appPackageUrl": "https://pub-a82f1dfc9441404597ad2db2668c279f.r2.dev",
+      "oneClick": false,
+      "perMachine": true,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "./src/assets/icon.ico",
+      "uninstallerIcon": "./src/assets/icon.ico",
+      "installerHeaderIcon": "./src/assets/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
   },
   "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-builder -p always",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\"",
-    "build": "rmdir /s /q Prospect-installers && rmdir /s /q Prospect-win32-x64 && electron-packager . --icon=src/assets/icon.ico && node build",
-    "builder": "electron-builder build",
-    "production": "electron-packager . --icon=src/assets/icon.ico --prune && node build"
-  },
-  "keywords": [],
-  "author": {
-    "name": "luarrekcah",
-    "email": "raulrodriguesdemoraes@gmail.com"
+    "start": "electron .",
+    "dev": "cross-env DEVELOPMENT=true electron .",
+    "build": "electron-builder",
+    "dist": "electron-builder --publish always",
+    "pack": "electron-builder --dir",
+    "clean": "rm -rf dist"
   },
   "license": "MIT",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "electron": "^23.1.4",
+    "electron-builder": "^23.6.0"
+  },
   "dependencies": {
     "axios": "^1.3.4",
-    "base64-arraybuffer": "^1.0.2",
-    "electron-log": "^5.0.0-beta.16",
-    "electron-squirrel-startup": "^1.0.0",
+    "electron-log": "^4.4.8",
+    "fs": "^0.0.1-security",
     "google-search-results-nodejs": "^2.1.0",
-    "jQuery": "^1.7.4",
-    "os": "^0.1.2",
-    "qr-image": "^3.2.0",
-    "rimraf": "^4.3.1",
-    "serpapi": "^1.1.1",
-    "whatsapp-web.js": "github:pedroslopez/whatsapp-web.js#fix-buttons-list",
+    "jquery": "^3.6.4",
+    "venom-bot": "^4.3.7",
     "xlsx": "^0.18.5"
-  },
-  "devDependencies": {
-    "@electron-forge/cli": "^6.0.5",
-    "electron": "23.1.1",
-    "electron-winstaller": "^5.1.0"
   }
 }
