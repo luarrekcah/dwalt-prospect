@@ -148,5 +148,5 @@ venom
   })
   .catch((erro) => {
     console.log(erro);
-    log.warn(error);
+    log.warn(erro);
   });

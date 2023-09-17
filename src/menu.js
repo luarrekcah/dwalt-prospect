@@ -75,17 +75,18 @@ const template = [
   },
 ];
 
-/* ONLY DEV
-menu.push({
-  label: "Avançado",
-  submenu: [
-    {
-      label: "Menu de desenvolvedor",
-      accelerator: "CmdOrCtrl+Shift+I",
-      role: "toggleDevTools",
-    },
-  ],
-});*/
+if(process.env.DEVELOPMENT) {
+  template.push({
+    label: "Avançado",
+    submenu: [
+      {
+        label: "Menu de desenvolvedor",
+        accelerator: "CmdOrCtrl+Shift+I",
+        role: "toggleDevTools",
+      },
+    ],
+  });
+}
 
 const menu = Menu.buildFromTemplate(template);
 
