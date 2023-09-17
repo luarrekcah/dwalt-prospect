@@ -1,7 +1,7 @@
 {
   "name": "prospect",
   "description": "App para prospecção",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "main": "src/index.js",
   "author": {
     "name": "RaulRodrigues",
